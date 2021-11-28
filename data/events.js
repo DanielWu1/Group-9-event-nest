@@ -10,12 +10,12 @@ const getAll = async () => {
 
     return eventList;
 };
-n;
+
 const get = async (id) => {
     try {
         id1 = ObjectId(id);
     } catch (e) {
-        throw "id format wrong";
+        throw "Format for event id is wrong";
     }
     if (!id) throw "You must provide an id to search for";
     if (typeof id != "string" || id.trim().length == 0)
@@ -29,29 +29,29 @@ const create = async (
     title,
     category,
     creator,
-    postdate,
+    date,
     timestart,
     endtime,
     address,
     city,
     state,
-    Tickets,
+    ticketcapacity,
     ticketleft,
-    Description
+    description
 ) => {
     if (
         !title ||
         !category ||
         !creator ||
-        !postdate ||
+        !date ||
         !timestart ||
         !endtime ||
         !address ||
         !city ||
         !state ||
-        !Tickets ||
+        !ticketcapacity ||
         !ticketleft ||
-        !Description
+        !description
     ) {
         throw "All fields need to have valid values";
     }
@@ -60,23 +60,23 @@ const create = async (
         typeof title != "string" ||
         typeof category != "string" ||
         typeof creator != "string" ||
-        typeof postdate != "string" ||
+        typeof date != "string" ||
         typeof address != "string" ||
         typeof city != "string" ||
         typeof state != "string" ||
-        typeof Description != "string" ||
+        typeof description != "string" ||
         title.trim().length == 0 ||
         category.trim().length == 0 ||
         creator.trim().length == 0 ||
         address.trim().length == 0 ||
         city.trim().length == 0 ||
         state.trim().length == 0 ||
-        Description.trim().length == 0
+        description.trim().length == 0
     ) {
         throw "parameters are not strings or are empty strings,";
     }
 
-    if (!postdate.match(validDate)) {
+    if (!date.match(validDate)) {
         throw "Date is not in Valid Format";
     }
     if (!Array.isArray(timestart)) {
@@ -121,7 +121,7 @@ const create = async (
         }
     }
 
-    if (typeof Tickets != "number" || typeof ticketleft != "number") {
+    if (typeof ticketcapacity != "number" || typeof ticketleft != "number") {
         throw " Number of Tickets must be in Numbers";
     }
 
@@ -131,15 +131,15 @@ const create = async (
         title: title,
         category: category,
         creator: creator,
-        postdate: postdate,
+        date: date,
         timestart: timestart,
         endtime: endtime,
         address: address,
         city: city,
         state: state,
-        Tickets: Tickets,
+        ticketcapacity: ticketcapacity,
         ticketleft: ticketleft,
-        Description: Description,
+        description: description,
         buyerList: [],
         followerList: [],
         likeList: [],
@@ -157,7 +157,7 @@ const remove = async (id) => {
     try {
         id1 = ObjectId(id);
     } catch (e) {
-        throw "id format wrong";
+        throw "Format for event id is wrong";
     }
     if (!id) throw "You must provide an id to search for";
     if (typeof id != "string" || id.trim().length == 0)
@@ -173,35 +173,35 @@ const update = async (
     title,
     category,
     creator,
-    postdate,
+    date,
     timestart,
     endtime,
     address,
     city,
     state,
-    Tickets,
+    ticketcapacity,
     ticketleft,
-    Description
+    description
 ) => {
     try {
         id1 = ObjectId(id);
     } catch (e) {
-        throw "id format wrong";
+        throw "Format for event id is wrong";
     }
     if (!id) throw "You must provide an id to search for";
     if (
         !title ||
         !category ||
         !creator ||
-        !postdate ||
+        !date ||
         !timestart ||
         !endtime ||
         !address ||
         !city ||
         !state ||
-        !Tickets ||
+        !ticketcapacity ||
         !ticketleft ||
-        !Description
+        !description
     ) {
         throw "All fields need to have valid values";
     }
@@ -210,23 +210,23 @@ const update = async (
         typeof title != "string" ||
         typeof category != "string" ||
         typeof creator != "string" ||
-        typeof postdate != "string" ||
+        typeof date != "string" ||
         typeof address != "string" ||
         typeof city != "string" ||
         typeof state != "string" ||
-        typeof Description != "string" ||
+        typeof description != "string" ||
         title.trim().length == 0 ||
         category.trim().length == 0 ||
         creator.trim().length == 0 ||
         address.trim().length == 0 ||
         city.trim().length == 0 ||
         state.trim().length == 0 ||
-        Description.trim().length == 0
+        description.trim().length == 0
     ) {
         throw "parameters are not strings or are empty strings,";
     }
 
-    if (!postdate.match(validDate)) {
+    if (!date.match(validDate)) {
         throw "Date is not in Valid Format";
     }
     if (!Array.isArray(timestart)) {
@@ -271,28 +271,28 @@ const update = async (
         }
     }
 
-    if (typeof Tickets != "number" || typeof ticketleft != "number") {
+    if (typeof ticketcapacity != "number" || typeof ticketleft != "number") {
         throw " Number of Tickets must be in Numbers";
     }
     const eventCollection = await events();
 
-    const updatedrest = {
+    const updatedEvent = {
         title: title,
         category: category,
         creator: creator,
-        postdate: postdate,
+        date: date,
         timestart: timestart,
         endtime: endtime,
         address: address,
         city: city,
         state: state,
-        Tickets: Tickets,
+        ticketcapacity: ticketcapacity,
         ticketleft: ticketleft,
-        Description: Description,
+        description: description,
     };
     await eventCollection.updateOne(
         { _id: ObjectId(id) },
-        { $set: updatedrest }
+        { $set: updatedEvent }
     );
     return await get(id);
 };
