@@ -4,7 +4,7 @@
     "description": "group 9 project Events",
     "main": "index.js",
     "scripts": {
-        "start": "node index"
+        "start": "node app"
     },
     "author": "Bingzhen Li Charan Telaganeni Neel Tejani Prajay Sachdev",
     "license": "ISC",
@@ -12,9 +12,9 @@
         "axios": "^0.24.0",
         "blueimp-md5": "^2.19.0",
         "express": "^4.17.1",
-        "express-handlebars": "^6.0.1",
+        "express-handlebars": "^6.0.2",
         "handlebars": "^4.7.7",
-        "mongodb": "^3.6.2",
+        "mongodb": "^3.7.3",
         "uuid": "^8.3.2"
     }
 }
