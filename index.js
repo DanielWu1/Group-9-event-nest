@@ -14,7 +14,7 @@ const main = async () => {
         "Hoboken",
         "NJ",
         100,
-        100,
+        150,
         "This is the event which is for upcoming event christmas 2k21"
     );
     const diwaliParty = await events.create(
@@ -28,7 +28,7 @@ const main = async () => {
         "Jersey City",
         "NJ",
         70,
-        70,
+        200,
         "This is the event which is for upcoming event christmas 2k21"
     );
 
@@ -44,7 +44,7 @@ const main = async () => {
         "Hoboken",
         "NJ",
         100,
-        100,
+        300,
         "This is the event which is for upcoming event christmas 2k21"
     );
 
