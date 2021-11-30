@@ -2,6 +2,7 @@ const mongoCollections = require('../config/mongoCollections');
 const users = mongoCollections.users;
 let {ObjectId} = require("mongodb")
 const bcrypt = require('bcryptjs');
+const { isDeepStrictEqual } = require('util');
 const saltRounds = 16;
 
 
@@ -214,12 +215,102 @@ async function checkUsers(email,password){
     return myusers;
 }
 
-async function getByUsers(email){
-
-    if (!email) throw 'You must provide an email to search for get';
+async function resetPassword(email, userName, password){
+    if (typeof(userName) !== 'string'| typeof(email) !== 'string'| typeof(password) !== 'string'){
+        throw '$ input is not string';
+    }
+    if (userName ==''|typeof userName == 'undefined' | userName === null | userName === NaN){
+        throw '$ userName is empty';
+    }
+    if ( !userName){
+        throw '$ you must supply the user userName'
+    }
+    if ( !email){
+        throw '$ you must supply the email'
+    }
     if ( !password){
         throw '$ you must supply the password'
     }
+    if (userName.match(/^[ ]*$/)){
+        throw '$ userName is spaces'
+    }
+    if (email ==''|typeof email == 'undefined' | email === null | email === NaN){
+        throw '$ email is empty';
+    }
+    if (email.match(/^[ ]*$/)){
+        throw '$email is spaces'
+    }
+    let net = email.split('')
+    // if (net[0] !== 'h'|| net[1] !== 't' || net[2] !== 't' || net[3] !== 'p' || net[4] !== ':' || net[5] !== '/' || net[6] !== '/' || net[7] !== 'w' || net[8] !== 'w' || net[9] !== 'w' || net[10] !== '.')
+    // throw '$ website is not right'
+    if (net.indexOf('@') == -1){
+        throw '$ email is not right1'
+    }
+    // console.log(net[net.length - 1])
+    if (net[net.length - 1] !== 'm'|| net[net.length - 2] !== 'o' || net[net.length - 3] !== 'c' || net[net.length - 4] !== '.'){
+        throw '$ email is not right2'
+    }
+    let mya = net.indexOf('@')
+    if ((net.length-4) - (mya+1) < 4){
+        throw '$ email is not right3'
+    }
+    let myusmail = email.split('@')
+    if (myusmail[0].indexOf(' ')!== -1){
+        throw '$ email name have spaces'
+    }
+    if ((/^[a-z0-9]+$/i).test(myusmail[0]) === false){
+        throw '$ email name is not valid'
+    }
+    if (mya+1 < 5){
+        throw '$ email is not right4'
+    }
+    // addrees check not ready
+
+
+    if (password ==''|typeof password == 'undefined' | password === null | password === NaN){
+        throw '$ password is empty';
+    }
+    if (password.match(/^[ ]*$/)){
+        throw '$ password is spaces'
+    }
+    const users1 = await users();
+    let myaftertestemail = email.split('@')
+    myaftertestemail[0] = myaftertestemail[0].toLowerCase()
+    let mynewemail = myaftertestemail[0]+'@'+myaftertestemail[1]
+    const myuser = await getByUsers(mynewemail)
+    let myreturn = {}
+    if (userName === myuser['userName']){
+        const hash = await bcrypt.hash(password,saltRounds)
+        const resetpassword = {
+            userName: myuser['userName'],
+            phone: myuser['phone'],
+            gender: myuser['gender'],
+            email: myuser['email'],
+            address: myuser['address'],
+            password: hash,
+            URL: myuser['URL'],
+            ticket: myuser['ticket'],
+            eventspost: myuser['eventspost'],
+            likeevents: myuser['likeevents'],
+        };
+        const updatedInfo = await users1.updateOne(
+            { email: mynewemail },
+            { $set: resetpassword }
+        );
+        if (updatedInfo.modifiedCount === 0) {
+            throw 'could not update password successfully (they are same)';
+        }
+        myreturn['reset'] = true
+    }
+    else{
+        throw 'user Name or emaill is not true'
+    }
+    return myreturn
+}
+
+async function getByUsers(email){
+
+    if (!email) throw 'You must provide an email to search for get';
     if (email ==''|typeof email == 'undefined' | email === null | email === NaN){
         throw '$ email is empty';
     }
@@ -716,6 +807,7 @@ async function removePostEvents(userId, eventsid){
 //     // const myeventId = myDBfunction('619bdfc0fa1fa9ca424f09a3')
 //     // const myuserId1 = myDBfunction('619bdfc0fa1fa9ca424f09c9')
 //     // const liket1 = await usersCollection.findOne({ _id: myuserId1, ticket:{$elemMatch:{eventsid:myeventId}}});
+//     // const restetpass = await resetPassword('tony1532659641@gmail.com','Bingzhen1Li','123123123')
 //     // let myaddlike = await addLikeevents('619bdfc0fa1fa9ca424f09c9', '619bdfc0fa1fa9ca424f09a3')
 //     // let myaddlike = await addTicketEvents('619bdfc0fa1fa9ca424f09c9', '619bdfc0fa1fa9ca424f09a3')
 //     // let myaddlike = await addPostEvents('619bdfc0fa1fa9ca424f09c9', '619bdfc0fa1fa9ca424f09a1')
@@ -724,6 +816,7 @@ async function removePostEvents(userId, eventsid){
 //     // let myaddlike = await removePostEvents('619bdfc0fa1fa9ca424f09c9', '619bdfc0fa1fa9ca424f09a3')
 //     // _id: '619bdfc0fa1fa9ca424f09c9', 
 //     // console.log(liket1)
+//     // console.log(restetpass)
 //     // console.log(myaddlike)
 //     // console.log(myaddlike)
 // }
