@@ -25,6 +25,29 @@ const get = async (id) => {
 
     return event;
 };
+
+const getTime = async (id) => {
+    const timeArray = [];
+    const timeObject = {};
+    try {
+        id1 = ObjectId(id);
+    } catch (e) {
+        throw "Format for event id is wrong";
+    }
+    if (!id) throw "You must provide an id to search for";
+    if (typeof id != "string" || id.trim().length == 0)
+        throw "the id provided is not a string or is an empty string";
+    const eventCollection = await events();
+    const event = await eventCollection.findOne({ _id: id1 });
+
+    timeObject["_id"] = event._id;
+    timeObject["title"] = event.title;
+    timeObject["timestart"] = event.timestart;
+    timeObject["description"] = event.description;
+    timeArray.push(timeObject);
+
+    return timeArray;
+};
 const create = async (
     title,
     category,
@@ -143,6 +166,7 @@ const create = async (
         buyerList: [],
         followerList: [],
         likeList: [],
+        comments : []
     };
 
     const insertInfo = await eventCollection.insertOne(newevent);
@@ -302,4 +326,5 @@ module.exports = {
     get,
     remove,
     update,
+    getTime,
 };

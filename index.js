@@ -1,5 +1,7 @@
 const dbConnection = require("./config/mongoConnection");
 const events = require("./data/events");
+const comments = require("./data/comments");
+
 const connection = require("./config/mongoConnection");
 
 const main = async () => {
@@ -49,8 +51,12 @@ const main = async () => {
     );
 
     const allevents = await events.getAll();
-    console.log(allevents);
+    //  console.log(allevents);
 
+    //const comment = await c.get("61a7151491316f152dfb6fbe");
+
+    console.log(comment);
+    //
     const db = await connection();
     await db.serverConfig.close();
 };
