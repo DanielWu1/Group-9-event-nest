@@ -2,7 +2,6 @@ const mongoCollections = require('../config/mongoCollections');
 const users = mongoCollections.users;
 let {ObjectId} = require("mongodb")
 const bcrypt = require('bcryptjs');
-const { isDeepStrictEqual } = require('util');
 const saltRounds = 16;
 
 
@@ -124,6 +123,7 @@ async function createUser(userName, phone, gender, email, address, password,){
       const newId = insertInfo.insertedId;
       newusers['_id'] = newusers['_id'].toString()
     //   const dog = await this.getDogById(newId);
+    // it will return the users information
       return newusers;
 
 }
@@ -211,7 +211,7 @@ async function checkUsers(email,password){
     }
     // console.log(rest['_id'].toString())
     myusers['_id'] = myusers['_id'].toString()
-
+    //it will return the users information
     return myusers;
 }
 
@@ -305,6 +305,8 @@ async function resetPassword(email, userName, password){
     else{
         throw 'user Name or emaill is not true'
     }
+    // it will return {reset = true}
+    // if reset the password not succeed it will return throw 'user Name or email is not true'
     return myreturn
 }
 
@@ -357,6 +359,7 @@ async function getByUsers(email){
     // console.log(rest['_id'].toString())
     myusers['_id'] = myusers['_id'].toString()
 
+    //return users information
     return myusers;
 }
 
@@ -415,6 +418,8 @@ async function addLikeevents(userId, eventsid){
     else {
         myreturn['addLikeEvents'] = true
     }
+    // if add like succeed it will return {addLikeEvents : true}
+    // if add like not succeed it will return {addLikeEvents : false}
     return myreturn;
 
 }
@@ -504,6 +509,8 @@ async function removeLikeEvents(userId, eventsid){
     // Object.keys(myreturn1).forEach(function(key){
     //     myreturn1[key]['_id'] = myreturn1[key]['_id'].toString()
     // })
+    // if remove like succeed it will return {addLikeEvents : true}
+    // if remove like not succeed it will return {addLikeEvents : false}
     return myreturn1;
 }
 
@@ -562,6 +569,8 @@ async function addTicketEvents(userId, ticketeventsid){
     else {
         myreturn['addTicketEvents'] = true
     }
+    // if add ticket succeed it will return {addLikeEvents : true}
+    // if add ticket not succeed it will return {addLikeEvents : false}
     return myreturn;
 
 }
@@ -650,6 +659,8 @@ async function removeTicketEvents(userId, ticketeventsid){
     // Object.keys(myreturn1).forEach(function(key){
     //     myreturn1[key]['_id'] = myreturn1[key]['_id'].toString()
     // })
+    // if remove ticket succeed it will return {addLikeEvents : true}
+    // if remove ticket not succeed it will return {addLikeEvents : false}
     return myreturn1;
 }
 
@@ -709,6 +720,8 @@ async function addPostEvents(userId, eventsid){
     else {
         myreturn['addPostEvents'] = true
     }
+    // if add Post succeed it will return {addLikeEvents : true}
+    // if add Post not succeed it will return {addLikeEvents : false}
     return myreturn;
 
 }
@@ -797,6 +810,8 @@ async function removePostEvents(userId, eventsid){
     // Object.keys(myreturn1).forEach(function(key){
     //     myreturn1[key]['_id'] = myreturn1[key]['_id'].toString()
     // })
+    // if remove Post succeed it will return {addLikeEvents : true}
+    // if remove Post not succeed it will return {addLikeEvents : false}
     return myreturn1;
 }
 
@@ -826,6 +841,7 @@ module.exports = {
     createUser,
     getAll,
     checkUsers,
+    resetPassword,
     getByUsers,
     addLikeevents,
     removeLikeEvents,
