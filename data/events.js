@@ -2,8 +2,12 @@ const mongoCollections = require("../config/mongoCollections");
 const events = mongoCollections.events;
 
 let { ObjectId } = require("mongodb");
-var validDate = /(0\d{1}|1[0-2])\/([0-2]\d{1}|3[0-1])\/(19|20)\d{2}/;
-var validTime = /^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$/;
+
+var myDate = new Date();
+var mytime = myDate.toLocaleDateString();
+var myhour = myDate.getHours();
+const validDate = /(0\d{1}|1[0-2])\/([0-2]\d{1}|3[0-1])\/(19|20)\d{2}/;
+const validTime = /^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$/;
 
 const getAllEvents = async () => {
     const eventCollection = await events();
@@ -99,7 +103,10 @@ const createEvent = async (
             throw " In Timestart you must enter in HH/MM format";
         }
     }
-
+    let mystart = new Date(timestart[0] + " " + timestart[1]);
+    if (myDate > mystart) {
+        throw "$ start time must after now";
+    }
     if (!Array.isArray(endtime)) {
         throw "endtime is Not an Array";
     } else if (endtime.length == 0) {
@@ -119,6 +126,10 @@ const createEvent = async (
         ) {
             throw " In Endtime you must enter in HH/MM format";
         }
+    }
+    let myend = new Date(endtime[0] + " " + endtime[1]);
+    if (mystart > myend) {
+        throw "$ end time must after start time and now";
     }
 
     if (typeof ticketcapacity != "number") {
