@@ -2,8 +2,14 @@ const mongoCollections = require('../config/mongoCollections');
 const users = mongoCollections.users;
 let {ObjectId} = require("mongodb")
 const bcrypt = require('bcryptjs');
-const { isDeepStrictEqual } = require('util');
 const saltRounds = 16;
+var myDate = new Date();
+var mytime = myDate.toLocaleDateString();
+var myhour = myDate.getHours()
+const validDate = /(0\d{1}|1[0-2])\/([0-2]\d{1}|3[0-1])\/(19|20)\d{2}/;
+const validTime = /^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$/;
+// console.log(myhour)
+// console.log(mytime)
 
 
 async function createUser(userName, phone, gender, email, address, password,){
@@ -124,6 +130,7 @@ async function createUser(userName, phone, gender, email, address, password,){
       const newId = insertInfo.insertedId;
       newusers['_id'] = newusers['_id'].toString()
     //   const dog = await this.getDogById(newId);
+    // it will return the users information
       return newusers;
 
 }
@@ -211,7 +218,7 @@ async function checkUsers(email,password){
     }
     // console.log(rest['_id'].toString())
     myusers['_id'] = myusers['_id'].toString()
-
+    //it will return the users information
     return myusers;
 }
 
@@ -305,6 +312,8 @@ async function resetPassword(email, userName, password){
     else{
         throw 'user Name or emaill is not true'
     }
+    // it will return {reset = true}
+    // if reset the password not succeed it will return throw 'user Name or email is not true'
     return myreturn
 }
 
@@ -357,6 +366,7 @@ async function getByUsers(email){
     // console.log(rest['_id'].toString())
     myusers['_id'] = myusers['_id'].toString()
 
+    //return users information
     return myusers;
 }
 
@@ -415,6 +425,8 @@ async function addLikeevents(userId, eventsid){
     else {
         myreturn['addLikeEvents'] = true
     }
+    // if add like succeed it will return {addLikeEvents : true}
+    // if add like not succeed it will return {addLikeEvents : false}
     return myreturn;
 
 }
@@ -504,10 +516,12 @@ async function removeLikeEvents(userId, eventsid){
     // Object.keys(myreturn1).forEach(function(key){
     //     myreturn1[key]['_id'] = myreturn1[key]['_id'].toString()
     // })
+    // if remove like succeed it will return {addLikeEvents : true}
+    // if remove like not succeed it will return {addLikeEvents : false}
     return myreturn1;
 }
 
-async function addTicketEvents(userId, ticketeventsid){
+async function addTicketEvents(userId, ticketeventsid, eventTitle,eventStartTime,eventEndtime,eventdescription){
     if (!userId) throw 'You must provide an id to search for get';
     if (userId ==''|typeof userId == 'undefined' | userId === null | userId === NaN){
         throw '$ id is empty';
@@ -516,6 +530,9 @@ async function addTicketEvents(userId, ticketeventsid){
         if (userId.match(/^[ ]*$/)){
             throw '$id is spaces'
         }
+    }
+    if(ObjectId.isValid(userId)===false){
+        throw '$id is not a valid ObjectId'
     }
     if (!ticketeventsid) throw 'You must provide an id to search for get';
     if (ticketeventsid ==''|typeof ticketeventsid == 'undefined' | ticketeventsid === null | ticketeventsid === NaN){
@@ -528,40 +545,153 @@ async function addTicketEvents(userId, ticketeventsid){
     }
 
     if(ObjectId.isValid(ticketeventsid)===false){
-        throw '$id is not a ObjectId'
+        throw '$id is not a valid ObjectId'
+    }
+    if (!eventTitle) throw 'You must provide an eventTitle to search for get';
+    if (!eventStartTime) throw 'You must provide an eventStartTime to search for get';
+    if (!eventEndtime) throw 'You must provide an eventEndtime to search for get';
+    if (!eventdescription) throw 'You must provide an eventdescription to search for get';
+    if (eventTitle ==''|typeof eventTitle == 'undefined' | eventTitle === null | eventTitle === NaN){
+        throw '$ eventTitle is empty';
+    }
+    if (typeof eventTitle != 'string'){
+        throw '$ event Title is not string'
+    }
+    if (typeof eventTitle == 'string'){
+        if (eventTitle.match(/^[ ]*$/)){
+            throw '$eventTitle is spaces'
+        }
+    }
+    if (eventStartTime ==''|typeof eventStartTime == 'undefined' | eventStartTime === null | eventStartTime === NaN){
+        throw '$ event Start Time is empty';
+    }
+    if (eventEndtime ==''|typeof eventEndtime == 'undefined' | eventEndtime === null | eventEndtime === NaN){
+        throw '$ event End time is empty';
+    }
+    if (!Array.isArray(eventStartTime)) {
+        throw "event Start Time is Not an Array";
+    } else if (eventStartTime.length == 0) {
+        throw "event Start Time is empty";
+    } else {
+        if (
+            typeof eventStartTime[0] != "string" ||
+            eventStartTime[0].trim().length == 0 ||
+            !eventStartTime[0].match(validDate)
+        ) {
+            throw " In event Start Time you must enter in MM/DD/YY format";
+        }
+        if (
+            typeof eventStartTime[1] != "string" ||
+            eventStartTime[1].trim().length == 0 ||
+            !eventStartTime[1].match(validTime)
+        ) {
+            throw " In event Start Time you must enter in HH/MM format";
+        }
+    }
+    let mystart = new Date(eventStartTime[0] + ' ' + eventStartTime[1])
+    if (myDate > mystart){
+        throw '$ start time must after now'
+    }
+
+    if (!Array.isArray(eventEndtime)) {
+        throw "event End time is Not an Array";
+    } else if (eventEndtime.length == 0) {
+        throw "event End time is Empty";
+    } else {
+        if (
+            typeof eventEndtime[0] != "string" ||
+            eventEndtime[0].trim().length == 0 ||
+            !eventEndtime[0].match(validDate)
+        ) {
+            throw " In event End time you must enter in MM/DD/YY format";
+        }
+        if (
+            typeof eventEndtime[1] != "string" ||
+            eventEndtime[1].trim().length == 0 ||
+            !eventEndtime[1].match(validTime)
+        ) {
+            throw " In event End time you must enter in HH/MM format";
+        }
+    }
+    let myend = new Date(eventEndtime[0] + ' ' + eventEndtime[1])
+    if (mystart > myend){
+        throw '$ end time must after start time and now'
+    }
+
+    if (eventdescription ==''|typeof eventdescription == 'undefined' | eventdescription === null | eventdescription === NaN){
+        throw '$ event description is empty';
+    }
+    if (typeof eventdescription != 'string'){
+        throw '$ event description Title is not string'
+    }
+    if (typeof eventdescription == 'string'){
+        if (eventdescription.match(/^[ ]*$/)){
+            throw '$event description is spaces'
+        }
     }
     
     const myuserId = myDBfunction(userId)
     const myeventId = myDBfunction(ticketeventsid)
     const usersCollection = await users();
     let newTicket = {
-        _id:ObjectId(),
         eventsid: myeventId,
-        // reviewer: reviewer,
-        // rating: rating,
-        // dateOfReview: dateOfReview,
-        // review: review
+        eventTitle: eventTitle,
+        eventStartTime: eventStartTime,
+        eventEndtime: eventEndtime,
+        eventdescription: eventdescription
     };
     
     // if (revi === null) throw 'No restaurants with that id';
     // const reviid = revi['reviews']
     // const insertInfo = await restaurantsCollection.insertOne(newreviews);
-    const liket1 = await usersCollection.findOne({ _id: myuserId, ticket:{$elemMatch:{eventsid:myeventId}}});
+    const ticket1 = await usersCollection.findOne({ _id: myuserId, ticket:{$elemMatch:{eventsid:myeventId}}});
     // console.log(liket1)
-    if (liket1 !== null){
+    if (ticket1 !== null){
         throw '$ events already have'
     }
+    const ticket2 = await usersCollection.findOne({ _id: myuserId});
+    if (ticket2 == null){
+        throw '$ not have same id users'
+    }
+    let userpostlist = ticket2['eventspost']
+    let userticketlist = ticket2['ticket']
+    // let myaddpoststime = eventStartTime[0] + ' ' + eventStartTime[1]
+    // let myaddpostetime = eventEndTime[0] + ' ' + eventEndTime[1]
+
+    for(let b = 0 ; b <userticketlist.length; b++){
+        let myticket = userticketlist[b]
+        let myticketstime = new Date(myticket['eventStartTime'][0] + ' ' + myticket['eventStartTime'][1])
+        let myticketetime = new Date(myticket['eventEndtime'][0] + ' ' + myticket['eventEndtime'][1])
+        if (myticketstime <= mystart &&  mystart <= myticketetime || myticketstime <= myend  && myend <= myticketetime){
+            let mythrow = myticket['eventTitle'] + ' have same time zone'
+            throw mythrow
+        }
+    }
+
+    for(let i = 0 ; i <userpostlist.length; i++){
+        let mypost = userpostlist[i]
+
+        let mypoststime = new Date(mypost['eventStartTime'][0] + ' ' + mypost['eventStartTime'][1])
+        let mypostetime = new Date(mypost['eventEndtime'][0] + ' ' + mypost['eventEndtime'][1])
+        if (mypoststime <= mystart &&  mystart <= mypostetime || mypoststime <= myend  && myend <= mypostetime){
+            let mythrow = mypost['eventTitle'] + ' have same time zone'
+            throw mythrow
+        }
+    }
+    
     const insertliketevents = await usersCollection.updateOne({ _id: myuserId }, { $addToSet: { ticket: newTicket } })
     if (insertliketevents.insertedCount === 0) throw '$ Could not add new like events';
-    const liket2 = await usersCollection.findOne({ _id: myuserId, ticket:{$elemMatch:{eventsid:myeventId}}});
+    const ticket3 = await usersCollection.findOne({ _id: myuserId, ticket:{$elemMatch:{eventsid:myeventId}}});
     // console.log(liket2)
     let myreturn = {}
-    if (liket2 === null){
+    if (ticket3 === null){
         myreturn['addTicketEvents'] = false
     }
     else {
         myreturn['addTicketEvents'] = true
     }
+    // if add ticket succeed it will return {addLikeEvents : true}
+    // if add ticket not succeed it will return {addLikeEvents : false}
     return myreturn;
 
 }
@@ -650,11 +780,13 @@ async function removeTicketEvents(userId, ticketeventsid){
     // Object.keys(myreturn1).forEach(function(key){
     //     myreturn1[key]['_id'] = myreturn1[key]['_id'].toString()
     // })
+    // if remove ticket succeed it will return {addLikeEvents : true}
+    // if remove ticket not succeed it will return {addLikeEvents : false}
     return myreturn1;
 }
 
 
-async function addPostEvents(userId, eventsid){
+async function addPostEvents(userId, eventsid, eventTitle,eventStartTime,eventEndtime,eventdescription ){
     if (!userId) throw 'You must provide an id to search for get';
     if (userId ==''|typeof userId == 'undefined' | userId === null | userId === NaN){
         throw '$ id is empty';
@@ -664,51 +796,166 @@ async function addPostEvents(userId, eventsid){
             throw '$id is spaces'
         }
     }
+    if(ObjectId.isValid(userId)===false){
+        throw '$id is not a valid ObjectId'
+    }
     if (!eventsid) throw 'You must provide an id to search for get';
     if (eventsid ==''|typeof eventsid == 'undefined' | eventsid === null | eventsid === NaN){
         throw '$ id is empty';
     }
     if (typeof eventsid == 'string'){
         if (eventsid.match(/^[ ]*$/)){
-            throw '$id is spaces'
+            throw '$ id is spaces'
         }
     }
 
     if(ObjectId.isValid(eventsid)===false){
-        throw '$id is not a ObjectId'
+        throw '$ id is not a ObjectId'
+    }
+    if (!eventTitle) throw 'You must provide an eventTitle to search for get';
+    if (!eventStartTime) throw 'You must provide an eventStartTime to search for get';
+    if (!eventEndtime) throw 'You must provide an eventEndtime to search for get';
+    if (!eventdescription) throw 'You must provide an eventdescription to search for get';
+    if (eventTitle ==''|typeof eventTitle == 'undefined' | eventTitle === null | eventTitle === NaN){
+        throw '$ eventTitle is empty';
+    }
+    if (typeof eventTitle != 'string'){
+        throw '$ event Title is not string'
+    }
+    if (typeof eventTitle == 'string'){
+        if (eventTitle.match(/^[ ]*$/)){
+            throw '$eventTitle is spaces'
+        }
+    }
+    if (eventStartTime ==''|typeof eventStartTime == 'undefined' | eventStartTime === null | eventStartTime === NaN){
+        throw '$ event Start Time is empty';
+    }
+    if (eventEndtime ==''|typeof eventEndtime == 'undefined' | eventEndtime === null | eventEndtime === NaN){
+        throw '$ event End time is empty';
+    }
+    if (!Array.isArray(eventStartTime)) {
+        throw "event Start Time is Not an Array";
+    } else if (eventStartTime.length == 0) {
+        throw "event Start Time is empty";
+    } else {
+        if (
+            typeof eventStartTime[0] != "string" ||
+            eventStartTime[0].trim().length == 0 ||
+            !eventStartTime[0].match(validDate)
+        ) {
+            throw " In event Start Time you must enter in MM/DD/YY format";
+        }
+        if (
+            typeof eventStartTime[1] != "string" ||
+            eventStartTime[1].trim().length == 0 ||
+            !eventStartTime[1].match(validTime)
+        ) {
+            throw " In event Start Time you must enter in HH/MM format";
+        }
+    }
+    let mystart = new Date(eventStartTime[0] + ' ' + eventStartTime[1])
+    if (myDate > mystart){
+        throw '$ start time must after now'
+    }
+
+    if (!Array.isArray(eventEndtime)) {
+        throw "event End time is Not an Array";
+    } else if (eventEndtime.length == 0) {
+        throw "event End time is Empty";
+    } else {
+        if (
+            typeof eventEndtime[0] != "string" ||
+            eventEndtime[0].trim().length == 0 ||
+            !eventEndtime[0].match(validDate)
+        ) {
+            throw " In event End time you must enter in MM/DD/YY format";
+        }
+        if (
+            typeof eventEndtime[1] != "string" ||
+            eventEndtime[1].trim().length == 0 ||
+            !eventEndtime[1].match(validTime)
+        ) {
+            throw " In event End time you must enter in HH/MM format";
+        }
+    }
+    let myend = new Date(eventEndtime[0] + ' ' + eventEndtime[1])
+    if (mystart > myend){
+        throw '$ end time must after start time and now'
+    }
+
+    if (eventdescription ==''|typeof eventdescription == 'undefined' | eventdescription === null | eventdescription === NaN){
+        throw '$ event description is empty';
+    }
+    if (typeof eventdescription != 'string'){
+        throw '$ event description Title is not string'
+    }
+    if (typeof eventdescription == 'string'){
+        if (eventdescription.match(/^[ ]*$/)){
+            throw '$event description is spaces'
+        }
     }
     
     const myuserId = myDBfunction(userId)
     const myeventId = myDBfunction(eventsid)
     const usersCollection = await users();
+
     let newpostevents = {
-        _id:ObjectId(),
         eventsid: myeventId,
-        // reviewer: reviewer,
-        // rating: rating,
-        // dateOfReview: dateOfReview,
-        // review: review
+        eventTitle: eventTitle,
+        eventStartTime: eventStartTime,
+        eventEndtime: eventEndtime,
+        eventdescription: eventdescription
     };
     
     // if (revi === null) throw 'No restaurants with that id';
     // const reviid = revi['reviews']
     // const insertInfo = await restaurantsCollection.insertOne(newreviews);
-    const liket1 = await usersCollection.findOne({ _id: myuserId, eventspost:{$elemMatch:{eventsid:myeventId}}});
+    const post1 = await usersCollection.findOne({ _id: myuserId, eventspost:{$elemMatch:{eventsid:myeventId}}});
     // console.log(liket1)
-    if (liket1 !== null){
+    if (post1 !== null){
         throw '$ events already have'
     }
+    const post2 = await usersCollection.findOne({ _id: myuserId});
+    if (post2 == null){
+        throw '$ not have same id users'
+    }
+    let userpostlist = post2['eventspost']
+    let userticketlist = post2['ticket']
+    // let myaddpoststime = eventStartTime[0] + ' ' + eventStartTime[1]
+    // let myaddpostetime = eventEndTime[0] + ' ' + eventEndTime[1]
+    
+    for(let i = 0 ; i <userpostlist.length; i++){
+        let mypost = userpostlist[i]
+
+        let mypoststime = new Date(mypost['eventStartTime'][0] + ' ' + mypost['eventStartTime'][1])
+        let mypostetime = new Date(mypost['eventEndtime'][0] + ' ' + mypost['eventEndtime'][1])
+        if (mypoststime <= mystart &&  mystart <= mypostetime || mypoststime <= myend  && myend <= mypostetime){
+            let mythrow = mypost['eventTitle'] + ' have same time zone'
+            throw mythrow
+        }
+    }
+    for(let b = 0 ; b <userticketlist.length; b++){
+        let myticket = userticketlist[b]
+        let myticketstime = new Date(myticket['eventStartTime'][0] + ' ' + myticket['eventStartTime'][1])
+        let myticketetime = new Date(myticket['eventEndtime'][0] + ' ' + myticket['eventEndtime'][1])
+        if (myticketstime <= mystart &&  mystart <= myticketetime || myticketstime <= myend  && myend <= myticketetime){
+            let mythrow = myticket['eventTitle'] + ' have same time zone'
+            throw mythrow
+        }
+    }
     const insertliketevents = await usersCollection.updateOne({ _id: myuserId }, { $addToSet: { eventspost: newpostevents } })
-    if (insertliketevents.insertedCount === 0) throw '$ Could not add new like events';
-    const liket2 = await usersCollection.findOne({ _id: myuserId, eventspost:{$elemMatch:{eventsid:myeventId}}});
+    if (insertliketevents.insertedCount === 0) throw '$ Could not add new post events';
+    const post3 = await usersCollection.findOne({ _id: myuserId, eventspost:{$elemMatch:{eventsid:myeventId}}});
     // console.log(liket2)
     let myreturn = {}
-    if (liket2 === null){
+    if (post3 === null){
         myreturn['addPostEvents'] = false
     }
     else {
         myreturn['addPostEvents'] = true
     }
+    // if add Post succeed it will return {addLikeEvents : true}
+    // if add Post not succeed it will return {addLikeEvents : false}
     return myreturn;
 
 }
@@ -797,6 +1044,8 @@ async function removePostEvents(userId, eventsid){
     // Object.keys(myreturn1).forEach(function(key){
     //     myreturn1[key]['_id'] = myreturn1[key]['_id'].toString()
     // })
+    // if remove Post succeed it will return {addLikeEvents : true}
+    // if remove Post not succeed it will return {addLikeEvents : false}
     return myreturn1;
 }
 
@@ -809,11 +1058,11 @@ async function removePostEvents(userId, eventsid){
 //     // const liket1 = await usersCollection.findOne({ _id: myuserId1, ticket:{$elemMatch:{eventsid:myeventId}}});
 //     // const restetpass = await resetPassword('tony1532659641@gmail.com','Bingzhen1Li','123123123')
 //     // let myaddlike = await addLikeevents('619bdfc0fa1fa9ca424f09c9', '619bdfc0fa1fa9ca424f09a3')
-//     // let myaddlike = await addTicketEvents('619bdfc0fa1fa9ca424f09c9', '619bdfc0fa1fa9ca424f09a3')
-//     // let myaddlike = await addPostEvents('619bdfc0fa1fa9ca424f09c9', '619bdfc0fa1fa9ca424f09a1')
+//     // let myaddlike = await addTicketEvents('61a3fc0ad42e251d4413dab5', '619bdfc0fa1fa9ca424f09a1','christmasParty2k21',["12/14/2021", "09:00"],["12/14/2021", "11:00"], 'asdfasdfasdf')
+//     // let myaddlike = await addPostEvents('61a3fc0ad42e251d4413dab5', '619bdfc0fa1fa9ca424f09a9','christmasParty2k21',["12/12/2021", "09:00"],["12/12/2021", "11:00"], 'asdfasdfasdf')
 //     // let myaddlike = await removeLikeEvents('619bdfc0fa1fa9ca424f09c9', '619bdfc0fa1fa9ca424f09c1')
-//     // let myaddlike = await removeTicketEvents('619bdfc0fa1fa9ca424f09c9', '619bdfc0fa1fa9ca424f09c2')
-//     // let myaddlike = await removePostEvents('619bdfc0fa1fa9ca424f09c9', '619bdfc0fa1fa9ca424f09a3')
+//     // let myaddlike = await removeTicketEvents('61a3fc0ad42e251d4413dab5', '619bdfc0fa1fa9ca424f09a1')
+//     // let myaddlike = await removePostEvents('61a3fc0ad42e251d4413dab5', '619bdfc0fa1fa9ca424f09a4')
 //     // _id: '619bdfc0fa1fa9ca424f09c9', 
 //     // console.log(liket1)
 //     // console.log(restetpass)
@@ -826,6 +1075,7 @@ module.exports = {
     createUser,
     getAll,
     checkUsers,
+    resetPassword,
     getByUsers,
     addLikeevents,
     removeLikeEvents,
