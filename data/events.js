@@ -158,6 +158,7 @@ const createEvent = async (
         followerList: [],
         likeList: [],
         comments: [],
+        active: true
     };
 
     const insertInfo = await eventCollection.insertOne(newevent);
@@ -196,14 +197,19 @@ const updateEvent = async (
     state,
     ticketcapacity,
     price,
-    description
+    description,
+    active
 ) => {
+    // console.log(active, typeof active)
+
+
     try {
         parsedEventid = ObjectId(eventId);
     } catch (e) {
         throw "id format wrong";
     }
     if (!eventId) throw "You must provide an id to search for";
+
     if (
         !title ||
         !category ||
@@ -216,7 +222,7 @@ const updateEvent = async (
         !state ||
         !ticketcapacity ||
         !price ||
-        !description
+        !description 
     ) {
         throw "All fields need to have valid values";
     }
@@ -236,7 +242,8 @@ const updateEvent = async (
         address.trim().length == 0 ||
         city.trim().length == 0 ||
         state.trim().length == 0 ||
-        description.trim().length == 0
+        description.trim().length == 0 
+        
     ) {
         throw "parameters are not strings or are empty strings,";
     }
@@ -293,6 +300,9 @@ const updateEvent = async (
     if (typeof price != "number") {
         throw " Number of Ticket's Price must be in Numbers";
     }
+
+    if (typeof active !== "boolean") throw "Active status of the event must a true or false";
+
     const eventCollection = await events();
 
     const updatedEvent = {
@@ -308,6 +318,7 @@ const updateEvent = async (
         ticketcapacity: ticketcapacity,
         price: price,
         description: description,
+        active: active
     };
     await eventCollection.updateOne(
         { _id: ObjectId(eventId) },
@@ -337,6 +348,41 @@ const getTimingofEvent = async (eventId) => {
 
     return timeArray;
 };
+
+// QUERYING FOR SEARCH BY NAME
+async function getEventListByName(inputEventName) {
+
+    // check inputs
+    if (typeof inputEventName !== "string") throw "Input event name has to be a string";
+    if (inputEventName.trim() === "") throw "Input event is an empty string"
+
+    // run query
+    const eventCollection = await events();
+    const result = await eventCollection.find({title:inputEventName.toString()}).toArray();
+
+    return result;
+};
+
+// QUERYING FOR SEARCH BY CATEGORY
+async function getEventListByCategory(inputEventCategory) {
+
+    // check inputs
+    if (typeof inputEventCategory !== "string") throw "Input event category has to be a string";
+    if (inputEventCategory.trim() === "") throw "Input event category is an empty string"
+
+    // run query
+    const eventCollection = await events();
+    const result = await eventCollection.find({category:inputEventCategory.toString()}).toArray();
+
+    return result;
+};
+
+
+
+
+
+
+
 module.exports = {
     createEvent,
     getAllEvents,
@@ -344,4 +390,8 @@ module.exports = {
     removeEvent,
     updateEvent,
     getTimingofEvent,
+    getEventListByName,
+    getEventListByCategory
 };
+
+

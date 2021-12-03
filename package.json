@@ -9,6 +9,7 @@
     "author": "Bingzhen Li Charan Telaganeni Neel Tejani Prajay Sachdev",
     "license": "ISC",
     "dependencies": {
+        "@sendgrid/mail": "^7.6.0",
         "axios": "^0.24.0",
         "blueimp-md5": "^2.19.0",
         "express": "^4.17.1",
