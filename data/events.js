@@ -12,7 +12,6 @@ const getAllEvents = async () => {
     return eventList;
 };
 
-const get = async (id) => {
 const getEvent = async (eventId) => {
     try {
         parsedEventid = ObjectId(eventId);
@@ -50,7 +49,6 @@ const getTime = async (id) => {
 
     return timeArray;
 };
-const create = async (
 const createEvent = async (
     title,
     category,
@@ -62,7 +60,6 @@ const createEvent = async (
     city,
     state,
     ticketcapacity,
-    ticketleft,
     price,
     description
 ) => {
@@ -77,7 +74,6 @@ const createEvent = async (
         !city ||
         !state ||
         !ticketcapacity ||
-        !ticketleft ||
         !price ||
         !description
     ) {
@@ -149,7 +145,6 @@ const createEvent = async (
         }
     }
 
-    if (typeof ticketcapacity != "number" || typeof ticketleft != "number") {
     if (typeof ticketcapacity != "number") {
         throw " Number of Tickets must be in Numbers";
     }
@@ -170,13 +165,11 @@ const createEvent = async (
         city: city,
         state: state,
         ticketcapacity: ticketcapacity,
-        ticketleft: ticketleft,
         price: price,
         description: description,
         buyerList: [],
         followerList: [],
         likeList: [],
-        comments : []
         comments: [],
     };
 
@@ -366,8 +359,6 @@ const getTimingofEvent = async (eventId) => {
     return timeArray;
 };
 module.exports = {
-    
-
     createEvent,
     getAllEvents,
     getEvent,

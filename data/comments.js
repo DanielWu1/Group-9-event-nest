@@ -50,7 +50,6 @@ const createComment = async (userId, eventId, comments) => {
     return finalEvent;
 };
 
-
 const getAllComments = async (eventId) => {
     if (!eventId) {
         throw "id need to have valid values";
@@ -72,13 +71,7 @@ const getAllComments = async (eventId) => {
     if (findEvent == null) throw "Event not exist with that eventId";
     return findEvent.comments;
 };
-const get = async (commentId) => {
-    if (!commentId) {
-        throw "id need to have valid values";
-    }
-    if (typeof commentId != "string" || commentId.trim().length == 0) {
-        throw "id is not string or is empty string,";
-    }
+
 //working
 const getComment = async (commentId) => {
     if (!commentId) {
@@ -209,9 +202,6 @@ const removeComment = async (commentId) => {
 };
 
 module.exports = {
-    
-    getAll,
-    get,
     remove,
     createComment,
     getAllComments,
