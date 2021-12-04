@@ -378,7 +378,11 @@ async function getEventListByCategory(inputEventCategory) {
 };
 
 
-
+const recordLike = async (eventId, userId) => {
+    const eventCollection = await events();
+    const likedEvent = await eventCollection.updateOne({ _id: new ObjectId(eventId) }, { $addToSet : { 'likeList': userId }});
+    return true;
+}
 
 
 
@@ -391,7 +395,8 @@ module.exports = {
     updateEvent,
     getTimingofEvent,
     getEventListByName,
-    getEventListByCategory
+    getEventListByCategory,
+    recordLike
 };
 
 
