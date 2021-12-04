@@ -11,6 +11,8 @@ const validTime = /^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$/;
 // console.log(myhour)
 // console.log(mytime)
 
+const events = mongoCollections.events;
+
 
 async function createUser(userName, phone, gender, email, address, password,){
     if (typeof(userName) !== 'string'| typeof(email) !== 'string'|typeof(address) !== 'string'| typeof(password) !== 'string'){
@@ -129,9 +131,12 @@ async function createUser(userName, phone, gender, email, address, password,){
   
       const newId = insertInfo.insertedId;
       newusers['_id'] = newusers['_id'].toString()
-    //   const dog = await this.getDogById(newId);
+    // const dog = await this.getDogById(newId);
     // it will return the users information
-      return newusers;
+    
+    // UPDATED BY PRAJAY: COMMENTING THIS TO RETURN ONLY THE USERNAME 
+    // return newusers;
+    return {"userName": userName};
 
 }
 
@@ -219,8 +224,11 @@ async function checkUsers(email,password){
     // console.log(rest['_id'].toString())
     myusers['_id'] = myusers['_id'].toString()
     //it will return the users information
+
     return myusers;
 }
+// createUser('PRAJAY','319-429-5274','male','prajay@gmail.com','333 rever st','123456') 
+checkUsers("tony1532659641@gmail.com", "123456")
 
 async function resetPassword(email, userName, password){
     if (typeof(userName) !== 'string'| typeof(email) !== 'string'| typeof(password) !== 'string'){
@@ -1049,7 +1057,7 @@ async function removePostEvents(userId, eventsid){
     return myreturn1;
 }
 
-// createUser('BingzhenLi','319-429-5274','male','tOny1532659641@gmail.com','333 rever st','123456') 
+// createUser('BingzhenLi','319-429-5274','male','tOny153265964@gmail.com','333 rever st','123456') 
 // let my = checkUsers('tony153265964@gmail.com','123456')
 // async function test(){
 //     // const usersCollection = await users()
@@ -1069,7 +1077,7 @@ async function removePostEvents(userId, eventsid){
 //     // console.log(myaddlike)
 //     // console.log(myaddlike)
 // }
-// test()
+//test()
 
 module.exports = {
     createUser,
@@ -1082,5 +1090,5 @@ module.exports = {
     addTicketEvents,
     removeTicketEvents,
     addPostEvents,
-    removePostEvents,
+    removePostEvents
 };

@@ -13,6 +13,10 @@ const msg = {
   html: '<strong>HEY GUYS! TESTING SOME EMAIL SENDING FUNCTIONALITY USING SENDGRID!</strong>',
 }
 
+// to send an email to the user
+
+
+
 sgMail
   .send(msg)
   .then((response) => {
