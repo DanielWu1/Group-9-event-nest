@@ -1,0 +1,219 @@
+<style>
+/* The container */
+.container2 {
+  display: block;
+  position: relative;
+  padding-left: 40px;
+  margin-bottom: 12px;
+  cursor: pointer;
+  font-size: 22px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  width: 15%;
+} 
+
+.container3 {
+  background-color: #ffffff;
+ color: rgb(32, 9, 240);
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  cursor: pointer;
+  width: 600px; 
+  right:1000px; 
+  border-radius: 12px;
+  text-decoration:none;
+}
+
+.container4 {
+  background-color: #039e31;
+ color: white;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  cursor: pointer;
+  width: 600px; 
+  right:1000px; 
+  border-radius: 12px;
+  text-decoration:none;
+}
+
+.container5 {
+  background-color: #1a09ff;
+ color: white;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  cursor: pointer;
+  width: 200px; 
+  right:1000px; 
+  border-radius: 12px;
+  text-decoration:none;
+}
+
+.container6 {
+  background-color: #ff0909;
+ color: white;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  cursor: pointer;
+  width: 200px; 
+  right:1000px; 
+  border-radius: 12px;
+  text-decoration:none;
+}
+
+button {
+  background-color: #1a09ff;
+  color: white;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  cursor: pointer;
+  width: 100px; 
+  right:1000px; 
+  border-radius: 12px;
+  text-decoration:none;
+  border-color: tomato;
+}
+
+/* Hide the browser's default checkbox */
+.container2 input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 20%;
+  width: 50%;
+}
+
+/* Create a custom checkbox */
+.checkmark {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 25px;
+  width: 25px;
+  background-color: #eee;
+}
+
+/* On mouse-over, add a grey background color */
+.container2:hover input ~ .checkmark {
+  background-color: #ccc;
+}
+
+/* When the checkbox is checked, add a blue background */
+.container2 input:checked ~ .checkmark {
+  background-color: #2196F3;
+}
+
+/* Create the checkmark/indicator (hidden when not checked) */
+.checkmark:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+/* Show the checkmark when checked */
+.container input:checked ~ .checkmark:after {
+  display: block;
+}
+
+/* Style the checkmark/indicator */
+.container2 .checkmark:after {
+  left: 9px;
+  top: 5px;
+  width: 5px;
+  height: 10px;
+  border: solid white;
+  border-width: 0 3px 3px 0;
+  -webkit-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  transform: rotate(45deg);
+}
+</style>
+
+<body>
+
+
+
+	<main class="body">
+		
+				<br><br><br>   
+   
+    
+    
+     
+     <div align="right"> 
+   <button class="button" type="submit"><a href="/logout" style="text-decoration: none ; color:#eee"> Logout </a></button> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+     </div> 
+
+     <div align="left"> 
+   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button class="button" type="submit"><a href="/create-event" style="text-decoration: none ; color:#eee"> Create Event </a></button> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+     </div>
+     <form  autocomplete="off" method="GET" action="/userhomepage">  
+                <center><input type="text" class="button"
+                    placeholder=" Search Events"
+                    name="search"></center> 
+                <center><button class="button"> search </button> </center>  
+
+                <br><br><br></form>
+
+                <form  autocomplete="off" method="POST" action="/userhomepage">
+
+<h1>&nbsp;&nbsp;Filter By Type</h1>
+<label class="container2">Party
+  <input type="checkbox" checked="checked">
+  <span class="checkmark"></span>
+</label>
+<label class="container2">Social Gathering
+  <input type="checkbox">
+  <span class="checkmark"></span>
+</label>
+<label class="container2">Conference / Workshop
+  <input type="checkbox">
+  <span class="checkmark"></span>
+</label>
+<label class="container2">Expo
+  <input type="checkbox">
+  <span class="checkmark"></span>
+</label>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button class="button"> filter </button>
+
+  </form>
+
+  {{#each allevents}}
+   <center><p class="container3">{{this.title}}</p></center>
+  <center><p class="container3"> Category:    {{this.category}} </p></center> 
+   <center><p class="container3">Creator Name:    {{this.creator}}</p></center>
+  <center><p class="container3">Date:   {{this.date}}</p></center> 
+  <center><p class="container3">Start Time:   {{this.timestart}}</p></center>
+  <center><p class="container3">End Time:   {{this.endtime}}</p></center>
+  <center><p class="container3">Address:   {{this.address}}</p></center>
+  <center><p class="container3">City:    {{this.city}}</p></center>
+  <center><p class="container3">State:    {{this.state}}</p></center>
+  <center><p class="container3">Description:    {{this.description}}</p></center>  
+  <center><p class="container4">Ticket Price:    {{this.price}}</p></center> 
+  
+<center>
+   <button class="container5" type="submit"> <a href="/buyticket" style="text-decoration: none ; color:#eee">Buy Ticket</a></button> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+     </center> 
+
+{{#if this.likedByThisUser}}
+<center>
+   <button class="container6" disabled style="background-color: thistle" value="submit">Liked</a></button>
+     </center> 
+     {{/if}}
+     {{#unless this.likedByThisUser}}
+  <center>
+   <button class="container6" type="submit"> <a href="/events/{{this._id}}/like" class="like" style="text-decoration: none ; color:#eee">Like Event</a></button> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+     </center> 
+     {{/unless}}
+  <br><br><br><br>
+  {{/each}} 
+
+
+</body>
+                
