@@ -177,19 +177,6 @@ router.get("/bookedevents", async(req,res) =>{
     }
 }); 
 
-// TODO: EVENTS ROUTES // CHECK FOR AJAX? -- IF YES, ONLY DO getAllEVents()
-// 7. to get the events by FILTER/ CATEGORY
-router.post("/events/:id/like", async (req, res) => {
-    console.log(req.params.id);
-    console.log(req.session.userId)
-    const updateLikes = await data1.recordLike(req.params.id, req.session.userId);
-    if (updateLikes === true) {
-        res.status(200).json({ likeAdded: true });
-        return;
-    }
-    
-});
-
 router.get("/likedevents", async(req,res) =>{
     try{
         res.render("likedevents/likedevents");
@@ -254,23 +241,6 @@ router.post("/create-event", async(req,res) => {
     }
 }); 
 
- 
-
-
-
-// ask cherry? 
-router.get("/private", async(req,res) =>{
-    try {
-        
-        res.render("private/private", { username: req.session.username});
-        return;
-    }
-    catch(e) {
-        console.log(e);
-        res.status(500).json({message : e});
-        return;
-    }
-});
 
 // 
 router.get('/logout', async (req, res) => {

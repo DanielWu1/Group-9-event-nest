@@ -228,7 +228,7 @@ async function checkUsers(email,password){
     return myusers;
 }
 // createUser('PRAJAY','319-429-5274','male','prajay@gmail.com','333 rever st','123456') 
-checkUsers("tony1532659641@gmail.com", "123456")
+// checkUsers("tony1532659641@gmail.com", "123456")
 
 async function resetPassword(email, userName, password){
     if (typeof(userName) !== 'string'| typeof(email) !== 'string'| typeof(password) !== 'string'){
@@ -637,7 +637,7 @@ async function addTicketEvents(userId, ticketeventsid, eventTitle,eventStartTime
             throw '$event description is spaces'
         }
     }
-    
+    let myreturn = {}
     const myuserId = myDBfunction(userId)
     const myeventId = myDBfunction(ticketeventsid)
     const usersCollection = await users();
@@ -672,7 +672,8 @@ async function addTicketEvents(userId, ticketeventsid, eventTitle,eventStartTime
         let myticketetime = new Date(myticket['eventEndtime'][0] + ' ' + myticket['eventEndtime'][1])
         if (myticketstime <= mystart &&  mystart <= myticketetime || myticketstime <= myend  && myend <= myticketetime){
             let mythrow = myticket['eventTitle'] + ' have same time zone'
-            throw mythrow
+            console.log(mythrow)
+            return myreturn['addTicketEvents'] = false
         }
     }
 
@@ -683,7 +684,8 @@ async function addTicketEvents(userId, ticketeventsid, eventTitle,eventStartTime
         let mypostetime = new Date(mypost['eventEndtime'][0] + ' ' + mypost['eventEndtime'][1])
         if (mypoststime <= mystart &&  mystart <= mypostetime || mypoststime <= myend  && myend <= mypostetime){
             let mythrow = mypost['eventTitle'] + ' have same time zone'
-            throw mythrow
+            console.log(mythrow)
+            return myreturn['addTicketEvents'] = false
         }
     }
     
@@ -691,7 +693,7 @@ async function addTicketEvents(userId, ticketeventsid, eventTitle,eventStartTime
     if (insertliketevents.insertedCount === 0) throw '$ Could not add new like events';
     const ticket3 = await usersCollection.findOne({ _id: myuserId, ticket:{$elemMatch:{eventsid:myeventId}}});
     // console.log(liket2)
-    let myreturn = {}
+    
     if (ticket3 === null){
         myreturn['addTicketEvents'] = false
     }
@@ -906,6 +908,7 @@ async function addPostEvents(userId, eventsid, eventTitle,eventStartTime,eventEn
     const myuserId = myDBfunction(userId)
     const myeventId = myDBfunction(eventsid)
     const usersCollection = await users();
+    let myreturn = {}
 
     let newpostevents = {
         eventsid: myeventId,
@@ -939,7 +942,8 @@ async function addPostEvents(userId, eventsid, eventTitle,eventStartTime,eventEn
         let mypostetime = new Date(mypost['eventEndtime'][0] + ' ' + mypost['eventEndtime'][1])
         if (mypoststime <= mystart &&  mystart <= mypostetime || mypoststime <= myend  && myend <= mypostetime){
             let mythrow = mypost['eventTitle'] + ' have same time zone'
-            throw mythrow
+            console.log(mythrow)
+            return myreturn['addPostEvents'] = false
         }
     }
     for(let b = 0 ; b <userticketlist.length; b++){
@@ -948,14 +952,14 @@ async function addPostEvents(userId, eventsid, eventTitle,eventStartTime,eventEn
         let myticketetime = new Date(myticket['eventEndtime'][0] + ' ' + myticket['eventEndtime'][1])
         if (myticketstime <= mystart &&  mystart <= myticketetime || myticketstime <= myend  && myend <= myticketetime){
             let mythrow = myticket['eventTitle'] + ' have same time zone'
-            throw mythrow
+            console.log(mythrow)
+            return myreturn['addPostEvents'] = false
         }
     }
     const insertliketevents = await usersCollection.updateOne({ _id: myuserId }, { $addToSet: { eventspost: newpostevents } })
     if (insertliketevents.insertedCount === 0) throw '$ Could not add new post events';
     const post3 = await usersCollection.findOne({ _id: myuserId, eventspost:{$elemMatch:{eventsid:myeventId}}});
     // console.log(liket2)
-    let myreturn = {}
     if (post3 === null){
         myreturn['addPostEvents'] = false
     }

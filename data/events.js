@@ -392,10 +392,29 @@ async function getEventListByCategory(inputEventCategory) {
     return result;
 };
 
+// to get the event booked by 
+async function getEventByCreatorEmail(inputEmail){
+
+    if (!inputEmail) throw "You must provide an emailid to search for";
+    if (typeof inputEmail !== "string" || inputEmail.trim().length === 0 || inputEmail === NaN) throw "the email provided is not a string or is an empty string";
+    if (isEmail(inputEmail) === false) throw "email of invalid format"
+    
+    const eventCollection = await events();
+    const eventList = await eventCollection.find({ creator: inputEmail }).toArray();
+
+    return eventList;
+}
 
 
-
-
+// check for email
+function isEmail(inputEmail) {
+    const re = /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
+    if (inputEmail.match(re)){
+        return true;
+    } else {
+        return false;
+    }
+}
 
 
 module.exports = {
@@ -406,7 +425,8 @@ module.exports = {
     updateEvent,
     getTimingofEvent,
     getEventListByName,
-    getEventListByCategory
+    getEventListByCategory,
+    getEventByCreatorEmail
 };
 
 
