@@ -1,7 +1,6 @@
 const mongoCollections = require("../config/mongoCollections");
 const events = mongoCollections.events;
 let { ObjectId } = require("mongodb");
-//working
 const createComment = async (userId, eventId, comments) => {
     if (!userId || !eventId || !comments) {
         throw "All fields need to have valid values";
@@ -45,7 +44,6 @@ const createComment = async (userId, eventId, comments) => {
 
     return finalEvent;
 };
-//working
 const getAllComments = async (eventId) => {
     if (!eventId) {
         throw "id need to have valid values";
@@ -67,7 +65,6 @@ const getAllComments = async (eventId) => {
     if (findEvent == null) throw "Event not exist with that eventId";
     return findEvent.comments;
 };
-//working
 const getComment = async (commentId) => {
     if (!commentId) {
         throw "CommentId need to have valid values";
@@ -103,7 +100,7 @@ const getComment = async (commentId) => {
     if (findEvent == null) throw "Comment doesn't found.";
     return findEvent.comments;
 };
-//working
+
 const getUserscomments = async (userId) => {
     if (!userId) {
         throw "id need to have valid values";
@@ -144,7 +141,6 @@ const getUserscomments = async (userId) => {
 
     return findEvent;
 };
-//working
 const removeComment = async (commentId) => {
     if (!commentId) {
         throw "Comment id need to have valid values";
