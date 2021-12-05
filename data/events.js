@@ -56,6 +56,7 @@ const createEvent = async (
     price,
     description
 ) => {
+    // checking for valid fields
     if (
         !title ||
         !category ||
@@ -73,6 +74,7 @@ const createEvent = async (
         throw "All fields need to have valid values";
     }
 
+    // to check for validations
     if (
         typeof title != "string" ||
         typeof category != "string" ||
@@ -93,9 +95,12 @@ const createEvent = async (
         throw "parameters are not strings or are empty strings,";
     }
 
+    // date validation
     if (!date.match(validDate)) {
         throw "Date is not in Valid Format";
     }
+
+    // timestart validation
     if (!Array.isArray(timestart)) {
         throw "timeStart is Not an Array";
     } else if (timestart.length == 0) {
@@ -116,6 +121,7 @@ const createEvent = async (
             throw " In Timestart you must enter in HH/MM format";
         }
     }
+    // start and end time
     let mystart = new Date(timestart[0] + " " + timestart[1]);
     if (myDate > mystart) {
         throw " start Event time must after now";
@@ -145,9 +151,12 @@ const createEvent = async (
         throw "$ end time must after start time and now";
     }
 
+    // check for validation ticket capacity
     if (typeof ticketcapacity != "number") {
         throw " Number of Tickets must be in Numbers";
     }
+
+    // check for price validation
     if (typeof price != "number") {
         throw " Number of Ticket's Price must be in Numbers";
     }
@@ -167,10 +176,16 @@ const createEvent = async (
         ticketcapacity: ticketcapacity,
         price: price,
         description: description,
+
         buyerList: [],
         likes: 0,
         intersted: 0,
         going: 0,
+
+        followerList: [], // people GOING
+        likeList: [], // LIKE event
+        interestedList: [], // people INTERESTED in the event
+
         comments: [],
         active: true,
     };
@@ -484,7 +499,8 @@ const getTimingofEvent = async (eventId) => {
 
     return timeArray;
 };
-// QUERYING FOR SEARCH BY NAME
+
+// QUERYING FOR SEARCH BY NAME // FOR SEARCH BAR
 async function getEventListByName(inputEventName) {
     // check inputs
     if (typeof inputEventName !== "string")
@@ -500,7 +516,8 @@ async function getEventListByName(inputEventName) {
     return result;
 }
 
-// QUERYING FOR SEARCH BY CATEGORY
+// QUERYING FOR SEARCH BY CATEGORY // FOR CATEGORY FILTERS
+// TODO: check to be done with Ajax
 async function getEventListByCategory(inputEventCategory) {
     // check inputs
     if (typeof inputEventCategory !== "string")
@@ -630,6 +647,7 @@ const removeLike = async (eventId) => {
 
     return `Total number of likes is ${updatedEvent.likes}`;
 };
+
 const addIntersted = async (eventId) => {
     if (!eventId) {
         throw "event id need to have valid values";
@@ -978,6 +996,37 @@ const getBuyerList = async (eventId, creator, noOftickets) => {
         return true;
     }
 };
+
+// to get the event booked by
+async function getEventByCreatorEmail(inputEmail) {
+    if (!inputEmail) throw "You must provide an emailid to search for";
+    if (
+        typeof inputEmail !== "string" ||
+        inputEmail.trim().length === 0 ||
+        inputEmail === NaN
+    )
+        throw "the email provided is not a string or is an empty string";
+    if (isEmail(inputEmail) === false) throw "email of invalid format";
+
+    const eventCollection = await events();
+    const eventList = await eventCollection
+        .find({ creator: inputEmail })
+        .toArray();
+
+    return eventList;
+}
+
+// check for email
+function isEmail(inputEmail) {
+    const re =
+        /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
+    if (inputEmail.match(re)) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
 module.exports = {
     createEvent,
     getAllEvents,
@@ -995,4 +1044,6 @@ module.exports = {
     addGoing,
     removeGoing,
     getBuyerList,
+
+    getEventByCreatorEmail,
 };
