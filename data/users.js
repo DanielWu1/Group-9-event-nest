@@ -125,10 +125,21 @@ async function createUser(userName, phone, gender, email, address, password,){
         eventspost: [],
         likeevents: [],
       };
-
+      let myreturn = {}
+      myreturn['CreateUser'] = false
       const insertInfo = await users1.insertOne(newusers);
-      if (insertInfo.insertedCount === 0) throw '$ Could not add new restaurants';
+      if (insertInfo.insertedCount === 0) {throw '$ Could not add new restaurants'}
+      else {
+        myreturn['CreateUser'] = true
+      }
   
+
+    //   const newId = insertInfo.insertedId;
+    //   newusers['_id'] = newusers['_id'].toString()
+    //   const dog = await this.getDogById(newId);
+    // it will return the users information
+      return myreturn;
+
       const newId = insertInfo.insertedId;
       newusers['_id'] = newusers['_id'].toString()
     // const dog = await this.getDogById(newId);
@@ -137,6 +148,7 @@ async function createUser(userName, phone, gender, email, address, password,){
     // UPDATED BY PRAJAY: COMMENTING THIS TO RETURN ONLY THE USERNAME 
     // return newusers;
     return {"userName": userName};
+
 
 }
 
@@ -184,9 +196,9 @@ async function checkUsers(email,password){
     let net = email.split('')
     // if (net[0] !== 'h'|| net[1] !== 't' || net[2] !== 't' || net[3] !== 'p' || net[4] !== ':' || net[5] !== '/' || net[6] !== '/' || net[7] !== 'w' || net[8] !== 'w' || net[9] !== 'w' || net[10] !== '.')
     // throw '$ website is not right'
-    if (net.indexOf('@') == -1){
-        throw '$ email is not right1'
-    }
+    // if (net.indexOf('@') == -1){
+    //     throw '$ email is not right1'
+    // }
     // console.log(net[net.length - 1])
     if (net[net.length - 1] !== 'm'|| net[net.length - 2] !== 'o' || net[net.length - 3] !== 'c' || net[net.length - 4] !== '.'){
         throw '$ email is not right2'
@@ -1061,9 +1073,13 @@ async function removePostEvents(userId, eventsid){
     return myreturn1;
 }
 
+
 // createUser('BingzhenLi','319-429-5274','male','tOny153265964@gmail.com','333 rever st','123456') 
+
 // let my = checkUsers('tony153265964@gmail.com','123456')
 // async function test(){
+//     let mycreate = await createUser('BingzhenLi','319-429-5274','male','tOny1532659612341@gmail.com','333 rever st','123456') 
+//     console.log(mycreate)
 //     // const usersCollection = await users()
 //     // const myeventId = myDBfunction('619bdfc0fa1fa9ca424f09a3')
 //     // const myuserId1 = myDBfunction('619bdfc0fa1fa9ca424f09c9')

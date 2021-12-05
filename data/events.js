@@ -112,7 +112,7 @@ const createEvent = async (
     // start and end time
     let mystart = new Date(timestart[0] + " " + timestart[1]);
     if (myDate > mystart) {
-        throw "$ start time must after now";
+        throw " start Event time must after now";
     }
     if (!Array.isArray(endtime)) {
         throw "endtime is Not an Array";
@@ -149,7 +149,6 @@ const createEvent = async (
         throw " Number of Ticket's Price must be in Numbers";
     }
 
-    // to create a new event
     const eventCollection = await events();
 
     let newevent = {
@@ -165,12 +164,17 @@ const createEvent = async (
         ticketcapacity: ticketcapacity,
         price: price,
         description: description,
-        buyerList: [], // people who have bought
+
+        buyerList: [],
+        likes: 0,
+
+       
         followerList: [], // people GOING
         likeList: [], // LIKE event
         interestedList : [], // people INTERESTED in the event
+
         comments: [],
-        active: true
+        active: true,
     };
 
     const insertInfo = await eventCollection.insertOne(newevent);
@@ -216,7 +220,7 @@ const updateEvent = async (
     description,
     active
 ) => {
-    
+
     try {
         parsedEventid = ObjectId(eventId);
     } catch (e) {
@@ -236,7 +240,7 @@ const updateEvent = async (
         !state ||
         !ticketcapacity ||
         !price ||
-        !description 
+        !description
     ) {
         throw "All fields need to have valid values";
     }
@@ -256,8 +260,7 @@ const updateEvent = async (
         address.trim().length == 0 ||
         city.trim().length == 0 ||
         state.trim().length == 0 ||
-        description.trim().length == 0 
-        
+        description.trim().length == 0
     ) {
         throw "parameters are not strings or are empty strings,";
     }
@@ -315,7 +318,8 @@ const updateEvent = async (
         throw " Number of Ticket's Price must be in Numbers";
     }
 
-    if (typeof active !== "boolean") throw "Active status of the event must a true or false";
+    if (typeof active !== "boolean")
+        throw "Active status of the event must a true or false";
 
     const eventCollection = await events();
 
@@ -332,7 +336,7 @@ const updateEvent = async (
         ticketcapacity: ticketcapacity,
         price: price,
         description: description,
-        active: active
+        active: active,
     };
     await eventCollection.updateOne(
         { _id: ObjectId(eventId) },
@@ -340,6 +344,7 @@ const updateEvent = async (
     );
     return await getEvent(eventId);
 };
+
 const getTimingofEvent = async (eventId) => {
     const timeArray = [];
     const timeObject = {};
@@ -365,31 +370,154 @@ const getTimingofEvent = async (eventId) => {
 
 // QUERYING FOR SEARCH BY NAME // FOR SEARCH BAR
 async function getEventListByName(inputEventName) {
-
     // check inputs
-    if (typeof inputEventName !== "string") throw "Input event name has to be a string";
-    if (inputEventName.trim() === "") throw "Input event is an empty string"
+    if (typeof inputEventName !== "string")
+        throw "Input event name has to be a string";
+    if (inputEventName.trim() === "") throw "Input event is an empty string";
 
     // run query
     const eventCollection = await events();
-    const result = await eventCollection.find({title:inputEventName.toString()}).toArray();
+    const result = await eventCollection
+        .find({ title: inputEventName.toString() })
+        .toArray();
 
     return result;
-};
+}
 
 // QUERYING FOR SEARCH BY CATEGORY // FOR CATEGORY FILTERS
 // TODO: check to be done with Ajax
 async function getEventListByCategory(inputEventCategory) {
-
     // check inputs
-    if (typeof inputEventCategory !== "string") throw "Input event category has to be a string";
-    if (inputEventCategory.trim() === "") throw "Input event category is an empty string"
+    if (typeof inputEventCategory !== "string")
+        throw "Input event category has to be a string";
+    if (inputEventCategory.trim() === "")
+        throw "Input event category is an empty string";
 
     // run query
     const eventCollection = await events();
-    const result = await eventCollection.find({category:inputEventCategory.toString()}).toArray();
+    const result = await eventCollection
+        .find({ category: inputEventCategory.toString() })
+        .toArray();
 
     return result;
+}
+
+
+const recordLike = async (eventId, userId) => {
+    const eventCollection = await events();
+    const likedEvent = await eventCollection.updateOne(
+        { _id: new ObjectId(eventId) },
+        { $addToSet: { likeList: userId } }
+    );
+    console.log(likedEvent.length);
+    return true;
+};
+const addLike = async (eventId) => {
+    if (!eventId) {
+        throw "event id need to have valid values";
+    }
+    if (typeof eventId != "string" || eventId.trim().length == 0) {
+        throw "id is not string or is empty string,";
+    }
+
+    try {
+        parsedEventid = ObjectId(eventId);
+    } catch (e) {
+        throw "id format wrong";
+    }
+    const eventCollection = await events();
+
+    const findEvent = await eventCollection.findOne({
+        _id: ObjectId(eventId),
+    });
+    console.log(findEvent);
+    // let mynewcomment = findComment["comments"];
+    // for (let i = 0; i < mynewcomment.length; i++) {
+    //     let mycommentlist = mynewcomment[i];
+    //     if (mycommentlist["_id"].equals(commentId)) {
+    //         console.log("asdfasdf");
+    //         mycommentlist["comments"] = comments;
+    //     }
+    // }
+    like = findEvent.likes;
+    like = like + 1;
+    const updatedEvent = {
+        title: findEvent.title,
+        category: findEvent.category,
+        creator: findEvent.creator,
+        date: findEvent.date,
+        timestart: findEvent.timestart,
+        endtime: findEvent.endtime,
+        address: findEvent.address,
+        city: findEvent.city,
+        state: findEvent.state,
+        ticketcapacity: findEvent.ticketcapacity,
+        price: findEvent.price,
+        description: findEvent.description,
+        active: findEvent.active,
+        likes: like,
+    };
+    await eventCollection.updateOne(
+        { _id: parsedEventid },
+        { $set: updatedEvent }
+    );
+
+
+    return `Total number of likes is ${updatedEvent.likes}`;
+};
+const removeLike = async (eventId) => {
+    if (!eventId) {
+        throw "event id need to have valid values";
+    }
+    if (typeof eventId != "string" || eventId.trim().length == 0) {
+        throw "id is not string or is empty string,";
+    }
+
+
+    try {
+        parsedEventid = ObjectId(eventId);
+    } catch (e) {
+        throw "id format wrong";
+    }
+    const eventCollection = await events();
+
+
+    const findEvent = await eventCollection.findOne({
+        _id: ObjectId(eventId),
+    });
+    console.log(findEvent);
+    // let mynewcomment = findComment["comments"];
+    // for (let i = 0; i < mynewcomment.length; i++) {
+    //     let mycommentlist = mynewcomment[i];
+    //     if (mycommentlist["_id"].equals(commentId)) {
+    //         console.log("asdfasdf");
+    //         mycommentlist["comments"] = comments;
+    //     }
+    // }
+    like = findEvent.likes;
+    like = like - 1;
+    const updatedEvent = {
+        title: findEvent.title,
+        category: findEvent.category,
+        creator: findEvent.creator,
+        date: findEvent.date,
+        timestart: findEvent.timestart,
+        endtime: findEvent.endtime,
+        address: findEvent.address,
+        city: findEvent.city,
+        state: findEvent.state,
+        ticketcapacity: findEvent.ticketcapacity,
+        price: findEvent.price,
+        description: findEvent.description,
+        active: findEvent.active,
+        likes: like,
+    };
+    await eventCollection.updateOne(
+        { _id: parsedEventid },
+        { $set: updatedEvent }
+    );
+
+    return `Total number of likes is ${updatedEvent.likes}`;
 };
 
 // to get the event booked by 
@@ -405,7 +533,6 @@ async function getEventByCreatorEmail(inputEmail){
     return eventList;
 }
 
-
 // check for email
 function isEmail(inputEmail) {
     const re = /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
@@ -416,7 +543,6 @@ function isEmail(inputEmail) {
     }
 }
 
-
 module.exports = {
     createEvent,
     getAllEvents,
@@ -426,7 +552,9 @@ module.exports = {
     getTimingofEvent,
     getEventListByName,
     getEventListByCategory,
+    recordLike,
+    addLike,
+    removeLike,
     getEventByCreatorEmail
+
 };
-
-

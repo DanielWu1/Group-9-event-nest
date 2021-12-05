@@ -78,14 +78,19 @@ span.psw {
     <center> <label for="username"><b>username</b></label> </center>
     <center><input type="text" placeholder="Enter username" name="username" required> </center>
     <br>
+  
 
-    <center><label for="phone"><b>Phone Number</b></label></center>
-   <center> <input type="text" placeholder="phone" name="phone" required></center>
-        <br>
+  <center> <label for="phonenumber"><b>Phone Number</b></label> </center><br>
+    <center><input class="ghost-round2" type="tel" id="phone" name="phone"
+       pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
+       required> </center>
+
+<center><small>Format: 123-456-7890</small></center> 
+
 
   <center> <label for = "gender"><h4>Gender:</h4> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</center>
                         
-                       <center><select class="ghost-round2" name="Gender" type="text" name="gender" id="gender" 
+                       <center><select class="ghost-round2" name="gender" type="text" name="gender" id="gender" 
                         placeholder="add/select a value" onfocus="this.select()"> </center> 
 						<center><option>Select a Value:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</option></center>
                         <option value="male">Male</option>

@@ -1,4 +1,5 @@
 @import url(https://fonts.googleapis.com/css?family=Roboto:400,300,100,500);
+
 body,
 html {
   margin: 0;
@@ -12,6 +13,17 @@ html {
 }
 input {
   border: none;
+}
+
+.ggg {
+  border: solid;
+  margin-left: 350px;
+  margin-right: 350px;
+  border-style: ridge;
+  border-radius: 5%;
+  
+  background-color: #000000; 
+  padding-top: 5%;
 }
 
 button:focus {
