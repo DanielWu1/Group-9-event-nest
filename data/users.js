@@ -11,6 +11,8 @@ const validTime = /^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$/;
 // console.log(myhour)
 // console.log(mytime)
 
+const events = mongoCollections.events;
+
 
 async function createUser(userName, phone, gender, email, address, password,){
     if (typeof(userName) !== 'string'| typeof(email) !== 'string'|typeof(address) !== 'string'| typeof(password) !== 'string'){
@@ -131,11 +133,22 @@ async function createUser(userName, phone, gender, email, address, password,){
         myreturn['CreateUser'] = true
       }
   
+
     //   const newId = insertInfo.insertedId;
     //   newusers['_id'] = newusers['_id'].toString()
     //   const dog = await this.getDogById(newId);
     // it will return the users information
       return myreturn;
+
+      const newId = insertInfo.insertedId;
+      newusers['_id'] = newusers['_id'].toString()
+    // const dog = await this.getDogById(newId);
+    // it will return the users information
+    
+    // UPDATED BY PRAJAY: COMMENTING THIS TO RETURN ONLY THE USERNAME 
+    // return newusers;
+    return {"userName": userName};
+
 
 }
 
@@ -223,8 +236,11 @@ async function checkUsers(email,password){
     // console.log(rest['_id'].toString())
     myusers['_id'] = myusers['_id'].toString()
     //it will return the users information
+
     return myusers;
 }
+// createUser('PRAJAY','319-429-5274','male','prajay@gmail.com','333 rever st','123456') 
+// checkUsers("tony1532659641@gmail.com", "123456")
 
 async function resetPassword(email, userName, password){
     if (typeof(userName) !== 'string'| typeof(email) !== 'string'| typeof(password) !== 'string'){
@@ -633,7 +649,7 @@ async function addTicketEvents(userId, ticketeventsid, eventTitle,eventStartTime
             throw '$event description is spaces'
         }
     }
-    
+    let myreturn = {}
     const myuserId = myDBfunction(userId)
     const myeventId = myDBfunction(ticketeventsid)
     const usersCollection = await users();
@@ -668,7 +684,8 @@ async function addTicketEvents(userId, ticketeventsid, eventTitle,eventStartTime
         let myticketetime = new Date(myticket['eventEndtime'][0] + ' ' + myticket['eventEndtime'][1])
         if (myticketstime <= mystart &&  mystart <= myticketetime || myticketstime <= myend  && myend <= myticketetime){
             let mythrow = myticket['eventTitle'] + ' have same time zone'
-            throw mythrow
+            console.log(mythrow)
+            return myreturn['addTicketEvents'] = false
         }
     }
 
@@ -679,7 +696,8 @@ async function addTicketEvents(userId, ticketeventsid, eventTitle,eventStartTime
         let mypostetime = new Date(mypost['eventEndtime'][0] + ' ' + mypost['eventEndtime'][1])
         if (mypoststime <= mystart &&  mystart <= mypostetime || mypoststime <= myend  && myend <= mypostetime){
             let mythrow = mypost['eventTitle'] + ' have same time zone'
-            throw mythrow
+            console.log(mythrow)
+            return myreturn['addTicketEvents'] = false
         }
     }
     
@@ -687,7 +705,7 @@ async function addTicketEvents(userId, ticketeventsid, eventTitle,eventStartTime
     if (insertliketevents.insertedCount === 0) throw '$ Could not add new like events';
     const ticket3 = await usersCollection.findOne({ _id: myuserId, ticket:{$elemMatch:{eventsid:myeventId}}});
     // console.log(liket2)
-    let myreturn = {}
+    
     if (ticket3 === null){
         myreturn['addTicketEvents'] = false
     }
@@ -902,6 +920,7 @@ async function addPostEvents(userId, eventsid, eventTitle,eventStartTime,eventEn
     const myuserId = myDBfunction(userId)
     const myeventId = myDBfunction(eventsid)
     const usersCollection = await users();
+    let myreturn = {}
 
     let newpostevents = {
         eventsid: myeventId,
@@ -935,7 +954,8 @@ async function addPostEvents(userId, eventsid, eventTitle,eventStartTime,eventEn
         let mypostetime = new Date(mypost['eventEndtime'][0] + ' ' + mypost['eventEndtime'][1])
         if (mypoststime <= mystart &&  mystart <= mypostetime || mypoststime <= myend  && myend <= mypostetime){
             let mythrow = mypost['eventTitle'] + ' have same time zone'
-            throw mythrow
+            console.log(mythrow)
+            return myreturn['addPostEvents'] = false
         }
     }
     for(let b = 0 ; b <userticketlist.length; b++){
@@ -944,14 +964,14 @@ async function addPostEvents(userId, eventsid, eventTitle,eventStartTime,eventEn
         let myticketetime = new Date(myticket['eventEndtime'][0] + ' ' + myticket['eventEndtime'][1])
         if (myticketstime <= mystart &&  mystart <= myticketetime || myticketstime <= myend  && myend <= myticketetime){
             let mythrow = myticket['eventTitle'] + ' have same time zone'
-            throw mythrow
+            console.log(mythrow)
+            return myreturn['addPostEvents'] = false
         }
     }
     const insertliketevents = await usersCollection.updateOne({ _id: myuserId }, { $addToSet: { eventspost: newpostevents } })
     if (insertliketevents.insertedCount === 0) throw '$ Could not add new post events';
     const post3 = await usersCollection.findOne({ _id: myuserId, eventspost:{$elemMatch:{eventsid:myeventId}}});
     // console.log(liket2)
-    let myreturn = {}
     if (post3 === null){
         myreturn['addPostEvents'] = false
     }
@@ -1054,6 +1074,7 @@ async function removePostEvents(userId, eventsid){
 }
 
 
+// createUser('BingzhenLi','319-429-5274','male','tOny153265964@gmail.com','333 rever st','123456') 
 
 // let my = checkUsers('tony153265964@gmail.com','123456')
 // async function test(){
@@ -1076,7 +1097,7 @@ async function removePostEvents(userId, eventsid){
 //     // console.log(myaddlike)
 //     // console.log(myaddlike)
 // }
-// test()
+//test()
 
 module.exports = {
     createUser,
@@ -1089,5 +1110,5 @@ module.exports = {
     addTicketEvents,
     removeTicketEvents,
     addPostEvents,
-    removePostEvents,
+    removePostEvents
 };
