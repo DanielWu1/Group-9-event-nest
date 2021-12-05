@@ -139,6 +139,10 @@ const createEvent = async (
         throw " Number of Ticket's Price must be in Numbers";
     }
 
+    
+
+
+
     const eventCollection = await events();
 
     let newevent = {
@@ -326,6 +330,7 @@ const updateEvent = async (
     );
     return await getEvent(eventId);
 };
+
 const getTimingofEvent = async (eventId) => {
     const timeArray = [];
     const timeObject = {};

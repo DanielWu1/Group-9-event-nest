@@ -44,5 +44,5 @@ app.use(session({
 
 app.listen(3100, () => { 
  
-    console.log('new server will be running on http://localhost:3200')
+    console.log('new server will be running on http://localhost:3100')
 })
