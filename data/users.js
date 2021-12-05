@@ -183,9 +183,9 @@ async function checkUsers(email,password){
     let net = email.split('')
     // if (net[0] !== 'h'|| net[1] !== 't' || net[2] !== 't' || net[3] !== 'p' || net[4] !== ':' || net[5] !== '/' || net[6] !== '/' || net[7] !== 'w' || net[8] !== 'w' || net[9] !== 'w' || net[10] !== '.')
     // throw '$ website is not right'
-    if (net.indexOf('@') == -1){
-        throw '$ email is not right1'
-    }
+    // if (net.indexOf('@') == -1){
+    //     throw '$ email is not right1'
+    // }
     // console.log(net[net.length - 1])
     if (net[net.length - 1] !== 'm'|| net[net.length - 2] !== 'o' || net[net.length - 3] !== 'c' || net[net.length - 4] !== '.'){
         throw '$ email is not right2'
