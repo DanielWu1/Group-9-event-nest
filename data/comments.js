@@ -1,7 +1,6 @@
 const mongoCollections = require("../config/mongoCollections");
 const events = mongoCollections.events;
 let { ObjectId } = require("mongodb");
-//working
 const createComment = async (userId, eventId, comments) => {
     if (!userId || !eventId || !comments) {
         throw "All fields need to have valid values";
@@ -72,7 +71,6 @@ const getAllComments = async (eventId) => {
     return findEvent.comments;
 };
 
-//working
 const getComment = async (commentId) => {
     if (!commentId) {
         throw "CommentId need to have valid values";
@@ -122,7 +120,7 @@ const remove = async (commentId) => {
     if (findEvent == null) throw "Comment doesn't found.";
     return findEvent.comments;
 };
-//working
+
 const getUserscomments = async (userId) => {
     if (!userId) {
         throw "id need to have valid values";
@@ -163,7 +161,6 @@ const getUserscomments = async (userId) => {
 
     return findEvent;
 };
-//working
 const removeComment = async (commentId) => {
     if (!commentId) {
         throw "Comment id need to have valid values";
@@ -200,7 +197,62 @@ const removeComment = async (commentId) => {
 
     if (commentCount == 0) throw "Comment doesn't exists with this CommentId,";
 };
+const updateComment = async (
+    commentId,
 
+    comments
+) => {
+    if (!commentId) {
+        throw "Comment id need to have valid values";
+    }
+    if (typeof commentId != "string" || commentId.trim().length == 0) {
+        throw "id is not string or is empty string,";
+    }
+
+    try {
+        parsedCommentid = ObjectId(commentId);
+    } catch (e) {
+        throw "id format wrong";
+    }
+    const eventCollection = await events();
+
+    const findComment = await eventCollection.findOne({
+        "comments._id": ObjectId(commentId),
+    });
+    console.log(findComment);
+    let mynewcomment = findComment["comments"];
+    for (let i = 0; i < mynewcomment.length; i++) {
+        let mycommentlist = mynewcomment[i];
+        if (mycommentlist["_id"].equals(commentId)) {
+            console.log("asdfasdf");
+            mycommentlist["comments"] = comments;
+        }
+    }
+
+    console.log(mynewcomment);
+    //let mynewarr = mynewcomment.push(updatedEvent);
+    console.log(findComment.title);
+    const updatedEvent = {
+        title: findComment.title,
+        category: findComment.category,
+        creator: findComment.creator,
+        date: findComment.date,
+        timestart: findComment.timestart,
+        endtime: findComment.endtime,
+        address: findComment.address,
+        city: findComment.city,
+        state: findComment.state,
+        ticketcapacity: findComment.ticketcapacity,
+        price: findComment.price,
+        description: findComment.description,
+        active: findComment.active,
+        comments: mynewcomment,
+    };
+    await eventCollection.updateOne(
+        { "comments._id": parsedCommentid },
+        { $set: updatedEvent }
+    );
+};
 module.exports = {
     remove,
     createComment,
@@ -208,4 +260,5 @@ module.exports = {
     getComment,
     removeComment,
     getUserscomments,
+    updateComment,
 };
