@@ -9,7 +9,7 @@ const eventsdata = require('../data/events')
 // 1. to get user login page
 router.get("/", async(req,res) =>{
     try{
-        res.redirect("/userlogin");
+        res.status(200).redirect("/userlogin");
         return;
     } catch(e){
         res.status(500).json({message : e});
@@ -29,6 +29,7 @@ router.get("/usersignup", async(req,res) =>{
     }
 }); 
 
+// TODO: check for phone number validations
 // 3. create the USER @ usersignup
 router.post("/usersignup", async(req,res) => {
     let createUserPost = req.body; 
@@ -57,7 +58,7 @@ router.post("/usersignup", async(req,res) => {
         res.status(400).render('usersignup/usersignup', { error: e, message:"Input username must be a string!"});
         return;
     }
-    if(typeof createUserPost.username === "string" && reateUserPost.username.trim() === "") {
+    if(typeof createUserPost.username === "string" && createUserPost.username.trim() === "") {
         res.status(400).render('usersignup/usersignup', { error: e, message:"Input username must be a string!"});
         return;
     }
@@ -76,7 +77,7 @@ router.post("/usersignup", async(req,res) => {
         res.status(400).render('usersignup/usersignup', { error: e, message:"Input address must be a string!"});
         return;
     }
-    if(typeof createUserPost.address === "string" && reateUserPost.address.trim() === "") {
+    if(typeof createUserPost.address === "string" && createUserPost.address.trim() === "") {
         res.status(400).render('usersignup/usersignup', { error: e, message:"Input address must be a string!"});
         return;
     }
@@ -85,17 +86,17 @@ router.post("/usersignup", async(req,res) => {
         res.status(400).render('usersignup/usersignup', { error: e, message:"Input gender must be a string!"});
         return;
     }
-    if(typeof createUserPost.gender === "string" && reateUserPost.gender.trim() === "") {
+    if(typeof createUserPost.gender === "string" && createUserPost.gender.trim() === "") {
         res.status(400).render('usersignup/usersignup', { error: e, message:"Input gender must be a string!"});
         return;
     }
 
     // check if the phone number is of length 10 is all digits 
     // TODO: CEHCK FOR -
-        if( (createUserPost.phone.length === 10) && (/^\d+\.\d+$/.test(createUserPost.phone))) {
-        res.status(400).render('usersignup/usersignup', { error: e, message:"Input phone must be only digits of length 10!"});
-        return;
-    }
+    //     if( (createUserPost.phone.length === 10) && (/^\d+\.\d+$/.test(createUserPost.phone))) {
+    //     res.status(400).render('usersignup/usersignup', { error: e, message:"Input phone must be only digits of length 10!"});
+    //     return;
+    // }
 
     try { 
     
@@ -111,12 +112,24 @@ router.post("/usersignup", async(req,res) => {
         return;
     } catch(e) {
         console.log(e)
-        res.render('usersignup/usersignup', { error: e });
+        res.status(500).render('usersignup/usersignup', { error: e, message: "There was an error in creating the user! Try Again!" });
         return;
     }
 });
 
-// 4. user login page 
+// 4.1 to get the user login page
+router.get("/userlogin", async(req,res) =>{
+    try{
+        res.status(200).render("userlogin/userlogin");
+        return;
+    }
+    catch(e){
+        res.status(500).json({message : e});
+        return;
+    }
+}); 
+
+// 4.2 user login page 
 router.post("/userlogin", async(req,res) => {
  
     let userLoginPostData = req.body; 
@@ -140,7 +153,7 @@ router.post("/userlogin", async(req,res) => {
         req.session.userId = logininfo['_id']
         req.session.email = logininfo['email']
         req.session.userName = logininfo['userName']
-        res.status(200).render("/userhomepage", logininfo);
+        res.status(200).render("userhomepage/userhomepage", logininfo);
         return;
     } catch(e) {   
         console.log(e);
@@ -152,7 +165,7 @@ router.post("/userlogin", async(req,res) => {
 // 5. to get the homepage data -- all events are rendered
 router.get("/userhomepage", async(req,res) =>{ 
     try{ 
-        const displayevent = await usersdata.getAllEvents();
+        const displayevent = await eventsdata.getAllEvents();
         res.status(200).render(displayevent);
         return;
     } catch(e){
@@ -162,87 +175,7 @@ router.get("/userhomepage", async(req,res) =>{
 }); 
 
 
-// TODO: EVENTS ROUTES
-// 6. to get the events created by self i.e // FOR: MY CREATED EVENTS 
-router.get("/bookedevents", async(req,res) =>{
-    try{
-        res.render("bookedevents/bookedevents");
-        return;
-}
-    
-    catch(e){
-     
-        res.status(500).json({message : e});
-        return;
-    }
-}); 
-
-router.get("/likedevents", async(req,res) =>{
-    try{
-        res.render("likedevents/likedevents");
-        return;
-}
-    
-    catch(e){
-     
-        res.status(500).json({message : e});
-        return;
-    }
-}); 
-
-
-
-// TODO: EVENTS ROUTES 
-// to get the page for creating a new event
-router.get("/create-event", async(req,res) =>{
-    try{
-
-        res.render("create-event/create-event");
-        return;
-}
-    
-    catch(e){
-     
-        res.status(500).json({message : e});
-        return;
-    }
-});    
-// to POST a new event
-router.post("/create-event", async(req,res) => {
-    let postevent = req.body; 
-
-    try
-{ 
-    
-    const createevent = await data1.createEvent( 
-        postevent.title,
-        postevent.category, 
-        postevent.creator,
-        postevent.date,
-        postevent.timestart,
-        postevent.endtime,
-        postevent.address,
-        postevent.city,
-        postevent.state,
-        postevent.ticketcapacity,
-        postevent.price,
-        postevent.description,
-        ); 
-         
-        
-        res.redirect('/eventshomepage') 
-        return;
-}
-    catch(e)
-    {
-        console.log(e)
-        res.render('create-event/create-event', { error: e });
-        return;
-    }
-}); 
-
-
-// 
+// TODO: FOR LOG OUT 
 router.get('/logout', async (req, res) => {
     req.session.destroy();
     res.render("logout/logout")
@@ -262,8 +195,8 @@ function isEmail(inputEmail) {
 }
 // check for password
 function isPassword(inputtxt) { 
-    var passre = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,20}$/;
-    if(inputtxt.value.match(passre)) { 
+    const passre = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,20}$/;
+    if(inputtxt.match(passre)) { 
         return true;
     } else { 
         return false;

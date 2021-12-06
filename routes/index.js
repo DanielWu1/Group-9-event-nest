@@ -1,7 +1,10 @@
-const routes = require('./users'); 
+const usersRoutes = require('./users');
+const eventsRoutes = require('./events');
+
 
 const constructorMethod = (app) => { 
-    app.use('/',routes) 
+    app.use('/', usersRoutes); 
+    app.use('/', eventsRoutes); 
     
 } 
 module.exports = constructorMethod;

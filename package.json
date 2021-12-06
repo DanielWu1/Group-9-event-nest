@@ -2,9 +2,9 @@
     "name": "group_9_project",
     "version": "1.0.0",
     "description": "group 9 project Events",
-    "main": "index.js",
+    "main": "app.js",
     "scripts": {
-        "start": "node index.js"
+        "start": "node app.js"
     },
     "author": "Bingzhen Li Charan Telaganeni Neel Tejani Prajay Sachdev",
     "license": "ISC",

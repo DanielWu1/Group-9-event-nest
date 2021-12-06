@@ -96,9 +96,9 @@ const createEvent = async (
     }
 
     // date validation
-    if (!date.match(validDate)) {
-        throw "Date is not in Valid Format";
-    }
+    // if (!date.match(validDate)) {
+    //     throw "Date is not in Valid Format";
+    // }
 
     // timestart validation
     if (!Array.isArray(timestart)) {
@@ -261,9 +261,9 @@ const updateEvent = async (
         throw "parameters are not strings or are empty strings,";
     }
 
-    if (!date.match(validDate)) {
-        throw "Date is not in Valid Format";
-    }
+    // if (!date.match(validDate)) {
+    //     throw "Date is not in Valid Format";
+    // }
     if (!Array.isArray(timestart)) {
         throw "timeStart is Not an Array";
     } else if (timestart.length == 0) {
@@ -401,9 +401,9 @@ const removeEvent = async (
         throw "parameters are not strings or are empty strings,";
     }
 
-    if (!date.match(validDate)) {
-        throw "Date is not in Valid Format";
-    }
+    // if (!date.match(validDate)) {
+    //     throw "Date is not in Valid Format";
+    // }
     if (!Array.isArray(timestart)) {
         throw "timeStart is Not an Array";
     } else if (timestart.length == 0) {
@@ -560,7 +560,7 @@ const addLike = async (eventId) => {
     const findEvent = await eventCollection.findOne({
         _id: ObjectId(eventId),
     });
-    console.log(findEvent);
+    // console.log(findEvent);
     // let mynewcomment = findComment["comments"];
     // for (let i = 0; i < mynewcomment.length; i++) {
     //     let mycommentlist = mynewcomment[i];
@@ -612,7 +612,7 @@ const removeLike = async (eventId) => {
     const findEvent = await eventCollection.findOne({
         _id: ObjectId(eventId),
     });
-    console.log(findEvent);
+    // console.log(findEvent);
     // let mynewcomment = findComment["comments"];
     // for (let i = 0; i < mynewcomment.length; i++) {
     //     let mycommentlist = mynewcomment[i];
@@ -666,7 +666,7 @@ const addIntersted = async (eventId) => {
     const findEvent = await eventCollection.findOne({
         _id: ObjectId(eventId),
     });
-    console.log(findEvent);
+    // console.log(findEvent);
     // let mynewcomment = findComment["comments"];
     // for (let i = 0; i < mynewcomment.length; i++) {
     //     let mycommentlist = mynewcomment[i];
@@ -719,7 +719,7 @@ const removeIntersted = async (eventId) => {
     const findEvent = await eventCollection.findOne({
         _id: ObjectId(eventId),
     });
-    console.log(findEvent);
+    // console.log(findEvent);
     // let mynewcomment = findComment["comments"];
     // for (let i = 0; i < mynewcomment.length; i++) {
     //     let mycommentlist = mynewcomment[i];
@@ -773,7 +773,7 @@ const addGoing = async (eventId) => {
     const findEvent = await eventCollection.findOne({
         _id: ObjectId(eventId),
     });
-    console.log(findEvent);
+    // console.log(findEvent);
     // let mynewcomment = findComment["comments"];
     // for (let i = 0; i < mynewcomment.length; i++) {
     //     let mycommentlist = mynewcomment[i];
@@ -827,7 +827,7 @@ const removeGoing = async (eventId) => {
     const findEvent = await eventCollection.findOne({
         _id: ObjectId(eventId),
     });
-    console.log(findEvent);
+    // console.log(findEvent);
     // let mynewcomment = findComment["comments"];
     // for (let i = 0; i < mynewcomment.length; i++) {
     //     let mycommentlist = mynewcomment[i];
