@@ -8,20 +8,20 @@ var mytime = myDate.toLocaleDateString();
 var myhour = myDate.getHours();
 const validDate = /(0\d{1}|1[0-2])\/([0-2]\d{1}|3[0-1])\/(19|20)\d{2}/;
 const validTime = /^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$/;
-function datetime(str) {
-    let datetimer = [];
-    let date = "";
-    let time = "";
-    for (let i = 0; i < 10; i++) {
-        date += str[i];
-    }
-    for (let j = 11; j < 16; j++) {
-        time += str[j];
-    }
-    datetimer.push(date);
-    datetimer.push(time);
-    return datetimer;
-}
+// function datetime(str) {
+//     let datetimer = [];
+//     let date = "";
+//     let time = "";
+//     for (let i = 0; i < 10; i++) {
+//         date += str[i];
+//     }
+//     for (let j = 11; j < 16; j++) {
+//         time += str[j];
+//     }
+//     datetimer.push(date);
+//     datetimer.push(time);
+//     return datetimer;
+// }
 const getAllEvents = async () => {
     const eventCollection = await events();
     const eventList = await eventCollection.find({}).toArray();
@@ -168,8 +168,8 @@ const createEvent = async (
         category: category,
         creator: creator,
         date: date,
-        timestart: datetime(timestart),
-        endtime: datetime(endtime),
+        timestart: timestart,
+        endtime: endtime,
         address: address,
         city: city,
         state: state,
