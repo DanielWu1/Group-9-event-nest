@@ -41,7 +41,6 @@ router.get("/bookedevents", async(req,res) =>{
 // }); 
 
 // 2.1 GET ALL THE EVENTS CREATED BY SELF -- web page
-// wtf???
 // router.get("/myevents", async(req,res) =>{
 //     try {
 //         res.status(200).render('myevents/myevents')
