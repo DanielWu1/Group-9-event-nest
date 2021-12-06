@@ -56,6 +56,18 @@ const createEvent = async (
     price,
     description
 ) => {
+    // console.log(title)
+    // console.log(category)
+    // console.log(creator)
+    // console.log(date)
+    // console.log(timestart)
+    // console.log(endtime)
+    // console.log(address)
+    // console.log(city)
+    // console.log(state)
+    // console.log(ticketcapacity)
+    // console.log(price)
+    // console.log(description)
     // checking for valid fields
     if (
         !title ||
@@ -157,7 +169,8 @@ const createEvent = async (
     }
 
     // check for price validation
-    if (typeof price != "number") {
+    ticketprice = Number(price)
+    if (typeof ticketprice != "number") {
         throw " Number of Ticket's Price must be in Numbers";
     }
 
@@ -174,7 +187,7 @@ const createEvent = async (
         city: city,
         state: state,
         ticketcapacity: ticketcapacity,
-        price: price,
+        price: ticketprice,
         description: description,
 
         buyerList: [],
