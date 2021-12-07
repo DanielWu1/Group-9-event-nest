@@ -15,7 +15,7 @@ router.get("/bookedevents", async(req,res) =>{
             let getevent1 = await eventsdata.getEvent(myevent)
             mylist.push(getevent1)
         }
-        res.status(200).render('bookedevents/bookedevents',{bookedevents:mylist});
+        res.status(200).render('bookedevents/bookedevents',{allBookedEvents:mylist});
         return;
     } catch(e){
         res.status(500).render('error/error',{message : e});
@@ -92,7 +92,7 @@ router.get("/myevents", async(req,res) =>{
             let getevent = await eventsdata.getEvent(myevent)
             mylist.push(getevent)
         }
-        res.status(200).render('myevents/myevents',{createdEvents:mylist});
+        res.status(200).render('myevents/myevents',{myEvents:mylist});
         return;
     } catch(e){
         res.status(500).render('error/error',{message : e});
@@ -256,7 +256,7 @@ router.post("/create-event", async(req,res) =>{
         let createNewEvent = await eventsdata.createEvent(
             createEventRequestBody.title, 
             createEventRequestBody.category, 
-            req.session.email,
+            req.session.userName,
             
             //req.session.email, 
             myfinaltime, 
