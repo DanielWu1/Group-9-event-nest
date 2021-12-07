@@ -9,7 +9,6 @@
     "author": "Bingzhen Li Charan Telaganeni Neel Tejani Prajay Sachdev",
     "license": "ISC",
     "dependencies": {
-        "@sendgrid/mail": "^7.6.0",
         "axios": "^0.24.0",
         "bcryptjs": "^2.4.3",
         "blueimp-md5": "^2.19.0",
@@ -17,7 +16,10 @@
         "express-handlebars": "^6.0.2",
         "express-session": "^1.17.2",
         "handlebars": "^4.7.7",
+        "mailgun-js": "^0.22.0",
         "mongodb": "^3.7.3",
+        "nodemailer": "^6.7.2",
+        "pdfkit": "^0.13.0",
         "uuid": "^8.3.2"
     }
 }
