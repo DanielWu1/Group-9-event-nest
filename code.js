@@ -16,4 +16,4 @@ function datetime(str)
     return datetimer
 } 
 
-console.log(datetime("2021-12-22T14:30"))
+ console.log(datetime("2021-12-22T14:30"))

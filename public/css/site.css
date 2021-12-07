@@ -152,6 +152,10 @@ button:focus {
   transition: all .2s ease;
 }
 
+.goodwidth
+{
+  width: 30%
+}
 .full-width {
   width: 100%; 
 

@@ -1071,6 +1071,17 @@ async function removePostEvents(userId, eventsid){
 // }
 // test()
 
+const bookTicket = async(userId, eventId) => {
+    const usersCollection = await users();
+    await usersCollection.updateOne({ _id: new ObjectId( userId) }, { $addToSet : { ticket: eventId } });
+    return true;
+}
+
+const getMyEvents = async (userId) => {
+    const usersCollection = await users();
+    return (await usersCollection.findOne({ _id: new ObjectId(userId) })).ticket;
+}
+
 module.exports = {
     createUser,
     getAll,
@@ -1083,4 +1094,6 @@ module.exports = {
     removeTicketEvents,
     addPostEvents,
     removePostEvents,
+    bookTicket,
+    getMyEvents,
 };

@@ -190,7 +190,7 @@ button {
 
   </form>
 
-  {{#each bookedevents}}
+  {{#each createdEvents}}
   <div class="ggg">
    <center><p class="container3">{{this.title}}</p></center>
   <center><p class="container3"> Category:    {{this.category}} </p></center> 
@@ -216,6 +216,10 @@ button {
 
 <center>
    <button class="container5" type="submit"> <a href="/buyticket" style="text-decoration: none ; color:#eee">Buy Ticket</a></button> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+     </center> 
+
+     <center>
+   <button class="container5" type="submit"> <a href="/updateevent/{{this._id}}" style="text-decoration: none ; color:#eee">Edit Event</a></button> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
      </center> 
 
  
