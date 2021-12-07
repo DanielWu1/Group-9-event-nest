@@ -386,20 +386,20 @@ router.get("/bookedevents/:id", async(req,res) =>{
     }
 });
 
-router.get("/myevents", async(req,res) =>{
-    try{
-        const myEvents = await data1.getEventByCreatorEmail(req.session.email);
-        console.log(myEvents)
-        res.render("myevents/myevents", { createdEvents: myEvents });
-        return;
-}
+// router.get("/myevents", async(req,res) =>{
+//     try{
+//         const myEvents = await data1.getEventByCreatorEmail(req.session.email);
+//         console.log(myEvents)
+//         res.render("myevents/myevents", { createdEvents: myEvents });
+//         return;
+// }
     
-    catch(e){
+//     catch(e){
      
-        res.status(500).json({message : e});
-        return;
-    }
-});
+//         res.status(500).json({message : e});
+//         return;
+//     }
+// });
 
 
 module.exports = router;
