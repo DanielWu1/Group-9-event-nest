@@ -55,44 +55,27 @@ const createEvent = async (
     price,
     description
 ) => {
-    // console.log(title)
-    // console.log(category)
-    // console.log(creator)
-    // console.log(date)
-    // console.log(timestart)
-    // console.log(endtime)
-    // console.log(address)
-    // console.log(city)
-    // console.log(state)
-    // console.log(ticketcapacity)
-    // console.log(price)
-    // console.log(description)
-    // checking for valid fields
+    console.log(title)
+    console.log(category)
+    console.log(creator)
+    console.log(date)
+    console.log(timestart)
+    console.log(endtime)
+    console.log(address)
+    console.log(city)
+    console.log(state)
+    console.log(ticketcapacity)
+    console.log(price)
+    console.log(description)
+ 
     if (
-        !title ||
-        !category ||
-        !creator ||
-        !timestart ||
-        !endtime ||
-        !address ||
-        !city ||
-        !state ||
-        !ticketcapacity ||
-        !price ||
-        !description
-    ) {
-        throw "All fields need to have valid values";
-    }
-
-    // to check for validations
-    if (
-        typeof title != "string" ||
-        typeof category != "string" ||
-        typeof creator != "string" ||
-        typeof address != "string" ||
-        typeof city != "string" ||
-        typeof state != "string" ||
-        typeof description != "string" ||
+        // typeof title != "string" ||
+        // typeof category != "string" ||
+        // typeof creator != "string" ||
+        // typeof address != "string" ||
+        // typeof city != "string" ||
+        // typeof state != "string" ||
+        // typeof description != "string" ||
         title.trim().length == 0 ||
         category.trim().length == 0 ||
         creator.trim().length == 0 ||
@@ -101,30 +84,28 @@ const createEvent = async (
         state.trim().length == 0 ||
         description.trim().length == 0
     ) {
-        throw "parameters are not strings or are empty strings,";
+        throw "parameters are just spaces!";
     }
 
-    // date validation
-    // if (!date.match(validDate)) {
-    //     throw "Date is not in Valid Format";
-    // }
+    //date validation
+    if (!date.match(validDate)) {
+        throw "Date is not in Valid Format";
+    }
 
-    // timestart validation
+    //timestart validation
     if (!Array.isArray(timestart)) {
         throw "timeStart is Not an Array";
     } else if (timestart.length == 0) {
         throw "timeStart is empty";
     } else {
         if (
-            typeof timestart[0] != "string" ||
-            timestart[0].trim().length == 0 ||
+         
             !timestart[0].match(validDate)
         ) {
-            throw " In Timestart you must enter in MM/DD/YY format";
+            throw " In Timestart you must enter in YYYY/DD/MM format";
         }
         if (
-            typeof timestart[1] != "string" ||
-            timestart[1].trim().length == 0 ||
+           
             !timestart[1].match(validTime)
         ) {
             throw " In Timestart you must enter in HH/MM format";
@@ -183,7 +164,7 @@ const createEvent = async (
         city: city,
         state: state,
         ticketcapacity: ticketcapacity,
-        price: ticketprice,
+        price: price,
         description: description,
 
         buyerList: [],
@@ -267,9 +248,9 @@ const updateEvent = async (
         throw "parameters are not strings or are empty strings,";
     }
 
-    // if (!date.match(validDate)) {
-    //     throw "Date is not in Valid Format";
-    // }
+    if (!date.match(validDate)) {
+        throw "Date is not in Valid Format";
+    }
     if (!Array.isArray(timestart)) {
         throw "timeStart is Not an Array";
     } else if (timestart.length == 0) {
@@ -992,6 +973,17 @@ const getBuyerList = async (eventId, creator, noOftickets) => {
     }
 };
 
+const bookTicket = async(userId, eventId) => {
+    const usersCollection = await users();
+    await usersCollection.updateOne({ _id: new ObjectId( userId) }, { $addToSet : { ticket: eventId } });
+    return true;
+}
+
+const getMyEvents = async (userId) => {
+    const usersCollection = await users();
+    return (await usersCollection.findOne({ _id: new ObjectId(userId) })).ticket;
+}
+
 // to get the event booked by
 async function getEventByCreatorEmail(inputEmail) {
     if (!inputEmail) throw "You must provide an emailid to search for";
@@ -1020,6 +1012,10 @@ function isEmail(inputEmail) {
     } else {
         return false;
     }
+
+
+
+ 
 }
 
 module.exports = {
@@ -1040,5 +1036,7 @@ module.exports = {
     removeGoing,
     getBuyerList,
 
-    getEventByCreatorEmail,
+    getEventByCreatorEmail, 
+    bookTicket, 
+    getMyEvents
 };

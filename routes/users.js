@@ -151,12 +151,12 @@ router.post("/userlogin", async(req,res) => {
  
     let login = req.body; 
     if (isEmail(login.email) === false){ 
-        res.status(400).render('usersignup/usersignup', { error: e, message:"Input email is not valid"});
+        res.status(400).render('usersignup/usersignup', { error: "Input email is not valid"});
         return;
     }
     // chekcing for password
     if (isPassword(login.password) === false){ 
-        res.status(400).render('usersignup/usersignup', { error: e, message:"Input password has to be 6-20 characters which contain at least one numeric digit, one uppercase and one lowercase letter"});
+        res.status(400).render('usersignup/usersignup', { error: "Input password has to be 6-20 characters which contain at least one numeric digit, one uppercase and one lowercase letter"});
         return;
     }
 
@@ -173,7 +173,7 @@ router.post("/userlogin", async(req,res) => {
         return;
     }
     catch(e)
-    {   console.log(e);
+    {   //console.log(e);
         res.render('userlogin/userlogin', {error:e});
         return;
     }
