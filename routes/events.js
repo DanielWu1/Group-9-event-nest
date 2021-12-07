@@ -379,52 +379,6 @@ router.get("/payment", async(req,res) =>{
 
 
 
-router.get("/bookedevents", async (req, res) => {
-    try {
-        const myBookedEvents = await eventsdata.getMyEvents(req.session.userId);
-        console.log(myBookedEvents);
-        let allEvents = [];
-        for (const bookedEvent of myBookedEvents) {
-            allEvents.push(await eventsdata.getEvent(bookedEvent));
-        }
-        console.log(allEvents)
-        res.render("bookedevents/bookedevents", { allBookedEvents: allEvents })
-        return
-    } catch (e) {
-        console.log(e)
-    }
-})
-
-router.get("/bookedevents/:id", async(req,res) =>{
-    try{
-        let eventId = req.params.id
-        let userId = req.session.userId;
-        let bookForUser = await eventsdata.bookTicket(userId, eventId);
-        res.redirect("/mybookedevents");
-        return;
-}
-    
-    catch(e){
-     
-        res.status(500).json({message : e});
-        return;
-    }
-});
-
-// router.get("/myevents", async(req,res) =>{
-//     try{
-//         const myEvents = await data1.getEventByCreatorEmail(req.session.email);
-//         console.log(myEvents)
-//         res.render("myevents/myevents", { createdEvents: myEvents });
-//         return;
-// }
-    
-//     catch(e){
-     
-//         res.status(500).json({message : e});
-//         return;
-//     }
-// });
 
 
 module.exports = router;
