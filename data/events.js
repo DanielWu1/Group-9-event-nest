@@ -55,18 +55,17 @@ const createEvent = async (
     price,
     description
 ) => {
-    console.log(title)
-    console.log(category)
-    console.log(creator)
-    console.log(date)
-    console.log(timestart)
-    console.log(endtime)
-    console.log(address)
-    console.log(city)
-    console.log(state)
-    console.log(ticketcapacity)
-    console.log(price)
-    console.log(description)
+    // console.log(title)
+    // console.log(category)
+    // console.log(creator)
+    // console.log(timestart)
+    // console.log(endtime)
+    // console.log(address)
+    // console.log(city)
+    // console.log(state)
+    // console.log(ticketcapacity)
+    // console.log(price)
+    // console.log(description)
  
     if (
         // typeof title != "string" ||
@@ -78,7 +77,6 @@ const createEvent = async (
         // typeof description != "string" ||
         title.trim().length == 0 ||
         category.trim().length == 0 ||
-        creator.trim().length == 0 ||
         address.trim().length == 0 ||
         city.trim().length == 0 ||
         state.trim().length == 0 ||
@@ -87,10 +85,7 @@ const createEvent = async (
         throw "parameters are just spaces!";
     }
 
-    //date validation
-    if (!date.match(validDate)) {
-        throw "Date is not in Valid Format";
-    }
+
 
     //timestart validation
     if (!Array.isArray(timestart)) {
@@ -142,15 +137,7 @@ const createEvent = async (
     }
 
     // check for validation ticket capacity
-    if (typeof ticketcapacity != "number") {
-        throw " Number of Tickets must be in Numbers";
-    }
-
-    // check for price validation
-    ticketprice = Number(price);
-    if (typeof ticketprice != "number") {
-        throw " Number of Ticket's Price must be in Numbers";
-    }
+ 
 
     const eventCollection = await events();
 
@@ -188,6 +175,16 @@ const createEvent = async (
 
     return event;
 };
+ 
+// const addComment = async (comments) => { 
+
+//     const eventCollection = await events();
+
+
+// }
+
+
+
 
 const updateEvent = async (
     eventId,
@@ -293,13 +290,9 @@ const updateEvent = async (
         }
     }
 
-    if (typeof ticketcapacity != "number") {
-        throw " Number of Tickets must be in Numbers";
-    }
+   
 
-    if (typeof price != "number") {
-        throw " Number of Ticket's Price must be in Numbers";
-    }
+   
 
     if (typeof active !== "boolean")
         throw "Active status of the event must a true or false";
@@ -1018,8 +1011,12 @@ function isEmail(inputEmail) {
  
 }
 
+
+
+
 module.exports = {
     createEvent,
+    //addComment,
     getAllEvents,
     getEvent,
     removeEvent,
@@ -1038,5 +1035,6 @@ module.exports = {
 
     getEventByCreatorEmail, 
     bookTicket, 
-    getMyEvents
+    getMyEvents, 
+   
 };

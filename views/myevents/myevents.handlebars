@@ -165,15 +165,13 @@ button {
      </div> 
 
      <div align="left"> 
-   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button class="button" type="submit"><a href="/create-event" style="text-decoration: none ; color:#eee"> Create Event </a></button> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button class="button" type="submit"><a href="/userhomepage" style="text-decoration: none ; color:#eee"> Homepage </a></button> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
 
    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button class="button" type="submit"><a href="/bookedevents" style="text-decoration: none ; color:#eee"> Booked Events </a></button> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
      </div> 
 
-     <div align="left">
-        &nbsp;&nbsp;&nbsp;&nbsp;  <button class="button" type="submit"><a href="/bookedevents" style="text-decoration: none ; color:#eee"> Liked Events </a></button> 
-     </div>
+   
    <div><form  autocomplete="off" method="GET" action="/userhomepage">  
                 <center><input type="text" class="ghost-round2"
                     placeholder=" Search Events"
@@ -190,7 +188,7 @@ button {
 
   </form>
 
-  {{#each createdEvents}}
+  {{#each myEvents}}
   <div class="ggg">
    <center><p class="container3">{{this.title}}</p></center>
   <center><p class="container3"> Category:    {{this.category}} </p></center> 

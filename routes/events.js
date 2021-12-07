@@ -298,6 +298,29 @@ router.post("/create-event", async(req,res) =>{
     }
 }); 
 
+
+router.get("/comment/:id", async(req,res) =>{
+    try{
+        const event = await eventsdata.getEvent(req.params.id); 
+        const createEventRequestBody = req.body;
+        let createNewEvent = await eventsdata.createEvent(
+            createEventRequestBody.comment,
+
+
+
+        )
+            
+        res.redirect("/userhomepage");
+        return;
+}
+    
+    catch(e){
+     
+        res.status(500).json({message : e});
+        return;
+    }
+}); 
+
 router.get("/likedevents", async(req,res) =>{
     try{
         res.render("likedevents/likedevents");
@@ -326,6 +349,8 @@ router.get("/checkout/:id", async(req,res) =>{
         return;
     }
 });    
+
+
 
 router.get("/update/:id", async(req,res) =>{
     try{
