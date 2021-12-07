@@ -1,28 +1,53 @@
+// sending emails
+const nodemailer = require('nodemailer');
 
-const SENDGRID_API_KEY = "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"
-const sgMail = require('@sendgrid/mail')
-sgMail.setApiKey(SENDGRID_API_KEY)
+const transporter = nodemailer.createTransport({
+  service: 'gmail',
+  auth: {
+    user: 'eventnestcs546@gmail.com',
+    pass: 'eventnestCS546group9'
+  }
+});
 
-const msg = {
-  to: 'tony153265964@gmail.com',
-  cc: 'neeltejani125@gmail.com',
-  bcc: 'charansundar05@gmail.com', // Change to your recipient
-  from: 'eventnestcs546@gmail.com', // Change to your verified sender
-  subject: 'TESTING WITH sendgrid // adding neel to the gmail email trail',
-  text: 'EVENT NEST TESTING FOR EMAIL',
-  html: '<strong>HEY GUYS! TESTING SOME EMAIL SENDING FUNCTIONALITY USING SENDGRID!</strong>',
+// send draft for your tickets
+function sendTicketEmail(toEmail, eventTitle, price, quantity){
+
+  const sendEmail = {};
+
+  // set toEmail
+  sendEmail['toEmail'] = toEmail;
+
+  // set subject
+  sendEmail['subject'] = "Your tickets to the EVENTNEST's " + eventTitle + " are here! ";
+
+  // set bodytext
+  sendEmail['text'] = "Greetings! \n This is the ticket to your EVENTNEST's " + eventTitle + " \n Tickets permit entry of "+ quantity + " pax with a total amount paid of " + price +". ";
+
+  triggerEmail(sendEmail);
 }
 
-// to send an email to the user
+// trigger email
+function triggerEmail(inputObject){
 
+  // send an email on 
+  var mailOptions = {
+    from: 'eventnestcs546@gmail.com',
+    to: inputObject.toEmail,
+    subject: inputObject.subject,
+    text:  inputObject.text,
+  };
 
+  transporter.sendMail(mailOptions, function(error, info){
+    if (error) {
+      console.log(error);
+    } else {
+      console.log('Email sent: ' + info.response);
+    }
+  });
+}
 
-sgMail
-  .send(msg)
-  .then((response) => {
-    console.log(response[0].statusCode)
-    console.log(response[0].headers)
-  })
-  .catch((error) => {
-    console.error(error)
-  })
+sendTicketEmail('charansundar05@gmail.com', "Lobster Event", 100, 10);
+
+module.exports = {
+  sendTicketEmail
+}
