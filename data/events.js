@@ -24,7 +24,7 @@ const validTime = /^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$/;
 // }
 const getAllEvents = async () => {
     const eventCollection = await events();
-    const eventList = await eventCollection.find({}).toArray();
+    const eventList = await eventCollection.find({ active: true }).toArray();
 
     return eventList;
 };
@@ -32,7 +32,7 @@ const getEvent = async (eventId) => {
     try {
         parsedEventid = ObjectId(eventId);
     } catch (e) {
-        throw "id format wrong";
+        throw "Event id format wrong";
     }
     if (!eventId) throw "You must provide an id to search for";
     if (typeof eventId != "string" || eventId.trim().length == 0)
@@ -46,7 +46,6 @@ const createEvent = async (
     title,
     category,
     creator,
-    date,
     timestart,
     endtime,
     address,
@@ -73,7 +72,6 @@ const createEvent = async (
         !title ||
         !category ||
         !creator ||
-        !date ||
         !timestart ||
         !endtime ||
         !address ||
@@ -91,7 +89,6 @@ const createEvent = async (
         typeof title != "string" ||
         typeof category != "string" ||
         typeof creator != "string" ||
-        typeof date != "string" ||
         typeof address != "string" ||
         typeof city != "string" ||
         typeof state != "string" ||
@@ -169,7 +166,7 @@ const createEvent = async (
     }
 
     // check for price validation
-    ticketprice = Number(price)
+    ticketprice = Number(price);
     if (typeof ticketprice != "number") {
         throw " Number of Ticket's Price must be in Numbers";
     }
@@ -180,7 +177,6 @@ const createEvent = async (
         title: title,
         category: category,
         creator: creator,
-        date: date,
         timestart: timestart,
         endtime: endtime,
         address: address,
@@ -217,7 +213,6 @@ const updateEvent = async (
     title,
     category,
     creator,
-    date,
     timestart,
     endtime,
     address,
@@ -241,7 +236,6 @@ const updateEvent = async (
         !title ||
         !category ||
         !creator ||
-        !date ||
         !timestart ||
         !endtime ||
         !address ||
@@ -258,7 +252,6 @@ const updateEvent = async (
         typeof title != "string" ||
         typeof category != "string" ||
         typeof creator != "string" ||
-        typeof date != "string" ||
         typeof address != "string" ||
         typeof city != "string" ||
         typeof state != "string" ||
@@ -336,7 +329,6 @@ const updateEvent = async (
         title: title,
         category: category,
         creator: creator,
-        date: date,
         timestart: timestart,
         endtime: endtime,
         address: address,
@@ -358,7 +350,6 @@ const removeEvent = async (
     title,
     category,
     creator,
-    date,
     timestart,
     endtime,
     address,
@@ -381,7 +372,6 @@ const removeEvent = async (
         !title ||
         !category ||
         !creator ||
-        !date ||
         !timestart ||
         !endtime ||
         !address ||
@@ -398,7 +388,6 @@ const removeEvent = async (
         typeof title != "string" ||
         typeof category != "string" ||
         typeof creator != "string" ||
-        typeof date != "string" ||
         typeof address != "string" ||
         typeof city != "string" ||
         typeof state != "string" ||
@@ -473,7 +462,6 @@ const removeEvent = async (
         title: title,
         category: category,
         creator: creator,
-        date: date,
         timestart: timestart,
         endtime: endtime,
         address: address,
@@ -588,7 +576,6 @@ const addLike = async (eventId) => {
         title: findEvent.title,
         category: findEvent.category,
         creator: findEvent.creator,
-        date: findEvent.date,
         timestart: findEvent.timestart,
         endtime: findEvent.endtime,
         address: findEvent.address,
@@ -641,7 +628,6 @@ const removeLike = async (eventId) => {
         title: findEvent.title,
         category: findEvent.category,
         creator: findEvent.creator,
-        date: findEvent.date,
         timestart: findEvent.timestart,
         endtime: findEvent.endtime,
         address: findEvent.address,
@@ -694,7 +680,6 @@ const addIntersted = async (eventId) => {
         title: findEvent.title,
         category: findEvent.category,
         creator: findEvent.creator,
-        date: findEvent.date,
         timestart: findEvent.timestart,
         endtime: findEvent.endtime,
         address: findEvent.address,
@@ -747,7 +732,6 @@ const removeIntersted = async (eventId) => {
         title: findEvent.title,
         category: findEvent.category,
         creator: findEvent.creator,
-        date: findEvent.date,
         timestart: findEvent.timestart,
         endtime: findEvent.endtime,
         address: findEvent.address,
@@ -801,7 +785,6 @@ const addGoing = async (eventId) => {
         title: findEvent.title,
         category: findEvent.category,
         creator: findEvent.creator,
-        date: findEvent.date,
         timestart: findEvent.timestart,
         endtime: findEvent.endtime,
         address: findEvent.address,
@@ -855,7 +838,6 @@ const removeGoing = async (eventId) => {
         title: findEvent.title,
         category: findEvent.category,
         creator: findEvent.creator,
-        date: findEvent.date,
         timestart: findEvent.timestart,
         endtime: findEvent.endtime,
         address: findEvent.address,
