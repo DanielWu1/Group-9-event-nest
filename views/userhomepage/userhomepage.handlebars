@@ -203,11 +203,14 @@ button {
 
         &nbsp;&nbsp;&nbsp;&nbsp;  <button class="container5" type="submit"><a href="/myevents" style="text-decoration: none ; color:#eee"> My Events </a></button> 
      </div>
-   <div><form  autocomplete="off" method="GET" action="/userhomepage">  
+   <div><form  autocomplete="off" method="Post" id="searchForm">  
+                <center>
+                  <label for="search_term">search_term </label>
+                </center>
                 <center><input type="text" class="ghost-round2"
                     placeholder=" Search Events"
-                    name="search"></center> 
-                <center><button class="button"> search </button> </center>  
+                    name="search" id= "search_term"></center> 
+                <center><button type="submit" id = "submit_button" class="btn-default" value = "Search">Search</button> </center>  
 
                 <br><br><br></form> </div>
 
@@ -232,12 +235,14 @@ button {
   <input type="checkbox">
   <span class="checkmark"></span>
 </label>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button class="button"> filter </button>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button class="button" id = 'filterbtn'> filter </button>
 
   </form>
-
+  <div class="ggg" id = "serchevent" hidden>
+  </div>
+  <div id="myallevent">
   {{#each allevents}}
-  <div class="ggg" id = 'myallevent'>
+  <div class="ggg">
    <center><p class="container3">{{this.title}}</p></center>
   <center><p class="container3"> Category:    {{this.category}} </p></center> 
    <center><p class="container3">Creator Name:    {{this.creator}}</p></center>
@@ -281,7 +286,9 @@ button {
   <br>
   <br>
   {{/each}} 
-
+  </div> 
+  {{!-- <script src="/public/js/form.js"></script> --}}
+  <a href="/userhomepage" id="homeLink" hidden>Back to All user home page</a>
 
 </body>
                 
