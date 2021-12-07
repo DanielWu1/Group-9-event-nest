@@ -30,7 +30,57 @@ button:focus {
   outline: none;
 } 
 
+.container3 {
+  background-color: #ffffff;
+ color: rgb(32, 9, 240);
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  cursor: pointer;
+  width: 600px; 
+  right:1000px; 
+  border-radius: 12px;
+  text-decoration:none;
+}
 
+.container4 {
+  background-color: #039e31;
+ color: white;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  cursor: pointer;
+  width: 600px; 
+  right:1000px; 
+  border-radius: 12px;
+  text-decoration:none;
+}
+
+.container5 {
+  background-color: #1a09ff;
+ color: white;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  cursor: pointer;
+  width: 200px; 
+  right:1000px; 
+  border-radius: 12px;
+  text-decoration:none;
+}
+
+.container6 {
+  background-color: #ff0909;
+ color: white;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  cursor: pointer;
+  width: 200px; 
+  right:1000px; 
+  border-radius: 12px;
+  text-decoration:none;
+}
 
 ::-webkit-input-placeholder {
   color: rgba(255, 255, 255, 0.65);

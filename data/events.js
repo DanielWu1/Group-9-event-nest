@@ -24,7 +24,7 @@ const validTime = /^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$/;
 // }
 const getAllEvents = async () => {
     const eventCollection = await events();
-    const eventList = await eventCollection.find({}).toArray();
+    const eventList = await eventCollection.find({ active: true }).toArray();
 
     return eventList;
 };
@@ -32,7 +32,7 @@ const getEvent = async (eventId) => {
     try {
         parsedEventid = ObjectId(eventId);
     } catch (e) {
-        throw "id format wrong";
+        throw "Event id format wrong";
     }
     if (!eventId) throw "You must provide an id to search for";
     if (typeof eventId != "string" || eventId.trim().length == 0)
@@ -46,7 +46,6 @@ const createEvent = async (
     title,
     category,
     creator,
-    date,
     timestart,
     endtime,
     address,
@@ -56,46 +55,27 @@ const createEvent = async (
     price,
     description
 ) => {
-    // console.log(title)
-    // console.log(category)
-    // console.log(creator)
-    // console.log(date)
-    // console.log(timestart)
-    // console.log(endtime)
-    // console.log(address)
-    // console.log(city)
-    // console.log(state)
-    // console.log(ticketcapacity)
-    // console.log(price)
-    // console.log(description)
-    // checking for valid fields
+    console.log(title)
+    console.log(category)
+    console.log(creator)
+    console.log(date)
+    console.log(timestart)
+    console.log(endtime)
+    console.log(address)
+    console.log(city)
+    console.log(state)
+    console.log(ticketcapacity)
+    console.log(price)
+    console.log(description)
+ 
     if (
-        !title ||
-        !category ||
-        !creator ||
-        !date ||
-        !timestart ||
-        !endtime ||
-        !address ||
-        !city ||
-        !state ||
-        !ticketcapacity ||
-        !price ||
-        !description
-    ) {
-        throw "All fields need to have valid values";
-    }
-
-    // to check for validations
-    if (
-        typeof title != "string" ||
-        typeof category != "string" ||
-        typeof creator != "string" ||
-        typeof date != "string" ||
-        typeof address != "string" ||
-        typeof city != "string" ||
-        typeof state != "string" ||
-        typeof description != "string" ||
+        // typeof title != "string" ||
+        // typeof category != "string" ||
+        // typeof creator != "string" ||
+        // typeof address != "string" ||
+        // typeof city != "string" ||
+        // typeof state != "string" ||
+        // typeof description != "string" ||
         title.trim().length == 0 ||
         category.trim().length == 0 ||
         creator.trim().length == 0 ||
@@ -104,30 +84,28 @@ const createEvent = async (
         state.trim().length == 0 ||
         description.trim().length == 0
     ) {
-        throw "parameters are not strings or are empty strings,";
+        throw "parameters are just spaces!";
     }
 
-    // date validation
-    // if (!date.match(validDate)) {
-    //     throw "Date is not in Valid Format";
-    // }
+    //date validation
+    if (!date.match(validDate)) {
+        throw "Date is not in Valid Format";
+    }
 
-    // timestart validation
+    //timestart validation
     if (!Array.isArray(timestart)) {
         throw "timeStart is Not an Array";
     } else if (timestart.length == 0) {
         throw "timeStart is empty";
     } else {
         if (
-            typeof timestart[0] != "string" ||
-            timestart[0].trim().length == 0 ||
+         
             !timestart[0].match(validDate)
         ) {
-            throw " In Timestart you must enter in MM/DD/YY format";
+            throw " In Timestart you must enter in YYYY/DD/MM format";
         }
         if (
-            typeof timestart[1] != "string" ||
-            timestart[1].trim().length == 0 ||
+           
             !timestart[1].match(validTime)
         ) {
             throw " In Timestart you must enter in HH/MM format";
@@ -169,7 +147,7 @@ const createEvent = async (
     }
 
     // check for price validation
-    ticketprice = Number(price)
+    ticketprice = Number(price);
     if (typeof ticketprice != "number") {
         throw " Number of Ticket's Price must be in Numbers";
     }
@@ -180,14 +158,13 @@ const createEvent = async (
         title: title,
         category: category,
         creator: creator,
-        date: date,
         timestart: timestart,
         endtime: endtime,
         address: address,
         city: city,
         state: state,
         ticketcapacity: ticketcapacity,
-        price: ticketprice,
+        price: price,
         description: description,
 
         buyerList: [],
@@ -217,7 +194,6 @@ const updateEvent = async (
     title,
     category,
     creator,
-    date,
     timestart,
     endtime,
     address,
@@ -241,7 +217,6 @@ const updateEvent = async (
         !title ||
         !category ||
         !creator ||
-        !date ||
         !timestart ||
         !endtime ||
         !address ||
@@ -258,7 +233,6 @@ const updateEvent = async (
         typeof title != "string" ||
         typeof category != "string" ||
         typeof creator != "string" ||
-        typeof date != "string" ||
         typeof address != "string" ||
         typeof city != "string" ||
         typeof state != "string" ||
@@ -274,9 +248,9 @@ const updateEvent = async (
         throw "parameters are not strings or are empty strings,";
     }
 
-    // if (!date.match(validDate)) {
-    //     throw "Date is not in Valid Format";
-    // }
+    if (!date.match(validDate)) {
+        throw "Date is not in Valid Format";
+    }
     if (!Array.isArray(timestart)) {
         throw "timeStart is Not an Array";
     } else if (timestart.length == 0) {
@@ -336,7 +310,6 @@ const updateEvent = async (
         title: title,
         category: category,
         creator: creator,
-        date: date,
         timestart: timestart,
         endtime: endtime,
         address: address,
@@ -358,7 +331,6 @@ const removeEvent = async (
     title,
     category,
     creator,
-    date,
     timestart,
     endtime,
     address,
@@ -381,7 +353,6 @@ const removeEvent = async (
         !title ||
         !category ||
         !creator ||
-        !date ||
         !timestart ||
         !endtime ||
         !address ||
@@ -398,7 +369,6 @@ const removeEvent = async (
         typeof title != "string" ||
         typeof category != "string" ||
         typeof creator != "string" ||
-        typeof date != "string" ||
         typeof address != "string" ||
         typeof city != "string" ||
         typeof state != "string" ||
@@ -473,7 +443,6 @@ const removeEvent = async (
         title: title,
         category: category,
         creator: creator,
-        date: date,
         timestart: timestart,
         endtime: endtime,
         address: address,
@@ -588,7 +557,6 @@ const addLike = async (eventId) => {
         title: findEvent.title,
         category: findEvent.category,
         creator: findEvent.creator,
-        date: findEvent.date,
         timestart: findEvent.timestart,
         endtime: findEvent.endtime,
         address: findEvent.address,
@@ -641,7 +609,6 @@ const removeLike = async (eventId) => {
         title: findEvent.title,
         category: findEvent.category,
         creator: findEvent.creator,
-        date: findEvent.date,
         timestart: findEvent.timestart,
         endtime: findEvent.endtime,
         address: findEvent.address,
@@ -694,7 +661,6 @@ const addIntersted = async (eventId) => {
         title: findEvent.title,
         category: findEvent.category,
         creator: findEvent.creator,
-        date: findEvent.date,
         timestart: findEvent.timestart,
         endtime: findEvent.endtime,
         address: findEvent.address,
@@ -747,7 +713,6 @@ const removeIntersted = async (eventId) => {
         title: findEvent.title,
         category: findEvent.category,
         creator: findEvent.creator,
-        date: findEvent.date,
         timestart: findEvent.timestart,
         endtime: findEvent.endtime,
         address: findEvent.address,
@@ -801,7 +766,6 @@ const addGoing = async (eventId) => {
         title: findEvent.title,
         category: findEvent.category,
         creator: findEvent.creator,
-        date: findEvent.date,
         timestart: findEvent.timestart,
         endtime: findEvent.endtime,
         address: findEvent.address,
@@ -855,7 +819,6 @@ const removeGoing = async (eventId) => {
         title: findEvent.title,
         category: findEvent.category,
         creator: findEvent.creator,
-        date: findEvent.date,
         timestart: findEvent.timestart,
         endtime: findEvent.endtime,
         address: findEvent.address,
@@ -1010,6 +973,17 @@ const getBuyerList = async (eventId, creator, noOftickets) => {
     }
 };
 
+const bookTicket = async(userId, eventId) => {
+    const usersCollection = await users();
+    await usersCollection.updateOne({ _id: new ObjectId( userId) }, { $addToSet : { ticket: eventId } });
+    return true;
+}
+
+const getMyEvents = async (userId) => {
+    const usersCollection = await users();
+    return (await usersCollection.findOne({ _id: new ObjectId(userId) })).ticket;
+}
+
 // to get the event booked by
 async function getEventByCreatorEmail(inputEmail) {
     if (!inputEmail) throw "You must provide an emailid to search for";
@@ -1038,6 +1012,10 @@ function isEmail(inputEmail) {
     } else {
         return false;
     }
+
+
+
+ 
 }
 
 module.exports = {
@@ -1058,5 +1036,7 @@ module.exports = {
     removeGoing,
     getBuyerList,
 
-    getEventByCreatorEmail,
+    getEventByCreatorEmail, 
+    bookTicket, 
+    getMyEvents
 };
