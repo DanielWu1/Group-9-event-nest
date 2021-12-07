@@ -19,22 +19,88 @@ app.use(
     })
 );
 
-app.use("/private", (req, res, next) => {
-    if (!req.session.username) {
+app.use('/', (req, res, next)=>{
+    let mytime = new Date().toUTCString()
+    let mymethod = req.method
+    let url = req.originalUrl
+    let Authenticated = ''
+    if(req.session.userName && req.session.email && req.session.userId){
+      Authenticated = 'Authenticated User'
+    }
+    else {
+      Authenticated = 'Non-Authenticated User'
+    }
+    console.log(mytime+' + '+mymethod+' '+url+' '+Authenticated)
+    next();
+})
+
+app.use('/userlogin', (req, res, next)=>{
+
+    if(req.session.userName && req.session.email && req.session.userId){
+      return res.redirect('/userhomepage')
+    }
+    else {
+      next();
+    }
+})
+app.use('/usersignup', (req, res, next)=>{
+
+    if(req.session.userName &&req.session.email &&req.session.userId){
+      return res.redirect('/userhomepage')
+    }
+    else {
+      next();
+    }
+})
+
+app.use("/userhomepage", (req, res, next) => {
+    if (!req.session.userName ||!req.session.email ||!req.session.userId) {
         return res.redirect("/");
     } else {
         next();
     }
 });
-app.use((req, res, next) => {
-    let answer = "";
-    if (req.session.username) {
-        answer = "User is authenticated";
+app.use("/bookedevents", (req, res, next) => {
+    if (!req.session.userName ||!req.session.email ||!req.session.userId) {
+        return res.redirect("/");
     } else {
-        answer = "User is not authenticated";
+        next();
     }
-    console.log(new Date().toUTCString(), req.method, req.originalUrl, answer);
-    next();
+});
+app.use("/myevents", (req, res, next) => {
+    if (!req.session.userName ||!req.session.email ||!req.session.userId) {
+        return res.redirect("/");
+    } else {
+        next();
+    }
+});
+app.use("/create-event", (req, res, next) => {
+    if (!req.session.userName ||!req.session.email ||!req.session.userId) {
+        return res.redirect("/");
+    } else {
+        next();
+    }
+});
+app.use("/checkout", (req, res, next) => {
+    if (!req.session.userName ||!req.session.email ||!req.session.userId) {
+        return res.redirect("/");
+    } else {
+        next();
+    }
+});
+app.use("/payment", (req, res, next) => {
+    if (!req.session.userName ||!req.session.email ||!req.session.userId) {
+        return res.redirect("/");
+    } else {
+        next();
+    }
+});
+app.use("/logout", (req, res, next) => {
+    if (!req.session.userName ||!req.session.email ||!req.session.userId) {
+        return res.redirect("/");
+    } else {
+        next();
+    }
 });
 
 configRoutes(app);

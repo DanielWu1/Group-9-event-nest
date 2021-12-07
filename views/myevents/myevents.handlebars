@@ -165,15 +165,13 @@ button {
      </div> 
 
      <div align="left"> 
-   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button class="button" type="submit"><a href="/create-event" style="text-decoration: none ; color:#eee"> Create Event </a></button> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button class="button" type="submit"><a href="/userhomepage" style="text-decoration: none ; color:#eee"> Homepage </a></button> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
 
    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button class="button" type="submit"><a href="/bookedevents" style="text-decoration: none ; color:#eee"> Booked Events </a></button> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
      </div> 
 
-     <div align="left">
-        &nbsp;&nbsp;&nbsp;&nbsp;  <button class="button" type="submit"><a href="/bookedevents" style="text-decoration: none ; color:#eee"> Liked Events </a></button> 
-     </div>
+   
    <div><form  autocomplete="off" method="GET" action="/userhomepage">  
                 <center><input type="text" class="ghost-round2"
                     placeholder=" Search Events"
@@ -190,7 +188,7 @@ button {
 
   </form>
 
-  {{#each bookedevents}}
+  {{#each myEvents}}
   <div class="ggg">
    <center><p class="container3">{{this.title}}</p></center>
   <center><p class="container3"> Category:    {{this.category}} </p></center> 
@@ -201,7 +199,8 @@ button {
   <center><p class="container3">Address:   {{this.address}}</p></center>
   <center><p class="container3">City:    {{this.city}}</p></center>
   <center><p class="container3">State:    {{this.state}}</p></center>
-  <center><p class="container3">Description:    {{this.description}}</p></center>  
+  <center><p class="container3">Description:    {{this.description}}</p></center> 
+
   <center><p class="container4">Ticket Price:    {{this.price}}</p></center> 
   
 
@@ -216,6 +215,10 @@ button {
 
 <center>
    <button class="container5" type="submit"> <a href="/buyticket" style="text-decoration: none ; color:#eee">Buy Ticket</a></button> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+     </center> 
+
+     <center>
+   <button class="container5" type="submit"> <a href="/updateevent/{{this._id}}" style="text-decoration: none ; color:#eee">Edit Event</a></button> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
      </center> 
 
  

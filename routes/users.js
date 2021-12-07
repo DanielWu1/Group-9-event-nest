@@ -1,191 +1,424 @@
 const express = require("express");
 //const { getAll } = require("../data");
 const router = express.Router();
-const usersdata = require('../data/users'); 
-const eventsdata = require('../data/events')
+const data = require('../data/users'); 
+const data1 = require('../data/events')
 
         
 
-// 1. to get user login page
+
 router.get("/", async(req,res) =>{
     try{
-        res.status(200).redirect("/userlogin");
+        res.redirect("/userlogin");
         return;
-    } catch(e){
+}
+    
+    catch(e){
+     
         res.status(500).json({message : e});
         return;
     }
 }); 
 
-// 2. to get the user sigup page
 router.get("/usersignup", async(req,res) =>{
     try{
         res.render("usersignup/usersignup");
         return;
-    }
+}
+    
     catch(e){
+     
         res.status(500).json({message : e});
         return;
     }
 }); 
 
-// TODO: check for phone number validations
-// 3. create the USER @ usersignup
 router.post("/usersignup", async(req,res) => {
-    let createUserPost = req.body; 
-
-    // ----- validations
-    if(!createUserPost) {
-        res.status(400).render('usersignup/usersignup', { error: e, message:"Input request not found"});
+    let signpost = req.body; 
+    if(!signpost) {
+        res.status(400).render('usersignup/usersignup', { error:"Input request not found"});
         return;
     }
-    if(!createUserPost.username|| createUserPost.username  === NaN){
-        res.status(400).render('usersignup/usersignup', { error: e, message:"Input username not found"});
+    if(!signpost.username|| signpost.username  === NaN){
+        res.status(400).render('usersignup/usersignup', { error:"Input username not found"});
         return;
     }
-    if(!createUserPost.email || createUserPost.email  === NaN){
-        res.status(400).render('usersignup/usersignup', { error: e, message:"Input email not found"});
+    if(!signpost.email || signpost.email  === NaN){
+        res.status(400).render('usersignup/usersignup', { error:"Input email not found"});
         return;
     }
-    if(!createUserPost.password || createUserPost.password  === NaN){
-        res.status(400).render('usersignup/usersignup', { error: e, message:"Input password not found"});
+    if(!signpost.password || signpost.password  === NaN){
+        res.status(400).render('usersignup/usersignup', { error:"Input password not found"});
         return;
     }
 
     // ----- check for string validations
     // check username
-    if(typeof createUserPost.username !== "string") {
-        res.status(400).render('usersignup/usersignup', { error: e, message:"Input username must be a string!"});
+    if(typeof signpost.username !== "string") {
+        res.status(400).render('usersignup/usersignup', { error:"Input username must be a string!"});
         return;
     }
-    if(typeof createUserPost.username === "string" && createUserPost.username.trim() === "") {
-        res.status(400).render('usersignup/usersignup', { error: e, message:"Input username must be a string!"});
+    if(typeof signpost.username === "string" && signpost.username.trim() === "") {
+        res.status(400).render('usersignup/usersignup', { error:"Input username must be a string!"});
         return;
     }
     // checking for email validations
-    if (isEmail(createUserPost.email) === false){ 
-        res.status(400).render('usersignup/usersignup', { error: e, message:"Input email is not valid"});
+    if (isEmail(signpost.email) === false){ 
+        res.status(400).render('usersignup/usersignup', { error:"Input email is not valid"});
         return;
     }
     // chekcing for password
-    if (isPassword(createUserPost.password) === false){ 
-        res.status(400).render('usersignup/usersignup', { error: e, message:"Input password has to be 6-20 characters which contain at least one numeric digit, one uppercase and one lowercase letter"});
+    if (isPassword(signpost.password) === false){ 
+        res.status(400).render('usersignup/usersignup', { error:"Input password has to be 6-20 characters which contain at least one numeric digit, one uppercase and one lowercase letter"});
         return;
     }
     // check address
-     if(typeof createUserPost.address !== "string") {
-        res.status(400).render('usersignup/usersignup', { error: e, message:"Input address must be a string!"});
+     if(typeof signpost.address !== "string") {
+        res.status(400).render('usersignup/usersignup', { error:"Input address must be a string!"});
         return;
     }
-    if(typeof createUserPost.address === "string" && createUserPost.address.trim() === "") {
-        res.status(400).render('usersignup/usersignup', { error: e, message:"Input address must be a string!"});
+    if(typeof signpost.address === "string" && signpost.address.trim() === "") {
+        res.status(400).render('usersignup/usersignup', { error:"Input address must be a string!"});
         return;
     }
     // check gender
-     if(typeof createUserPost.gender !== "string") {
-        res.status(400).render('usersignup/usersignup', { error: e, message:"Input gender must be a string!"});
+     if(typeof signpost.gender !== "string") {
+        res.status(400).render('usersignup/usersignup', { error:"Input gender must be a string!"});
         return;
     }
-    if(typeof createUserPost.gender === "string" && createUserPost.gender.trim() === "") {
-        res.status(400).render('usersignup/usersignup', { error: e, message:"Input gender must be a string!"});
+    if(typeof signpost.gender === "string" && signpost.gender.trim() === "") {
+        res.status(400).render('usersignup/usersignup', { error:"Input gender must be a string!"});
         return;
     }
-
-    // check if the phone number is of length 10 is all digits 
-    // TODO: CEHCK FOR -
-    //     if( (createUserPost.phone.length === 10) && (/^\d+\.\d+$/.test(createUserPost.phone))) {
-    //     res.status(400).render('usersignup/usersignup', { error: e, message:"Input phone must be only digits of length 10!"});
-    //     return;
-    // }
-
-    try { 
-    
-    const signupcreate = await usersdata.createUser( 
-        createUserPost.username, 
-        createUserPost.phone, 
-        createUserPost.gender, 
-        createUserPost.email, 
-        createUserPost.address, 
-        createUserPost.password
+    let mypho1 = signpost.phone.split('')
+    if (mypho1[3] !== '-' || mypho1[7] !== '-'){
+        res.status(400).render('usersignup/usersignup', { error:"phone input is wrong2!"});
+        return;
+    }
+    let mypho = signpost.phone.split('-')
+    if (mypho[0].length !== 3 || mypho[1].length !== 3 || mypho[2].length !== 4){
+        res.status(400).render('usersignup/usersignup', { error:"phone input is wrong1!"});
+        return;
+    }
+    if (mypho.length != 3){
+        res.status(400).render('usersignup/usersignup', { error:"phone input is wrong3!"});
+        return;
+    }
+    let n = Number(mypho[0])
+    let n2 = Number(mypho[1])
+    let n3 = Number(mypho[2])
+    if (isNaN(n) || isNaN(n2) || isNaN(n3)){
+        res.status(400).render('usersignup/usersignup', { error:"phone input is not a number!"});
+        return;
+    }
+    try{ 
+    console.log(signpost.gender)
+    const signupcreate = await data.createUser( 
+        signpost.username, 
+        signpost.phone, 
+        signpost.gender, 
+        signpost.email, 
+        signpost.address, 
+        signpost.password, 
         ); 
-        res.status(200).json({message:"User has been created successfully!"}).redirect('/userlogin');
+         
+        
+        res.redirect('/userlogin') 
         return;
-    } catch(e) {
+}
+    catch(e)
+    {
         console.log(e)
-        res.status(500).render('usersignup/usersignup', { error: e, message: "There was an error in creating the user! Try Again!" });
+        res.render('usersignup/usersignup', { error: e });
         return;
     }
 });
 
-// 4.1 to get the user login page
 router.get("/userlogin", async(req,res) =>{
     try{
-        res.status(200).render("userlogin/userlogin");
+        res.render("userlogin/userlogin");
         return;
-    }
+}
+    
     catch(e){
+     
         res.status(500).json({message : e});
         return;
     }
 }); 
 
-// 4.2 user login page 
 router.post("/userlogin", async(req,res) => {
  
-    let userLoginPostData = req.body; 
-
-    // checking for email validations
-    if (isEmail(userLoginPostData.email) === false){ 
-        res.status(400).render('usersignup/usersignup', { error: e, message:"Input email is not valid"});
+    let login = req.body; 
+    if (isEmail(login.email) === false){ 
+        res.status(400).render('usersignup/usersignup', { error: "Input email is not valid"});
         return;
     }
     // chekcing for password
-    if (isPassword(userLoginPostData.password) === false){ 
-        res.status(400).render('usersignup/usersignup', { error: e, message:"Input password has to be 6-20 characters which contain at least one numeric digit, one uppercase and one lowercase letter"});
+    if (isPassword(login.password) === false){ 
+        res.status(400).render('usersignup/usersignup', { error: "Input password has to be 6-20 characters which contain at least one numeric digit, one uppercase and one lowercase letter"});
         return;
     }
 
     try {
-        const logininfo = await usersdata.checkUsers(
-            userLoginPostData.email, 
-            userLoginPostData.password); 
+        console.log(login.email)
+        const logininfo = await data.checkUsers( 
+            login.email, 
+            login.password);
         
         req.session.userId = logininfo['_id']
         req.session.email = logininfo['email']
         req.session.userName = logininfo['userName']
-        res.status(200).render("userhomepage/userhomepage", logininfo);
+        res.redirect("/userhomepage");
         return;
-    } catch(e) {   
-        console.log(e);
-        res.status(500).render('userlogin/userlogin', {error:e});
+    }
+    catch(e)
+    {   //console.log(e);
+        res.render('userlogin/userlogin', {error:e});
         return;
     }
 }); 
 
-// 5. to get the homepage data -- all events are rendered
 router.get("/userhomepage", async(req,res) =>{ 
+
+
     try{ 
-        const displayevent = await eventsdata.getAllEvents();
-        res.status(200).render(displayevent);
+        const displayevent1 = await data.getByUsers(req.session.email)
+        const displayevent = await data1.getAllEvents() 
+        let result = [];
+        for (const event of displayevent) {
+            if (event.likeList.includes(req.session.userId)) {
+                event['likedByThisUser'] = true;
+            }
+            result.push(event);
+        }
+        
+        res.render("userhomepage/userhomepage",{allevents:displayevent, username: req.session.userName});
         return;
-    } catch(e){
+}
+    
+    catch(e){
+     
         res.status(500).json({message : e});
         return;
     }
 }); 
 
 
-// TODO: FOR LOG OUT 
+
+
+// router.get("/bookedevents", async(req,res) =>{
+//     try{
+//         res.render("bookedevents/bookedevents");
+//         return;
+// }
+    
+//     catch(e){
+     
+//         res.status(500).json({message : e});
+//         return;
+//     }
+// }); 
+
+router.post("/events/:id/like", async (req, res) => {
+    console.log(req.params.id);
+    console.log(req.session.userId)
+    const updateLikes = await data1.recordLike(req.params.id, req.session.userId);
+    if (updateLikes === true) {
+        res.status(200).json({ likeAdded: true });
+        return;
+    }
+    
+})
+
+// router.get("/likedevents", async(req,res) =>{
+//     try{
+//         res.render("likedevents/likedevents");
+//         return;
+// }
+    
+//     catch(e){
+     
+//         res.status(500).json({message : e});
+//         return;
+//     }
+// }); 
+
+
+// router.get("/userhomepage", async(req,res) =>{ 
+
+
+//     try{ 
+//         const displayevent1 = await data.getByUsers(req.session.email)
+//         const displayevent = await data1.getAllEvents() 
+//         let result = [];
+//         for (const event of displayevent) {
+//             if (event.likeList.includes(req.session.userId)) {
+//                 event['likedByThisUser'] = true;
+//             }
+//             result.push(event);
+//         }
+        
+//         res.render("userhomepage/userhomepage",{allevents:displayevent, username: req.session.userName});
+//         return;
+// }
+    
+//     catch(e){
+     
+//         res.status(500).json({message : e});
+//         return;
+//     }
+// }); 
+
+
+// router.get("/userhomepage", async(req,res) =>{ 
+
+
+//     try{ 
+//         const displayevent1 = await data.getByUsers(req.session.email)
+//         const displayevent = await data1.getAllEvents() 
+        
+        
+//         res.render("userhomepage/userhomepage",{allevents:displayevent, username: req.session.userName});
+//         return;
+// }
+    
+//     catch(e){
+     
+//         res.status(500).json({message : e});
+//         return;
+//     }
+// }); 
+
+
+
+// router.get("/eventshomepage", async(req,res) =>{ 
+
+
+//     try{  
+//         const displayevent = await data1.getAllEvents() 
+//         console.log(displayevent);
+//         let result = [];
+//         for (const event of displayevent) {
+//             if (event.likeList.includes(req.session.userId)) {
+//                 event['likedByThisUser'] = true;
+//             }
+//             result.push(event);
+//         }
+//         res.render("eventshomepage/eventshomepage",{allevents:result, username: req.session.userName});
+//         return;
+// }
+    
+//     catch(e){
+//         console.log(e);
+//         res.status(500).json({message : e});
+//         return;
+//     }
+// }); 
+
+
+
+// router.get("/create-event", async(req,res) =>{
+//     try{
+
+//         res.render("create-event/create-event");
+//         return;
+// }
+    
+//     catch(e){
+     
+//         res.status(500).json({message : e});
+//         return;
+//     }
+// });    
+
+
+
+
+
+// router.post("/create-event", async(req,res) => {
+//     let postevent = req.body; 
+//     console.log(postevent)
+//     try
+// { 
+    
+//     const createevent = await data1.createEvent( 
+        
+//         postevent.title,
+//         postevent.category, 
+//         postevent.creator,
+//         postevent.date,
+//         postevent.timestart,
+//         postevent.endtime,
+//         postevent.address,
+//         postevent.city,
+//         postevent.state,
+//         postevent.ticketcapacity,
+//         postevent.price,
+//         postevent.description,
+//         ); 
+         
+        
+//         res.redirect('/eventshomepage') 
+//         return;
+// }
+//     catch(e)
+//     {
+//         console.log(e)
+//         res.render('create-event/create-event', { error: e });
+//         return;
+//     }
+// }); 
+
+ 
+
+// router.post("/organizersignup", async(req,res) => {
+//     let orgsignpost = req.body; 
+//     try
+// { 
+    
+//     const signupcreate = await data.createOrganizer( 
+//         orgsignpost.username,
+//         orgsignpost.phone, 
+//         orgsignpost.gender,
+//         orgsignpost.email, 
+//         orgsignpost.address, 
+//         orgsignpost.password); 
+         
+        
+//         res.redirect('/organizersignup') 
+//         return;
+// }
+//     catch(e)
+//     {
+//         console.log(e)
+//         res.render('organizerignup/organizersignup', { error: e });
+//         return;
+//     }
+// });
+
+
+
+
+// router.get("/private", async(req,res) =>{
+//     try {
+        
+//         res.render("private/private", { username: req.session.username});
+//         return;
+//     }
+//     catch(e) {
+//         console.log(e);
+//         res.status(500).json({message : e});
+//         return;
+//     }
+// });
+
 router.get('/logout', async (req, res) => {
     req.session.destroy();
     res.render("logout/logout")
   });
 
-// ---------------------
-// validation functions
-// ---------------------
-// check for email
-function isEmail(inputEmail) {
+  function isEmail(inputEmail) {
     const re = /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
     if (inputEmail.match(re)){
         return true;
@@ -202,5 +435,6 @@ function isPassword(inputtxt) {
         return false;
     }
 }
+
 
 module.exports = router;

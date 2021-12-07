@@ -35,22 +35,10 @@
 						<br>
 					</div> 
 
-					<div class="form-group mt-2">
-						<label for="creator" >Creator Name:&nbsp;&nbsp;&nbsp;&nbsp;  
-						</label>
-						<input type="text" name="creator" class="ghost-round2" id="creator" placeholder="         Creator name" required> 
-						<br>
-						<br>
-					</div> 
 
 
 
-					<div class="form-group">
-						<label for="date" type = "date">Date:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
-						<input class="ghost-round2" name="date" id="date" placeholder="        Event date" type = "date"required>
-						<br>
-						<br>
-					</div>
+					
 
 					<div class="form-row">
 						<div class="form-group col-md-6">
@@ -127,6 +115,9 @@
 		</div>
 	</main>
 
+{{#if error}}
+<center><p> {{ error }}</p></center>
+{{/if}}
 
 
 	<!-- Bootstrap core JavaScript
