@@ -77,7 +77,6 @@ const createEvent = async (
         // typeof description != "string" ||
         title.trim().length == 0 ||
         category.trim().length == 0 ||
-        creator.trim().length == 0 ||
         address.trim().length == 0 ||
         city.trim().length == 0 ||
         state.trim().length == 0 ||
@@ -85,6 +84,7 @@ const createEvent = async (
     ) {
         throw "parameters are just spaces!";
     }
+
 
 
     //timestart validation
@@ -137,23 +137,6 @@ const createEvent = async (
     }
     let myticketcapacity = Number(ticketcapacity);
     // check for validation ticket capacity
-    if (isNaN(myticketcapacity)){
-        throw "ticketcapacity is not numbers"
-    }
-    if (typeof myticketcapacity != "number") {
-        throw " Number of Tickets must be in Numbers";
-    }
-    
-
-    // check for price validation
-    let ticketprice = Number(price);
-    if (isNaN(ticketprice)){
-        throw "ticket price is not numbers"
-    }
-    if (typeof ticketprice != "number") {
-        throw " Number of Ticket's Price must be in Numbers";
-    }
-    
 
     const eventCollection = await events();
 
@@ -191,6 +174,16 @@ const createEvent = async (
 
     return event;
 };
+ 
+// const addComment = async (comments) => { 
+
+//     const eventCollection = await events();
+
+
+// }
+
+
+
 
 const updateEvent = async (
     eventId,
@@ -295,25 +288,7 @@ const updateEvent = async (
             throw " In Endtime you must enter in HH/MM format";
         }
     }
-    let myticketcapacity = Number(ticketcapacity);
-    // check for validation ticket capacity
-    console.log(myticketcapacity)
-    if (isNaN(myticketcapacity)){
-        throw "ticketcapacity is not numbers"
-    }
-    if (typeof myticketcapacity !== "number") {
-        throw " Number of Tickets must be in Numbers";
-    }
-    
 
-    // check for price validation
-    let ticketprice = Number(price);
-    if (isNaN(ticketprice)){
-        throw "ticket price is not numbers"
-    }
-    if (typeof ticketprice != "number") {
-        throw " Number of Ticket's Price must be in Numbers";
-    }
 
     if (typeof active !== "boolean")
         throw "Active status of the event must a true or false";
@@ -1042,8 +1017,12 @@ function isEmail(inputEmail) {
  
 }
 
+
+
+
 module.exports = {
     createEvent,
+    //addComment,
     getAllEvents,
     getEvent,
     removeEvent,
@@ -1062,5 +1041,6 @@ module.exports = {
 
     getEventByCreatorEmail, 
     bookTicket, 
-    getMyEvents
+    getMyEvents, 
+   
 };

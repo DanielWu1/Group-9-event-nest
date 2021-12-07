@@ -199,7 +199,7 @@ button {
      </div> 
 
      <div align="left">
-        &nbsp;&nbsp;&nbsp;&nbsp;  <button class="container5" type="submit"><a href="/likedevents" style="text-decoration: none ; color:#eee"> Liked Events </a></button> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+       
 
         &nbsp;&nbsp;&nbsp;&nbsp;  <button class="container5" type="submit"><a href="/myevents" style="text-decoration: none ; color:#eee"> My Events </a></button> 
      </div>
@@ -273,6 +273,15 @@ button {
    <button class="button2" type="submit"> <a href="/buyticket" style="text-decoration: none ; color:#eee">Going</a></button> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
      </center> 
 
+     <center> 
+     <p>Comment section</p>
+    <input class= "" type ="text" name="comments">
+     </center>
+
+     <center>
+   <button class="container7" type="submit"> <a href="/comment/{{this._id}}" style="text-decoration: none ; color:#eee">Add the comment</a></button> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+     </center> 
+
 <center>
    <button class="container5" type="submit"> <a href="/checkout/{{this._id}}" style="text-decoration: none ; color:#eee">Buy Ticket</a></button> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
      </center> 
@@ -287,7 +296,7 @@ button {
   {{/each}} 
   </div> 
   {{!-- <script src="/public/js/form.js"></script> --}}
-  <a href="/userhomepage" id="homeLink" hidden>Back to All user home page</a>
+  <a href="/userhomepage" id="homeLink" hidden> Back to All user home page</a>
 
 </body>
                 
