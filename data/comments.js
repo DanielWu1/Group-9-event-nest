@@ -7,8 +7,6 @@ const createComment = async (userId, eventId, comments) => {
     }
 
     if (
-        typeof eventId != "string" ||
-        typeof comments != "string" ||
         typeof userId != "string" ||
         typeof eventId != "string" ||
         typeof comments != "string" ||
@@ -18,8 +16,6 @@ const createComment = async (userId, eventId, comments) => {
     ) {
         throw "parameters are not strings or are empty strings,";
     }
-
-    parsedEventid = ObjectId(eventId);
     try {
         parsedUserid = ObjectId(userId);
     } catch (e) {
@@ -48,7 +44,6 @@ const createComment = async (userId, eventId, comments) => {
 
     return finalEvent;
 };
-
 const getAllComments = async (eventId) => {
     if (!eventId) {
         throw "id need to have valid values";
@@ -70,7 +65,6 @@ const getAllComments = async (eventId) => {
     if (findEvent == null) throw "Event not exist with that eventId";
     return findEvent.comments;
 };
-
 const getComment = async (commentId) => {
     if (!commentId) {
         throw "CommentId need to have valid values";
@@ -86,20 +80,6 @@ const getComment = async (commentId) => {
     }
 
     const eventCollection = await events();
-    const findEvent = await eventCollection.findOne(
-        { "comments._id": ObjectId(commentId) },
-        { projection: { _id: 0, "comments.$": 1 } }
-    );
-    if (findEvent == null) throw "Review doesn't exist.";
-    return findEvent.comments;
-};
-const remove = async (commentId) => {
-    if (!commentId) {
-        throw "id need to have valid values";
-    }
-    if (typeof commentId != "string" || commentId.trim().length == 0) {
-        throw "id is not string or is empty string,";
-    }
 
     const findEvent = await eventCollection.findOne(
         { "comments._id": ObjectId(commentId) },
@@ -177,7 +157,6 @@ const removeComment = async (commentId) => {
 
     const eventCollection = await events();
     const findComment = await eventCollection.findOne({
-        "comments._id": parsedCommentid,
         "comments._id": ObjectId(commentId),
     });
 
@@ -185,7 +164,6 @@ const removeComment = async (commentId) => {
 
     for (let i = 0; i < findComment.comments.length; i++) {
         if (findComment.comments[i]._id == parsedCommentid) {
-            commentCount = commentCount + 1;
             commentCount = commentCount - 1;
         }
         const finalComments = await eventCollection.updateOne(
@@ -254,7 +232,6 @@ const updateComment = async (
     );
 };
 module.exports = {
-    remove,
     createComment,
     getAllComments,
     getComment,

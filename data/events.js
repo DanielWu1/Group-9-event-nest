@@ -8,32 +8,31 @@ var mytime = myDate.toLocaleDateString();
 var myhour = myDate.getHours();
 const validDate = /(0\d{1}|1[0-2])\/([0-2]\d{1}|3[0-1])\/(19|20)\d{2}/;
 const validTime = /^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$/;
-function datetime(str) {
-    let datetimer = [];
-    let date = "";
-    let time = "";
-    for (let i = 0; i < 10; i++) {
-        date += str[i];
-    }
-    for (let j = 11; j < 16; j++) {
-        time += str[j];
-    }
-    datetimer.push(date);
-    datetimer.push(time);
-    return datetimer;
-}
+// function datetime(str) {
+//     let datetimer = [];
+//     let date = "";
+//     let time = "";
+//     for (let i = 0; i < 10; i++) {
+//         date += str[i];
+//     }
+//     for (let j = 11; j < 16; j++) {
+//         time += str[j];
+//     }
+//     datetimer.push(date);
+//     datetimer.push(time);
+//     return datetimer;
+// }
 const getAllEvents = async () => {
     const eventCollection = await events();
     const eventList = await eventCollection.find({}).toArray();
 
     return eventList;
 };
-
 const getEvent = async (eventId) => {
     try {
         parsedEventid = ObjectId(eventId);
     } catch (e) {
-        throw "Format for event id is wrong";
+        throw "id format wrong";
     }
     if (!eventId) throw "You must provide an id to search for";
     if (typeof eventId != "string" || eventId.trim().length == 0)
@@ -42,29 +41,6 @@ const getEvent = async (eventId) => {
     const event = await eventCollection.findOne({ _id: parsedEventid });
 
     return event;
-};
-
-const getTime = async (id) => {
-    const timeArray = [];
-    const timeObject = {};
-    try {
-        id1 = ObjectId(id);
-    } catch (e) {
-        throw "Format for event id is wrong";
-    }
-    if (!id) throw "You must provide an id to search for";
-    if (typeof id != "string" || id.trim().length == 0)
-        throw "the id provided is not a string or is an empty string";
-    const eventCollection = await events();
-    const event = await eventCollection.findOne({ _id: id1 });
-
-    timeObject["_id"] = event._id;
-    timeObject["title"] = event.title;
-    timeObject["timestart"] = event.timestart;
-    timeObject["description"] = event.description;
-    timeArray.push(timeObject);
-
-    return timeArray;
 };
 const createEvent = async (
     title,
@@ -80,6 +56,18 @@ const createEvent = async (
     price,
     description
 ) => {
+    // console.log(title)
+    // console.log(category)
+    // console.log(creator)
+    // console.log(date)
+    // console.log(timestart)
+    // console.log(endtime)
+    // console.log(address)
+    // console.log(city)
+    // console.log(state)
+    // console.log(ticketcapacity)
+    // console.log(price)
+    // console.log(description)
     // checking for valid fields
     if (
         !title ||
@@ -120,9 +108,9 @@ const createEvent = async (
     }
 
     // date validation
-    if (!date.match(validDate)) {
-        throw "Date is not in Valid Format";
-    }
+    // if (!date.match(validDate)) {
+    //     throw "Date is not in Valid Format";
+    // }
 
     // timestart validation
     if (!Array.isArray(timestart)) {
@@ -181,7 +169,8 @@ const createEvent = async (
     }
 
     // check for price validation
-    if (typeof price != "number") {
+    ticketprice = Number(price);
+    if (typeof ticketprice != "number") {
         throw " Number of Ticket's Price must be in Numbers";
     }
 
@@ -192,13 +181,13 @@ const createEvent = async (
         category: category,
         creator: creator,
         date: date,
-        timestart: datetime(timestart),
-        endtime: datetime(endtime),
+        timestart: timestart,
+        endtime: endtime,
         address: address,
         city: city,
         state: state,
         ticketcapacity: ticketcapacity,
-        price: price,
+        price: ticketprice,
         description: description,
 
         buyerList: [],
@@ -244,7 +233,7 @@ const updateEvent = async (
     try {
         parsedEventid = ObjectId(eventId);
     } catch (e) {
-        throw "Format for event id is wrong";
+        throw "id format wrong";
     }
     if (!eventId) throw "You must provide an id to search for";
 
@@ -285,9 +274,9 @@ const updateEvent = async (
         throw "parameters are not strings or are empty strings,";
     }
 
-    if (!date.match(validDate)) {
-        throw "Date is not in Valid Format";
-    }
+    // if (!date.match(validDate)) {
+    //     throw "Date is not in Valid Format";
+    // }
     if (!Array.isArray(timestart)) {
         throw "timeStart is Not an Array";
     } else if (timestart.length == 0) {
@@ -376,7 +365,6 @@ const removeEvent = async (
     city,
     state,
     ticketcapacity,
-    ticketleft,
     price,
     description
 ) => {
@@ -385,7 +373,7 @@ const removeEvent = async (
     try {
         parsedEventid = ObjectId(eventId);
     } catch (e) {
-        throw "Format for event id is wrong";
+        throw "id format wrong";
     }
     if (!eventId) throw "You must provide an id to search for";
 
@@ -400,7 +388,6 @@ const removeEvent = async (
         !city ||
         !state ||
         !ticketcapacity ||
-        !ticketleft ||
         !price ||
         !description
     ) {
@@ -427,9 +414,9 @@ const removeEvent = async (
         throw "parameters are not strings or are empty strings,";
     }
 
-    if (!date.match(validDate)) {
-        throw "Date is not in Valid Format";
-    }
+    // if (!date.match(validDate)) {
+    //     throw "Date is not in Valid Format";
+    // }
     if (!Array.isArray(timestart)) {
         throw "timeStart is Not an Array";
     } else if (timestart.length == 0) {
@@ -472,7 +459,6 @@ const removeEvent = async (
         }
     }
 
-    if (typeof ticketcapacity != "number" || typeof ticketleft != "number") {
     if (typeof ticketcapacity != "number") {
         throw " Number of Tickets must be in Numbers";
     }
@@ -494,11 +480,6 @@ const removeEvent = async (
         city: city,
         state: state,
         ticketcapacity: ticketcapacity,
-        ticketleft: ticketleft,
-        description: description,
-    };
-    await eventCollection.updateOne(
-        { _id: ObjectId(id) },
         price: price,
         description: description,
         active: false,
@@ -592,7 +573,7 @@ const addLike = async (eventId) => {
     const findEvent = await eventCollection.findOne({
         _id: ObjectId(eventId),
     });
-    console.log(findEvent);
+    // console.log(findEvent);
     // let mynewcomment = findComment["comments"];
     // for (let i = 0; i < mynewcomment.length; i++) {
     //     let mycommentlist = mynewcomment[i];
@@ -644,7 +625,7 @@ const removeLike = async (eventId) => {
     const findEvent = await eventCollection.findOne({
         _id: ObjectId(eventId),
     });
-    console.log(findEvent);
+    // console.log(findEvent);
     // let mynewcomment = findComment["comments"];
     // for (let i = 0; i < mynewcomment.length; i++) {
     //     let mycommentlist = mynewcomment[i];
@@ -698,7 +679,7 @@ const addIntersted = async (eventId) => {
     const findEvent = await eventCollection.findOne({
         _id: ObjectId(eventId),
     });
-    console.log(findEvent);
+    // console.log(findEvent);
     // let mynewcomment = findComment["comments"];
     // for (let i = 0; i < mynewcomment.length; i++) {
     //     let mycommentlist = mynewcomment[i];
@@ -751,7 +732,7 @@ const removeIntersted = async (eventId) => {
     const findEvent = await eventCollection.findOne({
         _id: ObjectId(eventId),
     });
-    console.log(findEvent);
+    // console.log(findEvent);
     // let mynewcomment = findComment["comments"];
     // for (let i = 0; i < mynewcomment.length; i++) {
     //     let mycommentlist = mynewcomment[i];
@@ -805,7 +786,7 @@ const addGoing = async (eventId) => {
     const findEvent = await eventCollection.findOne({
         _id: ObjectId(eventId),
     });
-    console.log(findEvent);
+    // console.log(findEvent);
     // let mynewcomment = findComment["comments"];
     // for (let i = 0; i < mynewcomment.length; i++) {
     //     let mycommentlist = mynewcomment[i];
@@ -859,7 +840,7 @@ const removeGoing = async (eventId) => {
     const findEvent = await eventCollection.findOne({
         _id: ObjectId(eventId),
     });
-    console.log(findEvent);
+    // console.log(findEvent);
     // let mynewcomment = findComment["comments"];
     // for (let i = 0; i < mynewcomment.length; i++) {
     //     let mycommentlist = mynewcomment[i];
