@@ -55,18 +55,17 @@ const createEvent = async (
     price,
     description
 ) => {
-    console.log(title)
-    console.log(category)
-    console.log(creator)
-    console.log(date)
-    console.log(timestart)
-    console.log(endtime)
-    console.log(address)
-    console.log(city)
-    console.log(state)
-    console.log(ticketcapacity)
-    console.log(price)
-    console.log(description)
+    // console.log(title)
+    // console.log(category)
+    // console.log(creator)
+    // console.log(timestart)
+    // console.log(endtime)
+    // console.log(address)
+    // console.log(city)
+    // console.log(state)
+    // console.log(ticketcapacity)
+    // console.log(price)
+    // console.log(description)
  
     if (
         // typeof title != "string" ||
@@ -87,10 +86,6 @@ const createEvent = async (
         throw "parameters are just spaces!";
     }
 
-    //date validation
-    if (!date.match(validDate)) {
-        throw "Date is not in Valid Format";
-    }
 
     //timestart validation
     if (!Array.isArray(timestart)) {
@@ -140,17 +135,25 @@ const createEvent = async (
     if (mystart > myend) {
         throw "$ end time must after start time and now";
     }
-
+    let myticketcapacity = Number(ticketcapacity);
     // check for validation ticket capacity
-    if (typeof ticketcapacity != "number") {
+    if (isNaN(myticketcapacity)){
+        throw "ticketcapacity is not numbers"
+    }
+    if (typeof myticketcapacity != "number") {
         throw " Number of Tickets must be in Numbers";
     }
+    
 
     // check for price validation
-    ticketprice = Number(price);
+    let ticketprice = Number(price);
+    if (isNaN(ticketprice)){
+        throw "ticket price is not numbers"
+    }
     if (typeof ticketprice != "number") {
         throw " Number of Ticket's Price must be in Numbers";
     }
+    
 
     const eventCollection = await events();
 
@@ -163,8 +166,8 @@ const createEvent = async (
         address: address,
         city: city,
         state: state,
-        ticketcapacity: ticketcapacity,
-        price: price,
+        ticketcapacity: myticketcapacity,
+        price: ticketprice,
         description: description,
 
         buyerList: [],
@@ -292,12 +295,23 @@ const updateEvent = async (
             throw " In Endtime you must enter in HH/MM format";
         }
     }
-
-    if (typeof ticketcapacity != "number") {
+    let myticketcapacity = Number(ticketcapacity);
+    // check for validation ticket capacity
+    console.log(myticketcapacity)
+    if (isNaN(myticketcapacity)){
+        throw "ticketcapacity is not numbers"
+    }
+    if (typeof myticketcapacity !== "number") {
         throw " Number of Tickets must be in Numbers";
     }
+    
 
-    if (typeof price != "number") {
+    // check for price validation
+    let ticketprice = Number(price);
+    if (isNaN(ticketprice)){
+        throw "ticket price is not numbers"
+    }
+    if (typeof ticketprice != "number") {
         throw " Number of Ticket's Price must be in Numbers";
     }
 
@@ -305,7 +319,7 @@ const updateEvent = async (
         throw "Active status of the event must a true or false";
 
     const eventCollection = await events();
-
+    const olddata = await eventCollection.findOne({ _id: ObjectId(eventId) });
     const updatedEvent = {
         title: title,
         category: category,
@@ -315,9 +329,19 @@ const updateEvent = async (
         address: address,
         city: city,
         state: state,
-        ticketcapacity: ticketcapacity,
-        price: price,
+        ticketcapacity: myticketcapacity,
+        price: ticketprice,
         description: description,
+        buyerList: olddata['buyerList'],
+        likes: olddata['likes'],
+        intersted: olddata['intersted'],
+        going: olddata['going'],
+
+        followerList: olddata['followerList'], // people GOING
+        likeList: olddata['likeList'], // LIKE event
+        interestedList: olddata['interestedList'], // people INTERESTED in the event
+
+        comments: olddata['comments'],
         active: active,
     };
     await eventCollection.updateOne(
