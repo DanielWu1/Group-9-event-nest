@@ -135,9 +135,8 @@ const createEvent = async (
     if (mystart > myend) {
         throw "$ end time must after start time and now";
     }
-
+    let myticketcapacity = Number(ticketcapacity);
     // check for validation ticket capacity
- 
 
     const eventCollection = await events();
 
@@ -150,8 +149,8 @@ const createEvent = async (
         address: address,
         city: city,
         state: state,
-        ticketcapacity: ticketcapacity,
-        price: price,
+        ticketcapacity: myticketcapacity,
+        price: ticketprice,
         description: description,
 
         buyerList: [],
@@ -290,15 +289,12 @@ const updateEvent = async (
         }
     }
 
-   
-
-   
 
     if (typeof active !== "boolean")
         throw "Active status of the event must a true or false";
 
     const eventCollection = await events();
-
+    const olddata = await eventCollection.findOne({ _id: ObjectId(eventId) });
     const updatedEvent = {
         title: title,
         category: category,
@@ -308,9 +304,19 @@ const updateEvent = async (
         address: address,
         city: city,
         state: state,
-        ticketcapacity: ticketcapacity,
-        price: price,
+        ticketcapacity: myticketcapacity,
+        price: ticketprice,
         description: description,
+        buyerList: olddata['buyerList'],
+        likes: olddata['likes'],
+        intersted: olddata['intersted'],
+        going: olddata['going'],
+
+        followerList: olddata['followerList'], // people GOING
+        likeList: olddata['likeList'], // LIKE event
+        interestedList: olddata['interestedList'], // people INTERESTED in the event
+
+        comments: olddata['comments'],
         active: active,
     };
     await eventCollection.updateOne(
