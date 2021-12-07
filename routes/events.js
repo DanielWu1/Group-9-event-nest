@@ -50,6 +50,37 @@ router.get("/bookedevents", async(req,res) =>{
 //         return;
 //     }
 // }); 
+
+router.post('/search/:id', async(req,res) =>{
+    // console.log('asdfasdf')
+    const name = req.params.id
+    // console.log(name)
+    if(!name) {
+        res.status(400).render('error/error', { error:'You must provide a name'})
+        return;
+    }
+    if(typeof name !== 'string') {
+        res.status(400).render('error/error', { error:'name must be string'})
+        return;
+    }
+    if(name.match(/^[ ]*$/)) {
+        res.status(400).render('error/error', { error:'name is empty'})
+        return;
+    }
+    try{
+        // console.log('asdfasdf')
+        let myreturn = await eventsdata.getEventListByName(name)
+        // console.log(myreturn)
+        res.status(200).json(myreturn)
+        return
+    }
+    catch(e){
+        res.status(400).render('error/error', { error:e})
+        return;
+    }
+
+})
+
 // 2.2: GET ALL THE EVENTS CREATED BY SELF -- get data
 router.get("/myevents", async(req,res) =>{
     try{
