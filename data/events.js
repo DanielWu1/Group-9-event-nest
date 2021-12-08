@@ -501,21 +501,25 @@ async function getEventListByName(inputEventName) {
 }
 
 // QUERYING FOR SEARCH BY CATEGORY // FOR CATEGORY FILTERS
-// TODO: check to be done with Ajax
 async function getEventListByCategory(inputEventCategory) {
+
     // check inputs
-    if (typeof inputEventCategory !== "string")
-        throw "Input event category has to be a string";
-    if (inputEventCategory.trim() === "")
-        throw "Input event category is an empty string";
+    if (typeof inputEventCategory !== "object")
+        throw "Input event category has to be an array";
+    if (inputEventCategory.length === 0)
+        throw "no filters supplied";
 
     // run query
     const eventCollection = await events();
-    const result = await eventCollection
-        .find({ category: inputEventCategory.toString() })
+    for (let i =0 ; i<inputEventCategory.length; i++){
+        const result = await eventCollection
+        .find({ "category": inputEventCategory.toString() })
         .toArray();
 
-    return result;
+        returnEventList = returnEventList.concat(result);
+    }
+
+    return returnEventList;
 }
 
 const recordLike = async (eventId, userId) => {
