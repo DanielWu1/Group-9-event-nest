@@ -523,10 +523,34 @@ const recordLike = async (eventId, userId) => {
     const eventCollection = await events();
     const likedEvent = await eventCollection.updateOne(
         { _id: new ObjectId(eventId) },
-        { $addToSet: { likeList: userId } }
+        { $addToSet: { likeList: userId }}
     );
-    return true;
+    console.log((await eventCollection.findOne({ _id: new ObjectId(eventId) })));
+    return (await eventCollection.findOne({ _id: new ObjectId(eventId) })).likeList.length;
 };
+
+const recordInterested = async (eventId, userId) => {
+    const eventCollection = await events();
+    const interestedEvent = await eventCollection.updateOne(
+        { _id: new ObjectId(eventId) },
+        { $addToSet: { interestedList: userId }}
+    );
+    console.log((await eventCollection.findOne({ _id: new ObjectId(eventId) })));
+    return (await eventCollection.findOne({ _id: new ObjectId(eventId) })).interestedList.length;
+};
+
+const recordGoing = async (eventId, userId) => {
+    const eventCollection = await events();
+    const goingEvent = await eventCollection.updateOne(
+        { _id: new ObjectId(eventId) },
+        { $addToSet: { going: userId }}
+    );
+    console.log((await eventCollection.findOne({ _id: new ObjectId(eventId) })));
+    return (await eventCollection.findOne({ _id: new ObjectId(eventId) })).going.length;
+};
+
+
+
 const addLike = async (eventId) => {
     if (!eventId) {
         throw "event id need to have valid values";
@@ -980,6 +1004,18 @@ function isEmail(inputEmail) {
  
 }
 
+const addComment = async (eventId, comment) => { 
+   
+        const eventCollection = await events();
+    const commentAdded = await eventCollection.updateOne({ _id: new ObjectId(eventId) }, { $addToSet: { comments: [ comment ] }});
+    return true;
+
+
+
+
+    }
+    
+
 module.exports = {
     createEvent,
     getAllEvents,
@@ -989,6 +1025,8 @@ module.exports = {
     getEventListByName,
     getEventListByCategory,
     recordLike,
+    recordGoing,
+    recordInterested,
     addLike,
     removeLike,
     addIntersted,
@@ -998,5 +1036,6 @@ module.exports = {
     getBuyerList,
     addbuyerinbuyerlist,
     checkcapacity,
-    getEventByCreatorEmail, 
+    getEventByCreatorEmail,
+    addComment 
 };

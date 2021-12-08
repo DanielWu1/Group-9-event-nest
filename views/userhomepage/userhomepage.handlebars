@@ -269,23 +269,38 @@ button {
      {{#unless this.likedByThisUser}}
   <center>
    <button class="container6" type="submit"> <a href="/events/{{this._id}}/like" class="like" style="text-decoration: none ; color:#eee">Like Event</a></button> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+   <p id="likeCount" style="text-decoration:white">{{this.likeCount}}</p>
      </center> 
      {{/unless}}
 
 <center>
-   <button class="button3" type="submit"> <a href="/buyticket" style="text-decoration: none ; color:#eee">Interested</a></button> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+   <button class="button3" type="submit"> <a href="/events/{{this._id}}/interested" class="interested" style="text-decoration: none ; color:#eee">Interested</a></button> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+     <p id="interestedCount">{{this.interestedCount}}</p>
      </center> 
 <center>
-   <button class="button2" type="submit"> <a href="/buyticket" style="text-decoration: none ; color:#eee">Going</a></button> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+   <button class="button2" type="submit"> <a href="/events/{{this._id}}/going" style="text-decoration: none ; color:#eee">Going</a></button> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+     <p id="goingCount">{{this.goingCount}}</p>
      </center> 
 
-     <center> 
+<center>
+  {{#if this.comments}}
+  {{#each this.comments}}
+    <p class="container3"><strong>{{this}}</strong></p>    
+    {{/each}}
+  {{/if}}
+</center>
+
+<center> 
+<form action="/comment/{{this._id}}" method="POST">
+     
      <p style="color:#eee">Comment section</p>
-    <input class= "container1" type ="text" name="comments">
+    <input class= "container1" type ="text" name="comment">
      </center>
 
      <center>
-   <button class="container5" type="submit"> <a href="/comment/{{this._id}}" style="text-decoration: none ; color:#eee">Add the comment</a></button> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+       
+   <button class="container5" type="submit">Add the comment</button>
+   </form>
      </center> 
 
 <center>
@@ -301,8 +316,12 @@ button {
   <br>
   {{/each}} 
   </div> 
-  {{!-- <script src="/public/js/form.js"></script> --}}
+  {{!-- <script src="/public/js/form.js"></script> --}} 
+
+  
   
 <center><button class="container6"><a href="/userhomepage" id="homeLink" hidden> Back to All user home page</a></button></center>
 </body>
-                
+
+
+              

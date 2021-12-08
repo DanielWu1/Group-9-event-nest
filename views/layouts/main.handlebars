@@ -26,12 +26,46 @@
         url: link
       }
       $.ajax(requestConfig).then((message) => {
-          console.log(message)
-          if (message.likeAdded) {
-              $(elem).text('Liked');
-              $(elem).parent().css('background-color', 'teal');
-              $(elem).attr('disabled', true)
-          }
+          console.log(elem)
+          $(elem).parent().parent().find('#likeCount').text(message.likeAdded);
+      });
+    })
+  })
+
+
+    $('.interested').each((index, elem) => {
+      console.log(elem);
+    $(elem).click((event) => {
+      event.preventDefault();
+      console.log(event);
+      let link = event.target.href
+      console.log(link);
+      let requestConfig = {
+        method: 'POST',
+        url: link
+      }
+      $.ajax(requestConfig).then((message) => {
+          console.log(elem)
+          $(elem).parent().parent().find('#interestedCount').text(message.interestedAdded);
+      });
+    })
+  })
+
+
+    $('.going').each((index, elem) => {
+      console.log(elem);
+    $(elem).click((event) => {
+      event.preventDefault();
+      console.log(event);
+      let link = event.target.href
+      console.log(link);
+      let requestConfig = {
+        method: 'POST',
+        url: link
+      }
+      $.ajax(requestConfig).then((message) => {
+          console.log(elem)
+          $(elem).parent().parent().find('#goingCount').text(message.goingAdded);
       });
     })
   })

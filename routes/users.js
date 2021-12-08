@@ -187,18 +187,17 @@ router.get("/userhomepage", async(req,res) =>{
         const displayevent = await data1.getAllEvents() 
         let result = [];
         for (const event of displayevent) {
-            if (event.likeList.includes(req.session.userId)) {
-                event['likedByThisUser'] = true;
-            }
+                event['likeCount'] = event.likeList.length;
+                event['interestedCount'] = event.interestedList ? event.interestedList.length : 0;
             result.push(event);
         }
         
-        res.render("userhomepage/userhomepage",{allevents:displayevent, username: req.session.userName});
+        res.render("userhomepage/userhomepage",{allevents:result, username: req.session.userName});
         return;
 }
     
     catch(e){
-     
+        console.log(e);
         res.status(500).json({message : e});
         return;
     }
@@ -224,11 +223,24 @@ router.post("/events/:id/like", async (req, res) => {
     console.log(req.params.id);
     console.log(req.session.userId)
     const updateLikes = await data1.recordLike(req.params.id, req.session.userId);
-    if (updateLikes === true) {
-        res.status(200).json({ likeAdded: true });
-        return;
-    }
-    
+    res.status(200).json({ likeAdded: updateLikes });
+    return;
+})
+
+router.post("/events/:id/interested", async (req, res) => {
+    console.log(req.params.id);
+    console.log(req.session.userId)
+    const updateInterested = await data1.recordInterested(req.params.id, req.session.userId);
+    res.status(200).json({ interestedAdded: updateInterested });
+    return;
+}) 
+
+router.get("/events/:id/going", async (req, res) => {
+    console.log(req.params.id);
+    console.log(req.session.userId)
+    const updateGoing = await data1.recordGoing(req.params.id, req.session.userId);
+    res.status(200).json({ likeAdded: updateGoing });
+    return;
 })
 
 // router.get("/likedevents", async(req,res) =>{
