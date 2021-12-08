@@ -89,7 +89,8 @@ router.get("/myevents", async(req,res) =>{
         let mylist = []
         for (let i = 0; i < mybookEvents.length; i++){
             let myevent = mybookEvents[i]['eventsid'].toString()
-            let getevent = await eventsdata.getEvent(myevent)
+            let getevent = await eventsdata.getEvent(myevent) 
+            
             mylist.push(getevent)
         }
         res.status(200).render('myevents/myevents',{myEvents:mylist});
@@ -299,27 +300,27 @@ router.post("/create-event", async(req,res) =>{
 }); 
 
 
-router.get("/comment/:id", async(req,res) =>{
-    try{
-        const event = await eventsdata.getEvent(req.params.id); 
-        const createEventRequestBody = req.body;
-        let createNewEvent = await eventsdata.createEvent(
-            createEventRequestBody.comment,
+// router.get("/comment/:id", async(req,res) =>{
+//     try{
+//         const event = await eventsdata.getEvent(req.params.id); 
+//         const createEventRequestBody = req.body;
+//         let createNewEvent = await eventsdata.createEvent(
+//             createEventRequestBody.comment,
 
 
 
-        )
+//         )
             
-        res.redirect("/userhomepage");
-        return;
-}
+//         res.redirect("/userhomepage");
+//         return;
+// }
     
-    catch(e){
+//     catch(e){
      
-        res.status(500).json({message : e});
-        return;
-    }
-}); 
+//         res.status(500).json({message : e});
+//         return;
+//     }
+// }); 
 
 router.get("/likedevents", async(req,res) =>{
     try{
@@ -410,7 +411,21 @@ router.get("/payment", async(req,res) =>{
 }); 
 
 
+router.post("/comment/:id", async (req, res) => {
+    try {
+        let eventId = req.params.id;
+        const addComments = await eventsdata.addComment(eventId, req.body.comment); 
 
+        if (addComments) {
+            res.redirect("/userhomepage")
+            return;
+        }
+    } catch(e) {
+        console.log(e)
+        res.render("userhomepage/userhomepage");
+        return;
+    }
+})
 
 
 module.exports = router;
