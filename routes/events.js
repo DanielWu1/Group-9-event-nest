@@ -3,7 +3,7 @@ const express = require("express");
 const router = express.Router();
 const usersdata = require('../data/users'); 
 const eventsdata = require('../data/events')
-
+const sendemail = require('../data/email')
 // 1.1 to get the events which the user has booked -> get webpage
 router.get("/bookedevents", async(req,res) =>{   
     try{
@@ -349,6 +349,35 @@ router.get("/checkout/:id", async(req,res) =>{
         return;
     }
 });    
+
+router.get("/bookedevents/:id", async(req,res) =>{
+    try{
+        const event = await eventsdata.getEvent(req.params.id);
+        const additinuser = await usersdata.addTicketEvents(req.session.id,event._id,event.title,event.timestart,event.endtime,event.description)
+        if (additinuser.addTicketEvents === false){
+            res.render("checkoutcheck/checkoutcheck",{error : 'can not add it because you already have event have to go at same time'})
+            return
+        }
+        const check =await eventsdata.checkcapacity(req.params.id)
+        if (check === false){
+            res.render("checkoutcheck/checkoutcheck",{error : 'sorry there is no more seat for your'})
+            return
+        }
+        const additinevent = await eventsdata.addbuyerinbuyerlist(req.session.email,req.params.id)
+        if(additinevent.addbuyer ===true &&additinuser.addTicketEvents === true){
+            sendemail.sendTicketEmail(req.session.email, event.title, event.price, 1)
+        }
+
+        res.render("checkoutcheck/checkoutcheck",{message : 'you got that ticket, we send you the email check it!!'});
+        return;
+}
+    
+    catch(e){
+     
+        res.status(500).render("checkoutcheck/checkoutcheck",{error : e})
+        return;
+    }
+}); 
 
 
 
