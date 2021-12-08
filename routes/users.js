@@ -161,7 +161,7 @@ router.post("/userlogin", async(req,res) => {
     }
 
     try {
-        console.log(login.email)
+        // console.log(login.email)
         const logininfo = await data.checkUsers( 
             login.email, 
             login.password);
