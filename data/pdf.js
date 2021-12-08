@@ -5,5 +5,6 @@ var pdfDoc = new PDFDocument;
 pdfDoc.pipe(fs.createWriteStream('ticket.pdf'));
 
 pdfDoc.text("Your ticket to Lobster Inc.", { align: 'center'})
+// to do : formatting
 
 pdfDoc.end();

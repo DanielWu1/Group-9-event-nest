@@ -46,7 +46,7 @@ function triggerEmail(inputObject){
   });
 }
 
-sendTicketEmail('charansundar05@gmail.com', "Lobster Event", 100, 10);
+// sendTicketEmail('charansundar05@gmail.com', "Lobster Event", 100, 10);
 
 module.exports = {
   sendTicketEmail

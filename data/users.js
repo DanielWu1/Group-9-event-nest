@@ -8,11 +8,8 @@ var mytime = myDate.toLocaleDateString();
 var myhour = myDate.getHours()
 const validDate = /(0\d{1}|1[0-2])\/([0-2]\d{1}|3[0-1])\/(19|20)\d{2}/;
 const validTime = /^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$/;
-// console.log(myhour)
-// console.log(mytime)
 
 const events = mongoCollections.events;
-
 
 async function createUser(userName, phone, gender, email, address, password,){
     if (typeof(userName) !== 'string'| typeof(email) !== 'string'|typeof(address) !== 'string'| typeof(password) !== 'string'){
@@ -37,14 +34,12 @@ async function createUser(userName, phone, gender, email, address, password,){
         throw '$ you must supply the password'
     }
     if (userName ==''|typeof userName == 'undefined' | userName === null | userName === NaN){
-        throw '$ userName is empty';
+        throw '$ check the username';
     }
     if (userName.match(/^[ ]*$/)){
         throw '$ userName is spaces'
     }
-    // if (typeof phone != 'string'){
-    //     throw '$ phone number must be number'
-    // }
+
     let mypho1 = phone.split('')
     if (mypho1[3] !== '-' || mypho1[7] !== '-'){
         throw '$ phone input is wrong2'
@@ -62,49 +57,29 @@ async function createUser(userName, phone, gender, email, address, password,){
     if (isNaN(n) || isNaN(n2) || isNaN(n3)){
         throw '$ phone input is not a number'
     }
-    if( gender !== 'male' &&  gender!== 'female' && gender!== 'orther'){
-        throw '$ gender must be male ,female or orhter'
+    if( gender !== 'male' &&  gender!== 'female' && gender!== 'other'){
+        throw '$ gender must be male ,female or other'
     }
     if (email ==''|typeof email == 'undefined' | email === null | email === NaN){
         throw '$ email is empty';
     }
-    if (email.match(/^[ ]*$/)){
-        throw '$email is spaces'
+   
+    //  check email
+    if (isEmail(email) === false){ 
+        throw '$ email is of invalid type';
     }
-    let net = email.split('')
-    // if (net[0] !== 'h'|| net[1] !== 't' || net[2] !== 't' || net[3] !== 'p' || net[4] !== ':' || net[5] !== '/' || net[6] !== '/' || net[7] !== 'w' || net[8] !== 'w' || net[9] !== 'w' || net[10] !== '.')
-    // throw '$ website is not right'
-    if (net.indexOf('@') == -1){
-        throw '$ email is not right1'
-    }
-    // console.log(net[net.length - 1])
-    if (net[net.length - 1] !== 'm'|| net[net.length - 2] !== 'o' || net[net.length - 3] !== 'c' || net[net.length - 4] !== '.'){
-        throw '$ email is not right2'
-    }
-    let mya = net.indexOf('@')
-    if ((net.length-4) - (mya+1) < 4){
-        throw '$ email is not right3'
-    }
-    let myusmail = email.split('@')
-    if (myusmail[0].indexOf(' ')!== -1){
-        throw '$ email name have spaces'
-    }
-    if ((/^[a-z0-9]+$/i).test(myusmail[0]) === false){
-        throw '$ email name is not valid'
-    }
-    if (mya+1 < 5){
-        throw '$ email is not right4'
-    }
-    // addrees check not ready
 
+    // address check not ready
+    if( typeof address!== 'string' || address.trim() === "" ){
+        throw 'address has to a be string with valid input'
+    }
 
-    if (password ==''|typeof password == 'undefined' | password === null | password === NaN){
-        throw '$ password is empty';
+    // check password
+    if (isPassword(password) === false){ 
+        throw 'password has to a be string with valid input'
     }
-    if (password.match(/^[ ]*$/)){
-        throw '$ password is spaces'
-    }
-//to lower case
+
+    //to lower case
 
     const users1 = await users();
     const hash = await bcrypt.hash(password,saltRounds)
@@ -132,21 +107,13 @@ async function createUser(userName, phone, gender, email, address, password,){
       else {
         myreturn['CreateUser'] = true
       }
-  
 
-    //   const newId = insertInfo.insertedId;
-    //   newusers['_id'] = newusers['_id'].toString()
-    //   const dog = await this.getDogById(newId);
     // it will return the users information
       return myreturn;
 
       const newId = insertInfo.insertedId;
       newusers['_id'] = newusers['_id'].toString()
-    // const dog = await this.getDogById(newId);
-    // it will return the users information
-    
-    // UPDATED BY PRAJAY: COMMENTING THIS TO RETURN ONLY THE USERNAME 
-    // return newusers;
+
     return {"userName": userName};
 
 
@@ -188,59 +155,23 @@ async function checkUsers(email,password){
     if (email ==''|typeof email == 'undefined' | email === null | email === NaN){
         throw '$ email is empty';
     }
-    if (typeof email == 'string'){
-        if (email.match(/^[ ]*$/)){
-            throw '$email is spaces'
-        }
-    }
-    let net = email.split('')
-    // if (net[0] !== 'h'|| net[1] !== 't' || net[2] !== 't' || net[3] !== 'p' || net[4] !== ':' || net[5] !== '/' || net[6] !== '/' || net[7] !== 'w' || net[8] !== 'w' || net[9] !== 'w' || net[10] !== '.')
-    // throw '$ website is not right'
-    // if (net.indexOf('@') == -1){
-    //     throw '$ email is not right1'
-    // }
-    // console.log(net[net.length - 1])
-    if (net[net.length - 1] !== 'm'|| net[net.length - 2] !== 'o' || net[net.length - 3] !== 'c' || net[net.length - 4] !== '.'){
-        throw '$ email is not right2'
-    }
-    let mya = net.indexOf('@')
-    if ((net.length-4) - (mya+1)< 4){
-        throw '$ email is not right3'
-    }
-    let myusmail = email.split('@')
-    if (myusmail[0].indexOf(' ')!== -1){
-        throw '$ email name have spaces'
-    }
-    if ((/^[a-z0-9]+$/i).test(myusmail[0]) === false){
-        throw '$ email name is not valid'
-    }
-    if (mya+1 < 5){
-        throw '$ email is not right4'
-    }
 
-    // if(ObjectId.isValid(id)===false){
-    //     throw '$ id is not a valid id'
-    // }
-    let myaftertestemail = email.split('@')
-    myaftertestemail[0] = myaftertestemail[0].toLowerCase()
-    let mynewemail = myaftertestemail[0]+'@'+myaftertestemail[1]
+    if (isEmail(email) === false){
+        throw '$ email is of invalid type';
+    }
     
     const users1 = await users();
-    const myusers = await users1.findOne({ email: mynewemail });
+    const myusers = await users1.findOne({ email: email });
     if (myusers === null) throw 'No users with that email';
     let compareToMerlin = false
     compareToMerlin = await bcrypt.compare(password, myusers['password']);
     if (compareToMerlin === false){
         throw 'Either the username or password is invalid'
     }
-    // console.log(rest['_id'].toString())
     myusers['_id'] = myusers['_id'].toString()
-    //it will return the users information
-
     return myusers;
 }
-// createUser('PRAJAY','319-429-5274','male','prajay@gmail.com','333 rever st','123456') 
-// checkUsers("tony1532659641@gmail.com", "123456")
+
 
 async function resetPassword(email, userName, password){
     if (typeof(userName) !== 'string'| typeof(email) !== 'string'| typeof(password) !== 'string'){
@@ -339,54 +270,15 @@ async function resetPassword(email, userName, password){
 
 async function getByUsers(email){
 
-    if (!email) throw 'You must provide an email to search for get';
-    if (email ==''|typeof email == 'undefined' | email === null | email === NaN){
-        throw '$ email is empty';
-    }
-    if (typeof email == 'string'){
-        if (email.match(/^[ ]*$/)){
-            throw '$email is spaces'
-        }
-    }
-    let net = email.split('')
-    // if (net[0] !== 'h'|| net[1] !== 't' || net[2] !== 't' || net[3] !== 'p' || net[4] !== ':' || net[5] !== '/' || net[6] !== '/' || net[7] !== 'w' || net[8] !== 'w' || net[9] !== 'w' || net[10] !== '.')
-    // throw '$ website is not right'
-    if (net.indexOf('@') == -1){
-        throw '$ email is not right1'
-    }
-    // console.log(net[net.length - 1])
-    if (net[net.length - 1] !== 'm'|| net[net.length - 2] !== 'o' || net[net.length - 3] !== 'c' || net[net.length - 4] !== '.'){
-        throw '$ email is not right2'
-    }
-    let mya = net.indexOf('@')
-    if ((net.length-4) - (mya+1)< 4){
-        throw '$ email is not right3'
-    }
-    let myusmail = email.split('@')
-    if (myusmail[0].indexOf(' ')!== -1){
-        throw '$ email name have spaces'
-    }
-    if ((/^[a-z0-9]+$/i).test(myusmail[0]) === false){
-        throw '$ email name is not valid'
-    }
-    if (mya+1 < 5){
-        throw '$ email is not right4'
+    if(isEmail(email) === false){
+        throw "email is of invalid type"
     }
 
-    // if(ObjectId.isValid(id)===false){
-    //     throw '$ id is not a valid id'
-    // }
-    let myaftertestemail = email.split('@')
-    myaftertestemail[0] = myaftertestemail[0].toLowerCase()
-    let mynewemail = myaftertestemail[0]+'@'+myaftertestemail[1]
-    
     const users1 = await users();
-    const myusers = await users1.findOne({ email: mynewemail });
+    const myusers = await users1.findOne({ email: email });
     if (myusers === null) throw 'No users with that email';
-    // console.log(rest['_id'].toString())
     myusers['_id'] = myusers['_id'].toString()
 
-    //return users information
     return myusers;
 }
 
@@ -420,10 +312,7 @@ async function addLikeevents(userId, eventsid){
     let newlikeevents = {
         _id:ObjectId(),
         eventsid: myeventId,
-        // reviewer: reviewer,
-        // rating: rating,
-        // dateOfReview: dateOfReview,
-        // review: review
+        
     };
     
     // if (revi === null) throw 'No restaurants with that id';
@@ -1076,28 +965,26 @@ async function removePostEvents(userId, eventsid){
 
 // createUser('BingzhenLi','319-429-5274','male','tOny153265964@gmail.com','333 rever st','123456') 
 
-// let my = checkUsers('tony153265964@gmail.com','123456')
-// async function test(){
-//     let mycreate = await createUser('BingzhenLi','319-429-5274','male','tOny1532659612341@gmail.com','333 rever st','123456') 
-//     console.log(mycreate)
-//     // const usersCollection = await users()
-//     // const myeventId = myDBfunction('619bdfc0fa1fa9ca424f09a3')
-//     // const myuserId1 = myDBfunction('619bdfc0fa1fa9ca424f09c9')
-//     // const liket1 = await usersCollection.findOne({ _id: myuserId1, ticket:{$elemMatch:{eventsid:myeventId}}});
-//     // const restetpass = await resetPassword('tony1532659641@gmail.com','Bingzhen1Li','123123123')
-//     // let myaddlike = await addLikeevents('619bdfc0fa1fa9ca424f09c9', '619bdfc0fa1fa9ca424f09a3')
-//     // let myaddlike = await addTicketEvents('61a3fc0ad42e251d4413dab5', '619bdfc0fa1fa9ca424f09a1','christmasParty2k21',["12/14/2021", "09:00"],["12/14/2021", "11:00"], 'asdfasdfasdf')
-//     // let myaddlike = await addPostEvents('61a3fc0ad42e251d4413dab5', '619bdfc0fa1fa9ca424f09a9','christmasParty2k21',["12/12/2021", "09:00"],["12/12/2021", "11:00"], 'asdfasdfasdf')
-//     // let myaddlike = await removeLikeEvents('619bdfc0fa1fa9ca424f09c9', '619bdfc0fa1fa9ca424f09c1')
-//     // let myaddlike = await removeTicketEvents('61a3fc0ad42e251d4413dab5', '619bdfc0fa1fa9ca424f09a1')
-//     // let myaddlike = await removePostEvents('61a3fc0ad42e251d4413dab5', '619bdfc0fa1fa9ca424f09a4')
-//     // _id: '619bdfc0fa1fa9ca424f09c9', 
-//     // console.log(liket1)
-//     // console.log(restetpass)
-//     // console.log(myaddlike)
-//     // console.log(myaddlike)
-// }
-//test()
+// --------------------------------
+// validation functions
+function isEmail(inputEmail) {
+    const re = /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
+    if (inputEmail.match(re)){
+        return true;
+    } else {
+        return false;
+    }
+}
+
+// check for password
+function isPassword(inputtxt) { 
+    const passre = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,20}$/;
+    if(inputtxt.match(passre)) { 
+        return true;
+    } else { 
+        return false;
+    }
+}
 
 module.exports = {
     createUser,
