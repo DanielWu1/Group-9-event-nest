@@ -162,6 +162,12 @@ button {
   display: block;
 }
 
+.container1 {
+  padding: 10px 100px; 
+  border:blue; 
+  border-radius: 12px;
+}
+
 /* Style the checkmark/indicator */
 .container2 .checkmark:after {
   left: 9px;
@@ -274,12 +280,12 @@ button {
      </center> 
 
      <center> 
-     <p>Comment section</p>
-    <input class= "" type ="text" name="comments">
+     <p style="color:#eee">Comment section</p>
+    <input class= "container1" type ="text" name="comments">
      </center>
 
      <center>
-   <button class="container7" type="submit"> <a href="/comment/{{this._id}}" style="text-decoration: none ; color:#eee">Add the comment</a></button> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+   <button class="container5" type="submit"> <a href="/comment/{{this._id}}" style="text-decoration: none ; color:#eee">Add the comment</a></button> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
      </center> 
 
 <center>
@@ -296,7 +302,7 @@ button {
   {{/each}} 
   </div> 
   {{!-- <script src="/public/js/form.js"></script> --}}
-  <center><button class="container6"><a href="/userhomepage" id="homeLink" hidden> Back to All user home page</a></button></center>
-
+  
+<center><button class="container6"><a href="/userhomepage" id="homeLink" hidden> Back to All user home page</a></button></center>
 </body>
                 
