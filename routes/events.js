@@ -353,12 +353,15 @@ router.get("/checkout/:id", async(req,res) =>{
 router.get("/bookedevents/:id", async(req,res) =>{
     try{
         const event = await eventsdata.getEvent(req.params.id);
-        const additinuser = await usersdata.addTicketEvents(req.session.id,event._id,event.title,event.timestart,event.endtime,event.description)
+        // console.log(typeof req.session.userId)
+        const additinuser = await usersdata.addTicketEvents(req.session.userId,event._id.toString(),event.title,event.timestart,event.endtime,event.description)
         if (additinuser.addTicketEvents === false){
+            // console.log('3')
             res.render("checkoutcheck/checkoutcheck",{error : 'can not add it because you already have event have to go at same time'})
             return
         }
         const check =await eventsdata.checkcapacity(req.params.id)
+        // console.log('4')
         if (check === false){
             res.render("checkoutcheck/checkoutcheck",{error : 'sorry there is no more seat for your'})
             return
