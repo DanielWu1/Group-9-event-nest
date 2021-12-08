@@ -65,7 +65,7 @@
       }
       $.ajax(requestConfig).then((message) => {
           console.log(elem)
-          $(elem).parent().parent().find('#goingCount').text(message.goingAdded);
+          $(elem).parent().parent().find('#going').text(message.goingAdded);
       });
     })
   })

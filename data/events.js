@@ -173,11 +173,12 @@ const createEvent = async (
         buyerList: [],
         likes: 0,
         intersted: 0,
-        going: 0,
+        // going: 0,
 
         followerList: [], // people GOING
         likeList: [], // LIKE event
-        interestedList: [], // people INTERESTED in the event
+        interestedList: [],
+        going:[], // people INTERESTED in the event
 
         comments: [],
         active: true,
@@ -312,8 +313,7 @@ const updateEvent = async (
         throw " Number of Ticket's Price must be in Numbers";
     }
 
-    if (typeof active !== "boolean")
-        throw "Active status of the event must a true or false";
+   
 
     const eventCollection = await events();
     const olddata = await eventCollection.findOne({ _id: ObjectId(eventId) });

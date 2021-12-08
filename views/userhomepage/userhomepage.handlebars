@@ -1,5 +1,9 @@
 <style>
 /* The container */
+.p
+{
+  text-decoration: white;
+}
 .container2 {
   display: block;
   position: relative;
@@ -269,23 +273,23 @@ button {
      {{#unless this.likedByThisUser}}
   <center>
    <button class="container6" type="submit"> <a href="/events/{{this._id}}/like" class="like" style="text-decoration: none ; color:#eee">Like Event</a></button> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-   <p id="likeCount" style="text-decoration:white">{{this.likeCount}}</p>
+   <p id="likeCount" style="color:white">{{this.likeCount}}</p>
      </center> 
      {{/unless}}
 
 <center>
    <button class="button3" type="submit"> <a href="/events/{{this._id}}/interested" class="interested" style="text-decoration: none ; color:#eee">Interested</a></button> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-     <p id="interestedCount">{{this.interestedCount}}</p>
+     <p id="interestedCount" style="color:white">{{this.interestedCount}}</p>
      </center> 
 <center>
    <button class="button2" type="submit"> <a href="/events/{{this._id}}/going" style="text-decoration: none ; color:#eee">Going</a></button> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-     <p id="goingCount">{{this.goingCount}}</p>
+     <p id="goingCount" style="color:white">{{this.going}}</p>
      </center> 
 
 <center>
   {{#if this.comments}}
   {{#each this.comments}}
-    <p class="container3"><strong>{{this}}</strong></p>    
+    <p class="container7"><strong>{{this}}</strong></p>    
     {{/each}}
   {{/if}}
 </center>
