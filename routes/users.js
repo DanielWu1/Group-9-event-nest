@@ -188,7 +188,8 @@ router.get("/userhomepage", async(req,res) =>{
         let result = [];
         for (const event of displayevent) {
                 event['likeCount'] = event.likeList.length;
-                event['interestedCount'] = event.interestedList ? event.interestedList.length : 0;
+                event['interestedCount'] = event.interestedList ? event.interestedList.length : 0; 
+                event['going'] = event.going ? event.going.length : 0;
             result.push(event);
         }
         
@@ -235,11 +236,11 @@ router.post("/events/:id/interested", async (req, res) => {
     return;
 }) 
 
-router.get("/events/:id/going", async (req, res) => {
+router.post("/events/:id/going", async (req, res) => {
     console.log(req.params.id);
     console.log(req.session.userId)
     const updateGoing = await data1.recordGoing(req.params.id, req.session.userId);
-    res.status(200).json({ likeAdded: updateGoing });
+    res.status(200).json({ goingAdded: updateGoing });
     return;
 })
 
