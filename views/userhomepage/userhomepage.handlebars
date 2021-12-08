@@ -162,6 +162,12 @@ button {
   display: block;
 }
 
+.container1 {
+  padding: 10px 100px; 
+  border:blue; 
+  border-radius: 12px;
+}
+
 /* Style the checkmark/indicator */
 .container2 .checkmark:after {
   left: 9px;
@@ -210,7 +216,7 @@ button {
                 <center><input type="text" class="ghost-round2"
                     placeholder=" Search Events"
                     name="search" id= "search_term"></center> 
-                <center><button type="submit" id = "submit_button" class="btn-default" value = "Search">Search</button> </center>  
+                <center><button type="submit" id = "submit_button" class="container5" value = "Search">Search</button> </center>  
 
                 <br><br><br></form> </div>
 
@@ -244,15 +250,15 @@ button {
   {{#each allevents}}
   <div class="ggg">
    <center><p class="container3">{{this.title}}</p></center>
-  <center><p class="container3"> Category:    {{this.category}} </p></center> 
-   <center><p class="container3">Creator Name:    {{this.creator}}</p></center>
-  <center><p class="container3">Start Time:   {{this.timestart}}</p></center>
-  <center><p class="container3">End Time:   {{this.endtime}}</p></center>
-  <center><p class="container3">Address:   {{this.address}}</p></center>
-  <center><p class="container3">City:    {{this.city}}</p></center>
-  <center><p class="container3">State:    {{this.state}}</p></center>
-  <center><p class="container3">Description:    {{this.description}}</p></center>  
-  <center><p class="container4">Ticket Price:    {{this.price}}</p></center> 
+  <center><p class="container3"> <strong style="color:black; ">Category:</strong>    {{this.category}} </p></center> 
+   <center><p class="container3"><strong style="color:black; ">Creator Name: </strong>   {{this.creator}}</p></center>
+  <center><p class="container3"><strong style="color:black;">Start Time:</strong>   {{this.timestart}}</p></center>
+  <center><p class="container3"><strong style="color:black;">End Time:</strong>   {{this.endtime}}</p></center>
+  <center><p class="container3"><strong style="color:black;">Address:</strong>   {{this.address}}</p></center>
+  <center><p class="container3"><strong style="color:black;">City:</strong>    {{this.city}}</p></center>
+  <center><p class="container3"><strong style="color:black;">State:</strong>    {{this.state}}</p></center>
+  <center><p class="container3"><strong style="color:black;">Description:</strong>    {{this.description}}</p></center>  
+  <center><p class="container4"><strong style="color:black;">Ticket Price: </strong>   {{this.price}}</p></center> 
   
 
   {{#if this.likedByThisUser}}
@@ -274,12 +280,12 @@ button {
      </center> 
 
      <center> 
-     <p>Comment section</p>
-    <input class= "" type ="text" name="comments">
+     <p style="color:#eee">Comment section</p>
+    <input class= "container1" type ="text" name="comments">
      </center>
 
      <center>
-   <button class="container7" type="submit"> <a href="/comment/{{this._id}}" style="text-decoration: none ; color:#eee">Add the comment</a></button> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+   <button class="container5" type="submit"> <a href="/comment/{{this._id}}" style="text-decoration: none ; color:#eee">Add the comment</a></button> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
      </center> 
 
 <center>
@@ -296,7 +302,7 @@ button {
   {{/each}} 
   </div> 
   {{!-- <script src="/public/js/form.js"></script> --}}
-  <a href="/userhomepage" id="homeLink" hidden> Back to All user home page</a>
-
+  
+<center><button class="container6"><a href="/userhomepage" id="homeLink" hidden> Back to All user home page</a></button></center>
 </body>
                 

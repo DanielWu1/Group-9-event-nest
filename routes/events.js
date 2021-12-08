@@ -3,7 +3,7 @@ const express = require("express");
 const router = express.Router();
 const usersdata = require('../data/users'); 
 const eventsdata = require('../data/events')
-
+const sendemail = require('../data/email')
 // 1.1 to get the events which the user has booked -> get webpage
 router.get("/bookedevents", async(req,res) =>{   
     try{
@@ -350,6 +350,38 @@ router.get("/checkout/:id", async(req,res) =>{
     }
 });    
 
+router.get("/bookedevents/:id", async(req,res) =>{
+    try{
+        const event = await eventsdata.getEvent(req.params.id);
+        // console.log(typeof req.session.userId)
+        const additinuser = await usersdata.addTicketEvents(req.session.userId,event._id.toString(),event.title,event.timestart,event.endtime,event.description)
+        if (additinuser.addTicketEvents === false){
+            // console.log('3')
+            res.render("checkoutcheck/checkoutcheck",{error : 'can not add it because you already have event have to go at same time'})
+            return
+        }
+        const check =await eventsdata.checkcapacity(req.params.id)
+        // console.log('4')
+        if (check === false){
+            res.render("checkoutcheck/checkoutcheck",{error : 'sorry there is no more seat for your'})
+            return
+        }
+        const additinevent = await eventsdata.addbuyerinbuyerlist(req.session.email,req.params.id)
+        if(additinevent.addbuyer ===true &&additinuser.addTicketEvents === true){
+            sendemail.sendTicketEmail(req.session.email, event.title, event.price, 1)
+        }
+
+        res.render("checkoutcheck/checkoutcheck",{message : 'you got that ticket, we send you the email check it!!'});
+        return;
+}
+    
+    catch(e){
+     
+        res.status(500).render("checkoutcheck/checkoutcheck",{error : e})
+        return;
+    }
+}); 
+
 
 
 router.get("/update/:id", async(req,res) =>{
@@ -379,52 +411,6 @@ router.get("/payment", async(req,res) =>{
 
 
 
-router.get("/bookedevents", async (req, res) => {
-    try {
-        const myBookedEvents = await eventsdata.getMyEvents(req.session.userId);
-        console.log(myBookedEvents);
-        let allEvents = [];
-        for (const bookedEvent of myBookedEvents) {
-            allEvents.push(await eventsdata.getEvent(bookedEvent));
-        }
-        console.log(allEvents)
-        res.render("bookedevents/bookedevents", { allBookedEvents: allEvents })
-        return
-    } catch (e) {
-        console.log(e)
-    }
-})
-
-router.get("/bookedevents/:id", async(req,res) =>{
-    try{
-        let eventId = req.params.id
-        let userId = req.session.userId;
-        let bookForUser = await eventsdata.bookTicket(userId, eventId);
-        res.redirect("/mybookedevents");
-        return;
-}
-    
-    catch(e){
-     
-        res.status(500).json({message : e});
-        return;
-    }
-});
-
-// router.get("/myevents", async(req,res) =>{
-//     try{
-//         const myEvents = await data1.getEventByCreatorEmail(req.session.email);
-//         console.log(myEvents)
-//         res.render("myevents/myevents", { createdEvents: myEvents });
-//         return;
-// }
-    
-//     catch(e){
-     
-//         res.status(500).json({message : e});
-//         return;
-//     }
-// });
 
 
 module.exports = router;

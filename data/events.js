@@ -483,28 +483,6 @@ const removeEvent = async (
     );
     return await getEvent(eventId);
 };
-const getTimingofEvent = async (eventId) => {
-    const timeArray = [];
-    const timeObject = {};
-    try {
-        parsedEventid = ObjectId(eventId);
-    } catch (e) {
-        throw "Format for event id is wrong";
-    }
-    if (!eventId) throw "You must provide an id to search for";
-    if (typeof eventId != "string" || eventId.trim().length == 0)
-        throw "the id provided is not a string or is an empty string";
-    const eventCollection = await events();
-    const event = await eventCollection.findOne({ _id: parsedEventid });
-
-    timeObject["_id"] = event._id;
-    timeObject["title"] = event.title;
-    timeObject["timestart"] = event.timestart;
-    timeObject["description"] = event.description;
-    timeArray.push(timeObject);
-
-    return timeArray;
-};
 
 // QUERYING FOR SEARCH BY NAME // FOR SEARCH BAR
 async function getEventListByName(inputEventName) {
@@ -863,110 +841,80 @@ const removeGoing = async (eventId) => {
 
     return `Total number of going is ${updatedEvent.going}`;
 };
-// const getBuyerList = async (eventId, userEmail) => {
-//     if (!eventId) {
-//         throw "event id need to have valid values";
-//     }
-//     if (!userEmail) {
-//         throw "$ you must supply the email";
-//     }
-//     if (
-//         (userEmail == "") |
-//         (typeof userEmail == "undefined") |
-//         (userEmail === null) |
-//         (userEmail === NaN)
-//     ) {
-//         throw "$ email is empty";
-//     }
-//     if (userEmail.match(/^[ ]*$/)) {
-//         throw "$email is spaces";
-//     }
-//     if (userEmail.match(/^[ ]*$/)) {
-//         throw "$email is spaces";
-//     }
-//     let net = userEmail.split("");
-//     // if (net[0] !== 'h'|| net[1] !== 't' || net[2] !== 't' || net[3] !== 'p' || net[4] !== ':' || net[5] !== '/' || net[6] !== '/' || net[7] !== 'w' || net[8] !== 'w' || net[9] !== 'w' || net[10] !== '.')
-//     // throw '$ website is not right'
-//     if (net.indexOf("@") == -1) {
-//         throw "$ userEmail is not right1";
-//     }
-//     // console.log(net[net.length - 1])
-//     if (
-//         net[net.length - 1] !== "m" ||
-//         net[net.length - 2] !== "o" ||
-//         net[net.length - 3] !== "c" ||
-//         net[net.length - 4] !== "."
-//     ) {
-//         throw "$ userEmail is not right2";
-//     }
-//     let mya = net.indexOf("@");
-//     if (net.length - 4 - (mya + 1) < 4) {
-//         throw "$ userEmail is not right3";
-//     }
-//     let myusmail = email.split("@");
-//     if (myusmail[0].indexOf(" ") !== -1) {
-//         throw "$ userEmail name have spaces";
-//     }
-//     if (/^[a-z0-9]+$/i.test(myusmail[0]) === false) {
-//         throw "$ userEmail name is not valid";
-//     }
-//     if (mya + 1 < 5) {
-//         throw "$ userEmail is not right4";
-//     }
-//     if (typeof eventId != "string" || eventId.trim().length == 0) {
-//         throw "id is not string or is empty string,";
-//     }
 
-//     try {
-//         parsedEventid = ObjectId(eventId);
-//     } catch (e) {
-//         throw "id format wrong";
-//     }
-//     const eventCollection = await events();
+const checkcapacity = async(eventId)=>{
+    let myreturn = false
+    try {
+        parsedEventid = ObjectId(eventId);
+    } catch (e) {
+        throw "Event id format wrong";
+    }
+    if (!eventId) throw "You must provide an id to search for";
+    if (typeof eventId != "string" || eventId.trim().length == 0)
+        throw "the id provided is not a string or is an empty string";
+    const eventCollection = await events();
+    const olddata = await eventCollection.findOne({ _id: parsedEventid });
+    if (olddata['ticketcapacity'] < 1){
+        myreturn = false
+    }
+    else{
+        myreturn = true
+    }
+    return myreturn
+}
+const addbuyerinbuyerlist = async (email , eventId)=>{
+    if ( !email){
+        throw '$ you must supply the email'
+    }
+    if (isEmail(email) === false){
+        throw '$ email is not vaile'
+    }
+    try {
+        parsedEventid = ObjectId(eventId);
+    } catch (e) {
+        throw "Event id format wrong";
+    }
+    if (!eventId) throw "You must provide an id to search for";
+    if (typeof eventId != "string" || eventId.trim().length == 0)
+        throw "the id provided is not a string or is an empty string";
+    const eventCollection = await events();
+    const olddata = await eventCollection.findOne({ _id: parsedEventid });
+    if (olddata['ticketcapacity'] < 1){
+        throw 'no more site for this user'
+    }
+    let mynewcapacity = olddata['ticketcapacity'] - 1
+    let mynewbuylist = olddata['buyerList'].push(email)
+    let mynewup = {
+        title: olddata['title'],
+        category: olddata['category'],
+        creator: olddata['creator'],
+        timestart: olddata['timestart'],
+        endtime: olddata['endtime'],
+        address: olddata['address'],
+        city: olddata['city'],
+        state: olddata['state'],
+        ticketcapacity: mynewcapacity,
+        price: olddata['price'],
+        description: olddata['description'],
+        buyerList: mynewbuylist,
+        likes: olddata['likes'],
+        intersted: olddata['intersted'],
+        going: olddata['going'],
 
-//     const findEvent = await eventCollection.findOne({
-//         _id: ObjectId(eventId),
-//     });
-//     console.log(findEvent);
-//     // let mynewcomment = findComment["comments"];
-//     // for (let i = 0; i < mynewcomment.length; i++) {
-//     //     let mycommentlist = mynewcomment[i];
-//     //     if (mycommentlist["_id"].equals(commentId)) {
-//     //         console.log("asdfasdf");
-//     //         mycommentlist["comments"] = comments;
-//     //     }
-//     // }
+        followerList: olddata['followerList'], // people GOING
+        likeList: olddata['likeList'], // LIKE event
+        interestedList: olddata['interestedList'], // people INTERESTED in the event
 
-//     const updatedEvent = {
-//         title: findEvent.title,
-//         category: findEvent.category,
-//         creator: findEvent.creator,
-//         date: findEvent.date,
-//         timestart: findEvent.timestart,
-//         endtime: findEvent.endtime,
-//         address: findEvent.address,
-//         city: findEvent.city,
-//         state: findEvent.state,
-//         ticketcapacity: findEvent.ticketcapacity,
-//         price: findEvent.price,
-//         description: findEvent.description,
-//         active: findEvent.active,
-
-//         likes: findEvent.likes,
-//         intersted: findEvent.intersted,
-//         going: findEvent.going,
-//     };
-//     const a = await eventCollection.updateOne(
-//         { _id: new ObjectId(eventId) },
-//         { $addToSet: { buyerList: userEmail } }
-//     );
-
-//     if (a == null) {
-//         return false;
-//     } else {
-//         return true;
-//     }
-// };
+        comments: olddata['comments'],
+        active: mynewbuylist['active'],
+    }
+    let addbuyer1 = await eventCollection.updateOne(
+        { _id: ObjectId(eventId) },
+        { $set: mynewup }
+    );
+    if (addbuyer1.insertedCount === 0) throw '$ Could not buy this';
+    return {addbuyer : true}
+}
 
 const getBuyerList = async (eventId, creator, noOftickets) => {
     const eventCollection = await events();
@@ -996,17 +944,6 @@ const getBuyerList = async (eventId, creator, noOftickets) => {
         return true;
     }
 };
-
-const bookTicket = async(userId, eventId) => {
-    const usersCollection = await users();
-    await usersCollection.updateOne({ _id: new ObjectId( userId) }, { $addToSet : { ticket: eventId } });
-    return true;
-}
-
-const getMyEvents = async (userId) => {
-    const usersCollection = await users();
-    return (await usersCollection.findOne({ _id: new ObjectId(userId) })).ticket;
-}
 
 // to get the event booked by
 async function getEventByCreatorEmail(inputEmail) {
@@ -1048,7 +985,6 @@ module.exports = {
     getEvent,
     removeEvent,
     updateEvent,
-    getTimingofEvent,
     getEventListByName,
     getEventListByCategory,
     recordLike,
@@ -1059,8 +995,7 @@ module.exports = {
     addGoing,
     removeGoing,
     getBuyerList,
-
+    addbuyerinbuyerlist,
+    checkcapacity,
     getEventByCreatorEmail, 
-    bookTicket, 
-    getMyEvents
 };
