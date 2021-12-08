@@ -22,6 +22,9 @@
             method: 'POST',
             url: '/search/'+mysearch
         }
+        serchevent.children().each(function (index, element) {
+            element.remove();
+        })
 
         $.ajax(requestConfig).then(function (res){
             
