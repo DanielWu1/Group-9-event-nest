@@ -251,9 +251,6 @@ const updateEvent = async (
         throw "parameters are not strings or are empty strings,";
     }
 
-    if (!date.match(validDate)) {
-        throw "Date is not in Valid Format";
-    }
     if (!Array.isArray(timestart)) {
         throw "timeStart is Not an Array";
     } else if (timestart.length == 0) {

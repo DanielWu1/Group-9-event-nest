@@ -4,6 +4,7 @@ const router = express.Router();
 const usersdata = require('../data/users'); 
 const eventsdata = require('../data/events')
 const sendemail = require('../data/email')
+let {ObjectId} = require("mongodb")
 // 1.1 to get the events which the user has booked -> get webpage
 router.get("/bookedevents", async(req,res) =>{   
     try{
@@ -341,14 +342,14 @@ router.get("/checkout/:id", async(req,res) =>{
         const event = await eventsdata.getEvent(req.params.id);
         res.render("checkout/checkout", { event });
         return;
-}
+    }
     
     catch(e){
      
-        res.status(500).json({message : e});
+        res.status(500).render("error/error",{message : e});
         return;
     }
-});    
+});
 
 router.get("/bookedevents/:id", async(req,res) =>{
     try{
@@ -373,8 +374,7 @@ router.get("/bookedevents/:id", async(req,res) =>{
 
         res.render("checkoutcheck/checkoutcheck",{message : 'you got that ticket, we send you the email check it!!'});
         return;
-}
-    
+    }
     catch(e){
      
         res.status(500).render("checkoutcheck/checkoutcheck",{error : e})
@@ -382,32 +382,125 @@ router.get("/bookedevents/:id", async(req,res) =>{
     }
 }); 
 
+router.get("/edit-event/:id", async(req,res) =>{
+    let id = req.params.id
+    if (!id) return res.render("error/error",{message : 'You must provide an id to search for rename'})
+    if (id ==''|typeof id == 'undefined' | id === null | id === NaN){
+        return res.status(400).render("error/error",{message : '$ id is empty'})
+    }
+    if (typeof id == 'string'){
+        if (id.match(/^[ ]*$/)){
+            return res.status(400).render("error/error",{message : '$ id is spaces'})
+        }
+    }
 
-
-router.get("/update/:id", async(req,res) =>{
+    if(ObjectId.isValid(id)===false){
+        return res.status(404).render("error/error",{message : '$id is not a valid id'})
+    }
     try{
         const event = await eventsdata.getEvent(req.params.id);
-        res.render("checkout/checkout", { event });
+        res.render("edit-event/edit-event", { event });
         return;
 }
     
     catch(e){
      
-        res.status(500).json({message : e});
+        res.status(500).render("error/error",{message : e});
         return;
     }
-});  
+});    
 
-// to redirect to bookedevents after making the payment
-router.get("/payment", async(req,res) =>{
+router.post("/edit-eventsub", async(req,res) =>{
+    const myeditbody = req.body
+    // let eventid = document.getElementById('eventid')
+    // console.log(myeditbody)
+    let mycapacity = Number(myeditbody.ticketcapacity)
+    let myprice = Number(myeditbody.price)
+    if (isNaN(mycapacity)){
+        res.status(400).render("edit-event/edit-event", { error:'ticketcapacity is not numbers'})
+        return
+    }
+    if (typeof mycapacity !== "number") {
+        res.status(400).render("edit-event/edit-event", { error:'Number of Tickets must be in Numbers'})
+        return
+    }
+    if (mycapacity < 0){
+        res.status(400).render("edit-event/edit-event", { error:'ticketcapacity must more than 0 or equal 0'})
+        return
+    }
+    if (isNaN(myprice)){
+        res.status(400).render("edit-event/edit-event", { error:'ticket price is not numbers'})
+        return
+    }
+    if (typeof myprice != "number") {
+        res.status(400).render("edit-event/edit-event", { error:"Number of Ticket's Price must be in Numbers"})
+        return
+    }
+    if (myprice < 0){
+        res.status(400).render("edit-event/edit-event", { error:'ticket price must more than 0 or equal 0'})
+        return
+    }
     try{
-        res.status(200).render("bookedevents/bookedevents");
-        return;
-    } catch(e){
-        res.status(500).json({message : e});
+        const checkposter = await usersdata.getByUsers(req.session.email)
+        let mypostlist = checkposter['eventspost']
+        let myposttest = false
+        for(let i = 0; i <mypostlist.length; i++){
+            let myid = mypostlist[i]['eventsid'].toString()
+            if(myid == myeditbody.eventid)
+            myposttest = true
+        }
+        if (myposttest === false){
+            res.status(400).render("error/error",{message : 'you are not this event owner'})
+            return
+        }
+
+        const event = await eventsdata.getEvent(myeditbody.eventid);
+        // console.log(typeof req.session.userId)
+
+        const updateevent = await eventsdata.updateEvent(myeditbody.eventid, event.title, event.category, event.creator, event.timestart, event.endtime, event.address, event.city, event.state, myeditbody.ticketcapacity,myeditbody.price,event.description,event.active)
+        if (updateevent.insertedCount === 0){
+            res.status(400).render("edit-event/edit-event",{error : 'you must change lest one element'})
+            return
+        }
+        else{
+            res.render("checkoutcheck/checkoutcheck",{message : 'you change that, thanks you!!'});
+            return
+        }
+
+    }
+    catch(e){
+     
+        res.status(500).render("edit-event/edit-event",{error : e})
         return;
     }
 }); 
+
+
+
+// router.get("/update/:id", async(req,res) =>{
+//     try{
+//         const event = await eventsdata.getEvent(req.params.id);
+//         res.render("checkout/checkout", { event });
+//         return;
+// }
+    
+//     catch(e){
+     
+//         res.status(500).json({message : e});
+//         return;
+//     }
+// });  
+
+// // to redirect to bookedevents after making the payment
+// router.get("/payment", async(req,res) =>{
+//     try{
+//         res.status(200).render("bookedevents/bookedevents");
+//         return;
+//     } catch(e){
+//         res.status(500).json({message : e});
+//         return;
+//     }
+// }); 
 
 
 

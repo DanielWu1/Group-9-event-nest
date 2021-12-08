@@ -4,22 +4,22 @@
 
 	<!-- Begin page content -->
 	<main class="container">
+		
 		<div class="row big-font">
 			<div class="col-md-10 col-lg-8">
-				<header class="title mt-3 mb-2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Create New Event</header>
+				<header class="title mt-3 mb-2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Edit event</header>
 				<br><br><br>
-				<form class="needs-validation ml-1" novalidate autocomplete="off" method="POST" action="/create-event" autocomplete="off">
-				
+				<form class="needs-validation ml-1" novalidate autocomplete="off" method="POST" action="/edit-eventsub" autocomplete="off">
 
-				
-
-
-
-					
+						<div>
+							<label for="eventid"></label>
+							<input name="eventid" id="eventid" value="{{event._id}}" hidden>
+						</div>
 
                    <div class="form-group col-lg-5">
 							<label for="ticketcapacity">Ticket Capacity:&nbsp;&nbsp;&nbsp;&nbsp;</label>
 							<input type="number" class="ghost-round2" name="ticketcapacity" id="ticketcapacity" min="1" placeholder="      Number of seats" required>
+							<p>for now you have {{event.ticketcapacity}} seats</p>
 							<br>
 						<br>
 						</div>
@@ -29,7 +29,7 @@
 						<div class="form-group col-lg-5">
 							<label for="price">Price:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
 							<input type="number" class="ghost-round2" name="price" id="price" min="0" placeholder="        Price">
-							
+							<p>for now you ticket price is {{event.price}}</p>
 							<small class="form-text text-muted">
 								(leave empty if free.)
 							</small> 
@@ -40,7 +40,7 @@
                  
 						
 
-					<div><center><button type="submit" class='btn' value = "edit" ><a href = "/edit-event/{{event._id}}">Edit this Event</a></button></center></div>
+					<div><center><button type="submit" class='btn' value = "edit" >Edit this Event</a></button></center></div>
 				</form>
 			</div>
 		</div>
