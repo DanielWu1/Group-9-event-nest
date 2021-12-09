@@ -380,7 +380,7 @@ router.post("/create-event", async (req, res) => {
         );
         // console.log(createUserevent.addPostEvents)
 
-        if (createUserevent.addPostEvents == false) {
+        if (createUserevent == false) {
             let changetheeventactive = await eventsdata.updateEvent(
                 createNewEvent._id.toString(),
                 xss(req.body.title),
