@@ -263,6 +263,7 @@ button {
   <center><p class="container3"><strong style="color:black;">State:</strong>    {{this.state}}</p></center>
   <center><p class="container3"><strong style="color:black;">Description:</strong>    {{this.description}}</p></center>  
   <center><p class="container4"><strong style="color:black;">Ticket Price: </strong>   {{this.price}}</p></center> 
+  <center><p class="container4"><strong style="color:black;">Tickets Left: </strong>   {{this.ticketcapacity}}</p></center>
   
 
   {{#if this.likedByThisUser}}
@@ -283,7 +284,7 @@ button {
      </center> 
 <center>
    <button class="button2" type="submit"> <a href="/events/{{this._id}}/going" style="text-decoration: none ; color:#eee">Going</a></button> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-     <p id="goingCount" style="color:white">{{this.going}}</p>
+     <p id="goingCount" style="color:white">{{this.goingCount}}</p>
      </center> 
 
 <center>
@@ -309,7 +310,15 @@ button {
 
 <center>
    <button class="container5" type="submit"> <a href="/checkout/{{this._id}}" style="text-decoration: none ; color:#eee">Buy Ticket</a></button> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
-     </center> 
+     </center>  
+     <br>
+
+  <div>
+<center><a href="https://www.facebook.com/" class="fa fa-facebook"></a> </center> 
+<br>
+<center><a href="https://twitter.com/" class="fa fa-twitter"></a></center>
+
+</div>
 
  
 
