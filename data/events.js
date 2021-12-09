@@ -173,11 +173,12 @@ const createEvent = async (
         buyerList: [],
         likes: 0,
         intersted: 0,
-        going: 0,
+        // going: 0,
 
         followerList: [], // people GOING
         likeList: [], // LIKE event
-        interestedList: [], // people INTERESTED in the event
+        interestedList: [],
+        going:[], // people INTERESTED in the event
 
         comments: [],
         active: true,
@@ -251,9 +252,6 @@ const updateEvent = async (
         throw "parameters are not strings or are empty strings,";
     }
 
-    if (!date.match(validDate)) {
-        throw "Date is not in Valid Format";
-    }
     if (!Array.isArray(timestart)) {
         throw "timeStart is Not an Array";
     } else if (timestart.length == 0) {
@@ -315,8 +313,7 @@ const updateEvent = async (
         throw " Number of Ticket's Price must be in Numbers";
     }
 
-    if (typeof active !== "boolean")
-        throw "Active status of the event must a true or false";
+   
 
     const eventCollection = await events();
     const olddata = await eventCollection.findOne({ _id: ObjectId(eventId) });
@@ -526,10 +523,34 @@ const recordLike = async (eventId, userId) => {
     const eventCollection = await events();
     const likedEvent = await eventCollection.updateOne(
         { _id: new ObjectId(eventId) },
-        { $addToSet: { likeList: userId } }
+        { $addToSet: { likeList: userId }}
     );
-    return true;
+    console.log((await eventCollection.findOne({ _id: new ObjectId(eventId) })));
+    return (await eventCollection.findOne({ _id: new ObjectId(eventId) })).likeList.length;
 };
+
+const recordInterested = async (eventId, userId) => {
+    const eventCollection = await events();
+    const interestedEvent = await eventCollection.updateOne(
+        { _id: new ObjectId(eventId) },
+        { $addToSet: { interestedList: userId }}
+    );
+    console.log((await eventCollection.findOne({ _id: new ObjectId(eventId) })));
+    return (await eventCollection.findOne({ _id: new ObjectId(eventId) })).interestedList.length;
+};
+
+const recordGoing = async (eventId, userId) => {
+    const eventCollection = await events();
+    const goingEvent = await eventCollection.updateOne(
+        { _id: new ObjectId(eventId) },
+        { $addToSet: { going: userId }}
+    );
+    console.log((await eventCollection.findOne({ _id: new ObjectId(eventId) })));
+    return (await eventCollection.findOne({ _id: new ObjectId(eventId) })).going.length;
+};
+
+
+
 const addLike = async (eventId) => {
     if (!eventId) {
         throw "event id need to have valid values";
@@ -887,7 +908,12 @@ const addbuyerinbuyerlist = async (email , eventId)=>{
         throw 'no more site for this user'
     }
     let mynewcapacity = olddata['ticketcapacity'] - 1
-    let mynewbuylist = olddata['buyerList'].push(email)
+    let mynewbuylist = olddata['buyerList']
+    // console.log(mynewbuylist)
+    // console.log(email)
+    // console.log(typeof email)
+    mynewbuylist.push(email)
+    // console.log(mynewbuylist)
     let mynewup = {
         title: olddata['title'],
         category: olddata['category'],
@@ -910,14 +936,15 @@ const addbuyerinbuyerlist = async (email , eventId)=>{
         interestedList: olddata['interestedList'], // people INTERESTED in the event
 
         comments: olddata['comments'],
-        active: mynewbuylist['active'],
+        active: olddata['active'],
     }
     let addbuyer1 = await eventCollection.updateOne(
         { _id: ObjectId(eventId) },
         { $set: mynewup }
     );
     if (addbuyer1.insertedCount === 0) throw '$ Could not buy this';
-    return {addbuyer : true}
+    let myreturn = true
+    return myreturn
 }
 
 const getBuyerList = async (eventId, creator, noOftickets) => {
@@ -983,6 +1010,18 @@ function isEmail(inputEmail) {
  
 }
 
+const addComment = async (eventId, comment) => { 
+   
+        const eventCollection = await events();
+    const commentAdded = await eventCollection.updateOne({ _id: new ObjectId(eventId) }, { $addToSet: { comments: [ comment ] }});
+    return true;
+
+
+
+
+    }
+    
+
 module.exports = {
     createEvent,
     getAllEvents,
@@ -992,6 +1031,8 @@ module.exports = {
     getEventListByName,
     getEventListByCategory,
     recordLike,
+    recordGoing,
+    recordInterested,
     addLike,
     removeLike,
     addIntersted,
@@ -1001,5 +1042,6 @@ module.exports = {
     getBuyerList,
     addbuyerinbuyerlist,
     checkcapacity,
-    getEventByCreatorEmail, 
+    getEventByCreatorEmail,
+    addComment 
 };

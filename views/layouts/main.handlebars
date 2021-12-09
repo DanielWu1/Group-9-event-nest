@@ -4,7 +4,8 @@
         <meta charset ="utf-8"> 
         <title>{{title}}</title> 
         <link rel = "stylesheet" href="/public/css/site.css"> 
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"> 
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     </head> 
     <body> 
         {{{body}}} 
@@ -26,12 +27,46 @@
         url: link
       }
       $.ajax(requestConfig).then((message) => {
-          console.log(message)
-          if (message.likeAdded) {
-              $(elem).text('Liked');
-              $(elem).parent().css('background-color', 'teal');
-              $(elem).attr('disabled', true)
-          }
+          console.log(elem)
+          $(elem).parent().parent().find('#likeCount').text(message.likeAdded);
+      });
+    })
+  })
+
+
+    $('.interested').each((index, elem) => {
+      console.log(elem);
+    $(elem).click((event) => {
+      event.preventDefault();
+      console.log(event);
+      let link = event.target.href
+      console.log(link);
+      let requestConfig = {
+        method: 'POST',
+        url: link
+      }
+      $.ajax(requestConfig).then((message) => {
+          console.log(elem)
+          $(elem).parent().parent().find('#interestedCount').text(message.interestedAdded);
+      });
+    })
+  })
+
+
+    $('.going').each((index, elem) => {
+      console.log(elem);
+    $(elem).click((event) => {
+      event.preventDefault();
+      console.log(event);
+      let link = event.target.href
+      console.log(link);
+      let requestConfig = {
+        method: 'POST',
+        url: link
+      }
+      $.ajax(requestConfig).then((message) => {
+          console.log(elem)
+          $(elem).parent().parent().find('#goingCount').text(message.goingAdded);
       });
     })
   })
