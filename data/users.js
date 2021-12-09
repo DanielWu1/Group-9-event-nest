@@ -100,12 +100,12 @@ async function createUser(userName, phone, gender, email, address, password,){
         eventspost: [],
         likeevents: [],
       };
-      let myreturn = {}
-      myreturn['CreateUser'] = false
+      let myreturn = false
+      myreturn = false
       const insertInfo = await users1.insertOne(newusers);
       if (insertInfo.insertedCount === 0) {throw '$ Could not add new restaurants'}
       else {
-        myreturn['CreateUser'] = true
+        myreturn = true
       }
 
     // it will return the users information
@@ -236,7 +236,7 @@ async function resetPassword(email, userName, password){
     myaftertestemail[0] = myaftertestemail[0].toLowerCase()
     let mynewemail = myaftertestemail[0]+'@'+myaftertestemail[1]
     const myuser = await getByUsers(mynewemail)
-    let myreturn = {}
+    let myreturn = false
     if (userName === myuser['userName']){
         const hash = await bcrypt.hash(password,saltRounds)
         const resetpassword = {
@@ -258,7 +258,7 @@ async function resetPassword(email, userName, password){
         if (updatedInfo.modifiedCount === 0) {
             throw 'could not update password successfully (they are same)';
         }
-        myreturn['reset'] = true
+        myreturn = true
     }
     else{
         throw 'user Name or emaill is not true'
@@ -327,12 +327,12 @@ async function addLikeevents(userId, eventsid){
     if (insertliketevents.insertedCount === 0) throw '$ Could not add new like events';
     const liket2 = await usersCollection.findOne({ _id: myuserId, likeevents:{$elemMatch:{eventsid:myeventId}}});
     console.log(liket2)
-    let myreturn = {}
+    let myreturn = false
     if (liket2 === null){
-        myreturn['addLikeEvents'] = false
+        myreturn = false
     }
     else {
-        myreturn['addLikeEvents'] = true
+        myreturn = true
     }
     // if add like succeed it will return {addLikeEvents : true}
     // if add like not succeed it will return {addLikeEvents : false}
@@ -412,12 +412,12 @@ async function removeLikeEvents(userId, eventsid){
     // const myuser = newuser['likeevents']
     
     const removeLikeEvents1 = await usersCollection.findOne({ _id: myuserId, likeevents:{$elemMatch:{eventsid:myeventId}}})
-    let myreturn1 = {}
+    let myreturn1 = false
     if (removeLikeEvents1 === null){
-        myreturn1['removeLikeEvents'] = true
+        myreturn1= true
     }
     else {
-        myreturn1['removeLikeEvents'] = false
+        myreturn1 = false
     }
     
     // revi['_id'] = revi['_id'].toString()
@@ -538,7 +538,7 @@ async function addTicketEvents(userId, ticketeventsid, eventTitle,eventStartTime
             throw '$event description is spaces'
         }
     }
-    let myreturn = {}
+    let myreturn = false
     const myuserId = myDBfunction(userId)
     const myeventId = myDBfunction(ticketeventsid)
     const usersCollection = await users();
@@ -574,7 +574,7 @@ async function addTicketEvents(userId, ticketeventsid, eventTitle,eventStartTime
         if (myticketstime <= mystart &&  mystart <= myticketetime || myticketstime <= myend  && myend <= myticketetime){
             let mythrow = myticket['eventTitle'] + ' have same time zone'
             console.log(mythrow)
-            return myreturn['addTicketEvents'] = false
+            return myreturn = false
         }
     }
 
@@ -586,7 +586,7 @@ async function addTicketEvents(userId, ticketeventsid, eventTitle,eventStartTime
         if (mypoststime <= mystart &&  mystart <= mypostetime || mypoststime <= myend  && myend <= mypostetime){
             let mythrow = mypost['eventTitle'] + ' have same time zone'
             console.log(mythrow)
-            return myreturn['addTicketEvents'] = false
+            return myreturn = false
         }
     }
     
@@ -596,10 +596,10 @@ async function addTicketEvents(userId, ticketeventsid, eventTitle,eventStartTime
     // console.log(liket2)
     
     if (ticket3 === null){
-        myreturn['addTicketEvents'] = false
+        myreturn = false
     }
     else {
-        myreturn['addTicketEvents'] = true
+        myreturn = true
     }
     // if add ticket succeed it will return {addLikeEvents : true}
     // if add ticket not succeed it will return {addLikeEvents : false}
@@ -678,12 +678,12 @@ async function removeTicketEvents(userId, ticketeventsid){
     // const myuser = newuser['likeevents']
     
     const removeLikeEvents1 = await usersCollection.findOne({ _id: myuserId, ticket:{$elemMatch:{eventsid:myeventId}}})
-    let myreturn1 = {}
+    let myreturn1 = false
     if (removeLikeEvents1 === null){
-        myreturn1['removeTicketEvents'] = true
+        myreturn1 = true
     }
     else {
-        myreturn1['removeTicketEvents'] = false
+        myreturn1 = false
     }
     
     // revi['_id'] = revi['_id'].toString()
@@ -809,7 +809,7 @@ async function addPostEvents(userId, eventsid, eventTitle,eventStartTime,eventEn
     const myuserId = myDBfunction(userId)
     const myeventId = myDBfunction(eventsid)
     const usersCollection = await users();
-    let myreturn = {}
+    let myreturn = false
 
     let newpostevents = {
         eventsid: myeventId,
@@ -844,7 +844,7 @@ async function addPostEvents(userId, eventsid, eventTitle,eventStartTime,eventEn
         if (mypoststime <= mystart &&  mystart <= mypostetime || mypoststime <= myend  && myend <= mypostetime){
             let mythrow = mypost['eventTitle'] + ' have same time zone'
             console.log(mythrow)
-            return myreturn['addPostEvents'] = false
+            return myreturn = false
         }
     }
     for(let b = 0 ; b <userticketlist.length; b++){
@@ -854,7 +854,7 @@ async function addPostEvents(userId, eventsid, eventTitle,eventStartTime,eventEn
         if (myticketstime <= mystart &&  mystart <= myticketetime || myticketstime <= myend  && myend <= myticketetime){
             let mythrow = myticket['eventTitle'] + ' have same time zone'
             console.log(mythrow)
-            return myreturn['addPostEvents'] = false
+            return myreturn = false
         }
     }
     const insertliketevents = await usersCollection.updateOne({ _id: myuserId }, { $addToSet: { eventspost: newpostevents } })
@@ -862,10 +862,10 @@ async function addPostEvents(userId, eventsid, eventTitle,eventStartTime,eventEn
     const post3 = await usersCollection.findOne({ _id: myuserId, eventspost:{$elemMatch:{eventsid:myeventId}}});
     // console.log(liket2)
     if (post3 === null){
-        myreturn['addPostEvents'] = false
+        myreturn = false
     }
     else {
-        myreturn['addPostEvents'] = true
+        myreturn = true
     }
     // if add Post succeed it will return {addLikeEvents : true}
     // if add Post not succeed it will return {addLikeEvents : false}
@@ -944,12 +944,12 @@ async function removePostEvents(userId, eventsid){
     // const myuser = newuser['likeevents']
     
     const removePostEvents1 = await usersCollection.findOne({ _id: myuserId, eventspost:{$elemMatch:{eventsid:myeventId}}})
-    let myreturn1 = {}
+    let myreturn1 = false
     if (removePostEvents1 === null){
-        myreturn1['removePostEvents'] = true
+        myreturn1 = true
     }
     else {
-        myreturn1['removePostEvents'] = false
+        myreturn1 = false
     }
     
     // revi['_id'] = revi['_id'].toString()
