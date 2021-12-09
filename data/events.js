@@ -908,7 +908,12 @@ const addbuyerinbuyerlist = async (email , eventId)=>{
         throw 'no more site for this user'
     }
     let mynewcapacity = olddata['ticketcapacity'] - 1
-    let mynewbuylist = olddata['buyerList'].push(email)
+    let mynewbuylist = olddata['buyerList']
+    // console.log(mynewbuylist)
+    // console.log(email)
+    // console.log(typeof email)
+    mynewbuylist.push(email)
+    // console.log(mynewbuylist)
     let mynewup = {
         title: olddata['title'],
         category: olddata['category'],
