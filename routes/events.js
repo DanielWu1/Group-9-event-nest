@@ -385,8 +385,7 @@ router.post("/create-event", async (req, res) => {
                 createNewEvent._id.toString(),
                 xss(req.body.title),
                 xss(req.body.category),
-                req.session.email,
-                xss(req.body.date),
+                xss(req.session.userName),
                 xss(req.body.timestart),
                 xss(req.body.endtime),
                 xss(req.body.address),
@@ -396,7 +395,7 @@ router.post("/create-event", async (req, res) => {
                 xss(req.body.price),
                 xss(req.body.description),
                 false
-            );
+            )
             res.status(400).render("create-event/create-event", {
                 error: "SEEMS LIKE THIS EVENT OVERLAPS WITH ANOTHER EVENT OF YOURS! TRY AGAIN FOR A DIFFERENT TIME",
             });
