@@ -466,9 +466,10 @@ router.get("/bookedevents/:id", async (req, res) => {
             event.endtime,
             event.description
         );
-        if (additinuser.addTicketEvents === false) {
-            // console.log('3')
-            res.render("checkoutcheck/checkoutcheck", {
+        // console.log(additinuser)
+        if (additinuser === false) {
+            console.log('3')
+            res.status(400).render("checkoutcheck/checkoutcheck", {
                 error: "can not add it because you already have event have to go at same time",
             });
             return;
@@ -476,7 +477,7 @@ router.get("/bookedevents/:id", async (req, res) => {
         const check = await eventsdata.checkcapacity(req.params.id);
         // console.log('4')
         if (check === false) {
-            res.render("checkoutcheck/checkoutcheck", {
+            res.status(400).render("checkoutcheck/checkoutcheck", {
                 error: "sorry there is no more seat for your",
             });
             return;
