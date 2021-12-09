@@ -931,7 +931,7 @@ const addbuyerinbuyerlist = async (email , eventId)=>{
         interestedList: olddata['interestedList'], // people INTERESTED in the event
 
         comments: olddata['comments'],
-        active: mynewbuylist['active'],
+        active: olddata['active'],
     }
     let addbuyer1 = await eventCollection.updateOne(
         { _id: ObjectId(eventId) },
