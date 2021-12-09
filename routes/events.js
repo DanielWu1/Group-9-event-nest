@@ -487,8 +487,8 @@ router.get("/bookedevents/:id", async (req, res) => {
             req.params.id
         );
         if (
-            additinevent.addbuyer === true &&
-            additinuser.addTicketEvents === true
+            additinevent === true &&
+            additinuser === true
         ) {
             sendemail.sendTicketEmail(
                 req.session.email,

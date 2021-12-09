@@ -943,7 +943,8 @@ const addbuyerinbuyerlist = async (email , eventId)=>{
         { $set: mynewup }
     );
     if (addbuyer1.insertedCount === 0) throw '$ Could not buy this';
-    return {addbuyer : true}
+    let myreturn = true
+    return myreturn
 }
 
 const getBuyerList = async (eventId, creator, noOftickets) => {
