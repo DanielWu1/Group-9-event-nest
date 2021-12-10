@@ -491,7 +491,10 @@ async function getEventListByName(inputEventName) {
     // run query
     const eventCollection = await events();
     const result = await eventCollection
-        .find({ title: inputEventName.toString() })
+        .find(
+            { title: { $regex: ".*" + inputEventName + ".*", $options: "i" } },
+            
+         )
         .toArray();
 
     return result;
