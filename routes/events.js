@@ -7,6 +7,45 @@ const sendemail = require("../data/email");
 let { ObjectId } = require("mongodb");
 const xss = require("xss");
 
+
+// to get the events based on category/ filters
+router.post("/filterevents"),
+    async (req, res) => {
+
+        console.log(req.body)
+
+        // validations
+        if (typeof xss(req.body.filterList) !== "object") {
+            res.status(400).render("/userhomepage", {
+                error: "Something went wrong while filtering",
+            });
+            return;
+        }
+        if (xss(req.body.filterList).length === 0) {
+            res.status(400).render("/userhomepage", {
+                error: "Something went wrong while filter",
+            });
+            return;
+        }
+
+        try {
+            // req.body.filterList like [ 'Party', 'Expo' ]
+            const eventList = await eventsdata.getEventListByCategory(
+                xss(req.body.filterList)
+            );
+            // @cherry: make necessary changes to the render funcs based on your handlebars
+            // @cherry: do not hit the api if there are NO or ZERO filters
+            res.status(200).render("filterevents/filterevents", {
+                allFilteredEvents: eventList,
+            });
+            return;
+        } catch (e) {
+            res.status(500).json({ message: e });
+            return;
+        }
+    };
+
+
 // 1.1 to get the events which the user has booked -> get webpage
 router.get("/bookedevents", async (req, res) => {
     try {
@@ -641,6 +680,9 @@ router.post("/edit-eventsub", async (req, res) => {
 // to get the events based on category/ filters
 router.post("/filterevents"),
     async (req, res) => {
+
+        console.log(req.body)
+
         // validations
         if (typeof xss(req.body.filterList) !== "object") {
             res.status(400).render("/userhomepage", {

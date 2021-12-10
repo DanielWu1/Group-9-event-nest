@@ -6,8 +6,10 @@
 		searchterm = $("#search_term"),
 		homelink = $("#homeLink"),
 		myallevent = $("#myallevent")
+       
 
 
+       
 
     searchform.submit(function (show) {
         show.preventDefault();
@@ -77,4 +79,55 @@
         homelink.hide()
     })
     })
+
+    
+
+   
+
+
 })(window.jQuery);
+
+ // filter button
+ $('#filterbtn').on('click',function(e){
+
+    e.preventDefault();
+
+    let filterArr = [];
+    if($('#party').is(':checked')){
+        filterArr.push('Party');
+    }
+    if($('#getTogether').is(':checked')){
+        filterArr.push('Get-Together');
+    }
+    if($('#conference').is(':checked')){
+        filterArr.push('Conference');
+    }
+    if($('#workshop').is(':checked')){
+        filterArr.push('workshop');
+    }
+    if($('#expo').is(':checked')){
+        filterArr.push('Expo');
+    }
+    if($('#networkingSession').is(':checked')){
+        filterArr.push('Networking session');
+    }
+    
+    let requestConfig = {
+        method: 'POST',
+        url: '/filterevents',
+        contentType: 'application/json',
+        data: JSON.stringify({
+            filterList : filterArr
+        })
+    }
+
+    console.log(requestConfig);
+
+    $.ajax(requestConfig).then(function (res){
+
+
+        alert(res)
+    })
+    
+
+})
