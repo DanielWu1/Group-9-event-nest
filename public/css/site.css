@@ -22,8 +22,9 @@ input {
   border-style: ridge;
   border-radius: 5%;
   
-  background-color: #000000; 
-  padding-top: 5%;
+  background-color: #04018f; 
+  padding-top: 5%; 
+  border-color: #000000;
 }
 
 button:focus {
@@ -111,13 +112,13 @@ button:focus {
   border-radius: 60%;
 }
 .fa-facebook {
-  background: #3B5998;
+  background: #035d8a;
   color: white;
 }
 
 .fa-twitter {
-  background: #55ACEE;
-  color: white;
+  background: #007dba;
+  color: #ffffff;
 }
 
 
