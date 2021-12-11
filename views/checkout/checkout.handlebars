@@ -1,156 +1,38 @@
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
-<style>
-    body {
-  font-family: Arial;
-  font-size: 17px;
-  padding: 8px;
-}
-
-* {
-  box-sizing: border-box;
-}
-
-.row {
-  display: -ms-flexbox; /* IE10 */
-  display: flex;
-  -ms-flex-wrap: wrap; /* IE10 */
-  flex-wrap: wrap;
-  margin: 0 -16px;
-}
-
-.col-25 {
-  -ms-flex: 25%; /* IE10 */
-  flex: 25%;
-}
-
-.col-50 {
-  -ms-flex: 50%; /* IE10 */
-  flex: 50%;
-  padding: 10px;
-}
-
-.col-75 {
-  -ms-flex: 75%; /* IE10 */
-  flex: 75%;
-}
-
-.col-25,
-.col-50,
-.col-75 {
-  padding: 0 16px;
-}
-
-.container {
-  background-color: #f2f2f2;
-  padding: 5px 20px 15px 20px;
-  border: 1px solid lightgrey;
-  border-radius: 3px;
-}
-
-input[type=text] {
-  width: 100%;
-  margin-bottom: 20px;
-  padding: 20px;
-  border: 1px solid #ccc;
-  border-radius: 3px;
-}
-
-label {
-  margin-bottom: 10px;
-  display: block;
-}
-
-.icon-container {
-  margin-bottom: 20px;
-  padding: 7px 0;
-  font-size: 24px;
-}
-
-.center {
-  margin: auto;
-  width: 60%;
-  border: 3px solid #73AD21; 
-  border-radius: 12px;
-  padding: 20px;
-}
-
-.btn {
-  background-color: #000000;
-  color: white;
-  padding: 12px;
-  margin: 10px 0;
-  border: none; 
-  border-radius: 20px;
-  width: 20%;
-  border-radius: 3px;
-  cursor: pointer;
-  font-size: 17px;
-
-  text-decoration: #ffffff;
-}
-
-.btn:hover {
-  background-color: #a1a1a1;
-}
-
-a {
-  color: #2196F3;
-}
-
-hr {
-  border: 1px solid lightgrey;
-}
-
-span.price {
-  float: right;
-  color: grey;
-}
-
-/* Responsive layout - when the screen is less than 800px wide, make the two columns stack on top of each other instead of next to each other (also change the direction - make the "cart" column go on top) */
-@media (max-width: 800px) {
-  .row {
-    flex-direction: column-reverse;
-  }
-  .col-25 {
-    margin-bottom: 20px;
-  }
-}
-</style>
-
-
-<br><br>
+<main>
+<body>
+<br>
 <br><br>
 
-<center><h1>Booking for the event "{{event.title}}"</h1></center>
+<h1 class="center1">Booking for the event "{{event.title}}"</h1>
 <br><br>
 <br><br>
 
 <div class="ggg">
     
-<center><p class="container3"> <strong>Title:</strong>    {{event.title}} </p></center> 
- <center><p class="container3"> <strong>Category:</strong>    {{event.category}} </p></center> 
+<p class="container3"> <strong>Title:</strong>    {{event.title}} </p> <br>
+<p class="container3"> <strong>Category:</strong>    {{event.category}} </p><br>
  
-  <center><p class="container3"><strong>Start Time:</strong>   {{event.timestart}}</p></center>
-  <center><p class="container3"><strong>End Time: </strong>  {{event.endtime}}</p></center>
-  <center><p class="container3"><strong>Address:</strong>   {{event.address}}</p></center>
-  <center><p class="container3"><strong>City:</strong>    {{event.city}}</p></center>
-  <center><p class="container3"><strong>State:</strong>    {{event.state}}</p></center>
-  <center><p class="container3"><strong>Description:</strong>    {{event.description}}</p></center>  
-  <center><p class="container4"><strong>Ticket Price:</strong>    {{event.price}}</p></center>
+ <p class="container3"><strong>Start Time:</strong>   {{event.timestart}}</p><br>
+  <p class="container3"><strong>End Time: </strong>  {{event.endtime}}</p><br>
+ <p class="container3"><strong>Address:</strong>   {{event.address}}</p><br>
+<p class="container3"><strong>City:</strong>    {{event.city}}</p><br>
+  <p class="container3"><strong>State:</strong>    {{event.state}}</p><br>
+<p class="container3"><strong>Description:</strong>    {{event.description}}</p><br> 
+<p class="container4"><strong>Ticket Price:</strong>    {{event.price}}</p><br>
   <br><br><br> </div>
 <br><br>
 
  <div class="center">
-            <h1>Payment</h3> 
-            <label for="fname">Accepted Cards</label>
+            <h1>Payment</h1> 
+            <p>Accepted Cards<p>
             <div class="icon-container">
               <i class="fa fa-cc-visa" style="color:navy;"></i>
               <i class="fa fa-cc-amex" style="color:blue;"></i>
               <i class="fa fa-cc-mastercard" style="color:red;"></i>
               <i class="fa fa-cc-discover" style="color:orange;"></i>
             </div>
-            <label for="cname" >Name on Card</label>
+            <label for="cname">Name on Card</label>
             <input type="text" id="cname" name="cardname" placeholder="John More Doe" required>
             <label for="ccnum">Credit card number</label>
             <input type="text" id="ccnum" name="cardnumber" placeholder="1111-2222-3333-4444" required>
@@ -168,13 +50,14 @@ span.price {
             </div>
           </div>
           
-        </div>
+       
         <br>
-        <label>
-          <center><input type="checkbox" checked="checked" name="sameadr" required> Shipping address same as billing</center>
-        </label>
-      <div><center><button type="submit" class='btn' value = "logout" ><a href = "/bookedevents/{{event._id}}">Book this Event</a></button></center></div>
-      </form> 
-   
-      <div><center><button type="submit" class='btn' value = "logout" ><a href = "/userhomepage">Homepage</a></button></center></div>
-    </div>
+        
+    
+    
+   <br>
+     <div class = "center1"><a href = "/bookedevents/{{event._id}}">Book this Event</a></div><br>
+      <div class="center1"><a href="/userhomepage" target="_blank">Homepage</a></div><br><br><br>
+
+</body>
+</main>
