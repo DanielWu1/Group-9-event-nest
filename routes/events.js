@@ -501,7 +501,7 @@ router.get("/bookedevents/:id", async (req, res) => {
         if (additinuser === false) {
             console.log('3')
             res.status(400).render("checkoutcheck/checkoutcheck", {
-                error: "can not add it because you already have event have to go at same time",
+                error: "Seems like you have a conflicting event for this time.",
             });
             return;
         }
