@@ -347,21 +347,12 @@ const updateEvent = async (
     );
     return await getEvent(eventId);
 };
+
+// TO SOFT DELETE THE EVENT
 const removeEvent = async (
     eventId,
-    title,
-    category,
-    creator,
-    timestart,
-    endtime,
-    address,
-    city,
-    state,
-    ticketcapacity,
-    price,
-    description
+    activeFlag
 ) => {
-    // console.log(active, typeof active)
 
     try {
         parsedEventid = ObjectId(eventId);
@@ -369,115 +360,17 @@ const removeEvent = async (
         throw "id format wrong";
     }
     if (!eventId) throw "You must provide an id to search for";
+    if (!activeFlag) throw "You must provide an activeFlag to set";
+    if ( typeof activeFlag === "boolean") throw "You must provide an activeFlag to set";
 
-    if (
-        !title ||
-        !category ||
-        !creator ||
-        !timestart ||
-        !endtime ||
-        !address ||
-        !city ||
-        !state ||
-        !ticketcapacity ||
-        !price ||
-        !description
-    ) {
-        throw "All fields need to have valid values";
-    }
-
-    if (
-        typeof title != "string" ||
-        typeof category != "string" ||
-        typeof creator != "string" ||
-        typeof address != "string" ||
-        typeof city != "string" ||
-        typeof state != "string" ||
-        typeof description != "string" ||
-        title.trim().length == 0 ||
-        category.trim().length == 0 ||
-        creator.trim().length == 0 ||
-        address.trim().length == 0 ||
-        city.trim().length == 0 ||
-        state.trim().length == 0 ||
-        description.trim().length == 0
-    ) {
-        throw "parameters are not strings or are empty strings,";
-    }
-
-    // if (!date.match(validDate)) {
-    //     throw "Date is not in Valid Format";
-    // }
-    if (!Array.isArray(timestart)) {
-        throw "timeStart is Not an Array";
-    } else if (timestart.length == 0) {
-        throw "timeStart is empty";
-    } else {
-        if (
-            typeof timestart[0] != "string" ||
-            timestart[0].trim().length == 0 ||
-            !timestart[0].match(validDate)
-        ) {
-            throw " In Timestart you must enter in MM/DD/YY format";
-        }
-        if (
-            typeof timestart[1] != "string" ||
-            timestart[1].trim().length == 0 ||
-            !timestart[1].match(validTime)
-        ) {
-            throw " In Timestart you must enter in HH/MM format";
-        }
-    }
-
-    if (!Array.isArray(endtime)) {
-        throw "endtime is not an Array";
-    } else if (endtime.length == 0) {
-        throw "endtime is empty";
-    } else {
-        if (
-            typeof endtime[0] != "string" ||
-            endtime[0].trim().length == 0 ||
-            !endtime[0].match(validDate)
-        ) {
-            throw " In Endtime you must enter in MM/DD/YY format";
-        }
-        if (
-            typeof endtime[1] != "string" ||
-            endtime[1].trim().length == 0 ||
-            !endtime[1].match(validTime)
-        ) {
-            throw " In Endtime you must enter in HH/MM format";
-        }
-    }
-
-    if (typeof ticketcapacity != "number") {
-        throw " Number of Tickets must be in Numbers";
-    }
-
-    if (typeof price != "number") {
-        throw " Number of Ticket's Price must be in Numbers";
-    }
 
     const eventCollection = await events();
 
-    const updatedEvent = {
-        title: title,
-        category: category,
-        creator: creator,
-        timestart: timestart,
-        endtime: endtime,
-        address: address,
-        city: city,
-        state: state,
-        ticketcapacity: ticketcapacity,
-        price: price,
-        description: description,
-        active: false,
-    };
     await eventCollection.updateOne(
         { _id: ObjectId(eventId) },
-        { $set: updatedEvent }
+        { $set: { active: activeFlag} }
     );
+
     return await getEvent(eventId);
 };
 
@@ -509,15 +402,17 @@ async function getEventListByCategory(inputEventCategory) {
     if (inputEventCategory.length === 0)
         throw "no filters supplied";
 
+    let returnEventList = [];
     // run query
     const eventCollection = await events();
     for (let i =0 ; i<inputEventCategory.length; i++){
         const result = await eventCollection
-        .find({ "category": inputEventCategory.toString() })
+        .find({ "category": inputEventCategory[i].toString() })
         .toArray();
 
         returnEventList = returnEventList.concat(result);
     }
+    // console.log(returnEventList)
 
     return returnEventList;
 }
