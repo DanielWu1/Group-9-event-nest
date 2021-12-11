@@ -107,6 +107,16 @@ button:focus {
   text-decoration:none;
 }
 
+input[type=email], input[type=password] , input[type=text]{
+  width: 40%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+  border-radius: 12px;
+}
+
 .container6 {
   background-color: #ff0909;
  color: white;
