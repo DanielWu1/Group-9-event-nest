@@ -91,13 +91,15 @@ app.use("/payment", (req, res, next) => {
     }
 });
 
-app.use("/filterevents", (req, res, next) => {
-    if (!req.session.userName || !req.session.email || !req.session.userId) {
-        return res.redirect("/");
-    } else {
-        next();
-    }
-});
+// app.use("/filterevents", (req, res, next) => {
+//     // console.log(req.originalUrl, req.method);
+//     if (!req.session.userName || !req.session.email || !req.session.userId) {
+//         return res.redirect("/");
+//     } else {
+//         next();
+//     }
+// });
+
 app.use("/logout", (req, res, next) => {
     if (!req.session.userName || !req.session.email || !req.session.userId) {
         return res.redirect("/");
