@@ -38,6 +38,7 @@
                 for(let i =0 ; i <newelement.length; i++){
             	    let showdetail = newelement[i]
                     // console.log(showdetail)
+                
             	    let myeach1 = '<center><p class="container3">' +showdetail.title+'</p></center>'
                     let myeach2 = '<center><p class="container3">Category:    ' +showdetail.category+'</p></center>'
                     let myeach3 = '<center><p class="container3">Creator Name:    ' +showdetail.creator+'</p></center>'
@@ -48,7 +49,10 @@
                     let myeach8 = '<center><p class="container3">City:    ' +showdetail.city+'</p></center>'
                     let myeach9 = '<center><p class="container3">State:    ' +showdetail.state+'</p></center>'
                     let myeach10 = '<center><p class="container3">Description:    ' +showdetail.description+'</p></center>'
-                    let myeach11 = '<center><p class="container4">Ticket Price:    ' +showdetail.price+'</p></center>'
+                    let myeach11 = '<center><p class="container4">Ticket Price:    ' +showdetail.price+'</p></center>' 
+
+                    //let myeach12 = '<button class="container5" type="submit"> <a href="/checkout/''" style="text-decoration: none ; color:#eee">Buy Ticket</a></button>'
+                    
             	    serchevent.append(myeach1,myeach2,myeach3,myeach4,myeach5,myeach6,myeach7,myeach8,myeach9,myeach10,myeach11)
                     // console.log(serchevent)
         	    }
