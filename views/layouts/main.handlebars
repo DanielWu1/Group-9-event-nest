@@ -9,9 +9,9 @@
     </head> 
     <body> 
         {{{body}}} 
-        <script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="
+        <script> src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="
         crossorigin="anonymous"></script>
-        <script src="/public/js/form.js"></script>
+        <script> src="/public/js/form.js"></script>
         {{!-- <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script> --}}
         {{!-- <script src="/public/js/form.js"></script> --}}
         <script>
@@ -28,7 +28,7 @@
       }
       $.ajax(requestConfig).then((message) => {
           console.log(elem)
-          $(elem).parent().parent().find('#likeCount').text(message.likeAdded);
+          $(elem).next().text(message.likeAdded);
       });
     })
   })
@@ -47,7 +47,7 @@
       }
       $.ajax(requestConfig).then((message) => {
           console.log(elem)
-          $(elem).parent().parent().find('#interestedCount').text(message.interestedAdded);
+          $(elem).next().text(message.interestedAdded);
       });
     })
   })

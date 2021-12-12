@@ -187,14 +187,14 @@ router.get("/userlogin", async (req, res) => {
 router.post("/userlogin", async (req, res) => {
     // let login = req.body;
     if (isEmail(xss(req.body.email)) === false) {
-        res.status(400).render("usersignup/usersignup", {
+        res.status(400).render("userlogin/userlogin", {
             error: "Input email is not valid",
         });
         return;
     }
     // chekcing for password
     if (isPassword(xss(req.body.password)) === false) {
-        res.status(400).render("usersignup/usersignup", {
+        res.status(400).render("userlogin/userlogin", {
             error: "Input password has to be 6-20 characters which contain at least one numeric digit, one uppercase and one lowercase letter",
         });
         return;

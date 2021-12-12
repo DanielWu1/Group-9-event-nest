@@ -36,7 +36,7 @@ a:link, a:visited {
 }
 
 p{
-  color:white
+  color:rgb(66, 66, 66)
 }
 
 a:hover, a:active {
@@ -139,7 +139,8 @@ button:focus {
   width: 200px; 
   right:1000px; 
   border-radius: 12px;
-  text-decoration:none;
+  text-decoration:none; 
+  margin-left: 40%;
 }
 
 input[type=email], input[type=password] ,input[type=text]{
@@ -190,6 +191,7 @@ input[type=email], input[type=password] ,input[type=text]{
 
 #search_term {
   width: 20%;
+  height:5%;
   margin-left:40%;
 }
 

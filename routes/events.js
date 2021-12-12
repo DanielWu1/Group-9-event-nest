@@ -505,11 +505,11 @@ router.get("/bookedevents/:id", async (req, res) => {
             event.endtime,
             event.description
         );
-        console.log(additinuser)
+       // console.log(additinuser)
         if (additinuser === false) {
-            console.log('3')
+           // console.log('3')
             res.status(400).render("checkoutcheck/checkoutcheck", {
-                error: "Seems like you have a conflicting event for this time.",
+                error: "Seems like you have a conflicting event for this time / You have created events at the same time (conflicting)",
             });
             return;
         }
