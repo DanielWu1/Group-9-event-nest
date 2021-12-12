@@ -104,8 +104,8 @@ async function createUser(userName, phone, gender, email, address, password) {
     const hash = await bcrypt.hash(password,saltRounds)
     let myaftertestemail = email.split('@')
     myaftertestemail[0] = myaftertestemail[0].toLowerCase()
-    myaftertestemail[1] = myaftertestemail[0].toLowerCase()
-    let mynewemail = myaftertestemail[0]+'@'+myaftertestemail[1].toLowerCase()
+    myaftertestemail[1] = myaftertestemail[1].toLowerCase()
+    let mynewemail = myaftertestemail[0]+'@'+myaftertestemail[1]
     const myusers = await users1.findOne({ email: mynewemail });
     if (myusers !== null) throw "have users with same email";
     let newusers = {
