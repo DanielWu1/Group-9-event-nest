@@ -19,8 +19,8 @@ const main = async () => {
         "Lobster Event",
         "Party",
         "neeltejani125@gmail.com",
-        ["12/22/2023", "02:39"],
-        ["12/30/2023", "02:39"],
+        ["12/26/2021", "15:39"],
+        ["12/26/2021", "19:39"],
         "315 new york ave ",
         "New york City",
         "New York",
@@ -36,27 +36,7 @@ const main = async () => {
         event1.endtime,
         event1.description
     );
-    const event11 = await events.createEvent(
-        "School get together",
-        "Get-Together",
-        "neeltejani125@gmail.com",
-        ["12/22/2023", "02:39"],
-        ["12/30/2023", "02:39"],
-        "315 new york ave ",
-        "New york City",
-        "New York",
-        550,
-        1000,
-        "This is the lobester party is going to arranged in New york city"
-    );
-    const addeventUserdata1 = await users.addPostEvents(
-        user1Object._id,
-        event11._id.toString(),
-        event11.title,
-        event11.timestart,
-        event11.endtime,
-        event11.description
-    );
+
     const user2 = await users.createUser(
         "prajay1",
         "111-233-3343",
@@ -68,17 +48,17 @@ const main = async () => {
     const user2Object = await users.getByUsers("prajay16@gmail.com");
 
     const event2 = await events.createEvent(
-        "The christmas party",
-        "Party",
+        "The school Get-together",
+        "Get-Together",
         "prajay16@gmail.com",
-        ["12/10/2022", "02:39"],
-        ["12/27/2022", "02:39"],
+        ["12/27/2021", "15:39"],
+        ["12/27/2021", "19:39"],
         "86 graham st ",
         "Jersey City",
         "New Jersey",
         100,
         700,
-        "This is the christmas party is going to arranged in jersey city"
+        "This is the get together is going to arranged in jersey city"
     );
     const addeventUserdata2 = await users.addPostEvents(
         user2Object._id,
@@ -100,17 +80,17 @@ const main = async () => {
     const user3Object = await users.getByUsers("daniel123@gmail.com");
 
     const event3 = await events.createEvent(
-        "The christmas party",
-        "Party",
+        "Python workshop",
+        "workshop",
         "daniel123@gmail.com",
-        ["12/10/2022", "02:39"],
-        ["12/27/2022", "02:39"],
-        "86 graham st ",
-        "Jersey City",
+        ["12/28/2022", "15:39"],
+        ["12/28/2022", "19:39"],
+        "86 sdsd st ",
+        "hoboken",
         "New Jersey",
         100,
-        700,
-        "This is the christmas party is going to arranged in jersey city"
+        540,
+        "This is the workshop is going to arranged in jersey city"
     );
     const addeventUserdata3 = await users.addPostEvents(
         user3Object._id,
@@ -131,16 +111,16 @@ const main = async () => {
     const user4Object = await users.getByUsers("charan22@gmail.com");
 
     const event4 = await events.createEvent(
-        "The christmas party",
-        "Party",
+        "HongKong Expo",
+        "Expo",
         "charan22@gmail.com",
-        ["12/10/2022", "02:39"],
-        ["12/27/2022", "02:39"],
-        "86 graham st ",
-        "Jersey City",
-        "New Jersey",
+        ["12/29/2022", "15:39"],
+        ["12/29/2022", "19:39"],
+        "89 hoje st ",
+        "belgium",
+        "Hong Kong",
         100,
-        700,
+        500,
         "This is the christmas party is going to arranged in jersey city"
     );
     const addeventUserdata4 = await users.addPostEvents(
