@@ -1,24 +1,21 @@
-
-<body >
+<main>
 
 
 	<!-- Begin page content -->
 
-		<div class="center1">
-			<div class="col-md-10 col-lg-8">
-				<h1 class="center1">Create a New Event</h1>
+
+			<div class="center1">
+				<h1 >Create a New Event</h1>
 				<br><br><br>
 				<form class="needs-validation ml-1" novalidate autocomplete="off" method="POST" action="/create-event">
-					<div class="form-group mt-2">
+				
 						<label for="title"> Title:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  
 						</label>
 						<input type="text" name="title" id="title" placeholder="Event name" required> 
 						<br>
 						<br>
-					</div> 
-
-					<div class="center1">
-						<label for = "category">Category: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			
+						<label for = "category">Category: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br><br>
                         
                         <select class="ghost-round2" name="category"  id="category" 
                        onfocus="this.select()" > 
@@ -33,91 +30,79 @@
 						 </label>
 						 <br>
 						<br>
-					</div> 
-
-
-
-
 					
 
-					<div class="center1">
-						<div class="form-group col-md-6">
+					
 							<label for="timestart">Start Time:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label> 
 						
-							<input type="datetime-local"  name="timestart" id="timestart"  required>
+							<input type="datetime-local"  name="timestart" id="timestart"  required> &nbsp;&nbsp;&nbsp;
 							
+						<br> 
 						<br>
-						</div>
-
-						<div class="form-group col-md-6">
+						<br>
+				
 							<label for="endtime">End Time:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
 							<input type="datetime-local"  name="endtime" id="endtime" required> 
 							
 							<br>
 						<br>
-						</div>
-					</div>
-
-					<div class="form-group">
+					
+	
 						<label for="address">Address:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
 						<input type="text" class="ghost-round2" name="address" id="address" placeholder="          Address" required>
 						<br>
 						<br>
-					</div>
+				
 					
-                   <div class="form-group">
+               
 						<label for="city">City: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
 						<input type="text" class="ghost-round2" name="city" id="city" placeholder="          state" required>
 						<br>
 						<br>
-					</div>
+	
 
-					<div class="form-group">
+		
 						<label for="state">State:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
 						<input type="text" class="ghost-round2" name="state" id="state" placeholder="          state" required>
 						<br>
-						<br>
-					</div>
+		
 
-                   <div class="form-group col-lg-5">
 							<label for="ticketcapacity">Ticket Capacity:&nbsp;&nbsp;&nbsp;&nbsp;</label>
 							<input type="number" class="ghost-round2" name="ticketcapacity" id="ticketcapacity"  placeholder="      Number of seats" required>
 							<br>
 						<br>
-						</div>
+				
 					
 
-					<div class="form-row">
-						<div class="form-group col-lg-5">
+			
 							<label for="price">Price:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
 							<input type="number" class="ghost-round2" name="price" id="price"  >
 							
-							<small class="form-text text-muted">
+							<br><small class="form-text text-muted">
 								(leave empty if free.)
 							</small> 
 							<br>
 						<br>
-						</div>
 						
-                   <div class="center1">
+						
+                
 							<label for="description">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Description:</label>
 							<input type="text" class="ghost-round2" name="description" id="description" placeholder="      Description" required>
 							<br>
 						<br>
-						</div>
-					</div>
+					
+				
 					
 						
 
-					<div><input class='ghost-round1 full-width' type="submit" value="create-event"></div> 
+					<input class='ghost-round1 full-width' type="submit" value="create-event">
 				</form>
 			</div>
-		</div>
+	
 	
 
 {{#if error}}
 <p class="center1"> {{ error }}</p>
 {{/if}}
 
-	
-</body> 
+</main>
