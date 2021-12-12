@@ -4,105 +4,116 @@
 	<!-- Begin page content -->
 
 
-			<div class="center1">
-				<h1 >Create a New Event</h1>
-				<br><br><br>
-				<form class="needs-validation ml-1" novalidate autocomplete="off" method="POST" action="/create-event">
-				
-						<label for="title"> Title:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  
-						</label>
-						<input type="text" name="title" id="title" placeholder="Event name" required> 
-						<br>
-						<br>
-			
-						<label for = "category">Category: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br><br>
-                        
-                        <select class="ghost-round2" name="category"  id="category" 
-                       onfocus="this.select()" > 
-						<option>Select a Value:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</option>
-                        <option value="Party">Party</option>
-                        <option value="Get-Together">Get-Together</option>
-                         <option value="Conference">Conference</option>
-                         <option value="workshop">workshop</option>
-                         <option value="Expo">Expo</option>
-                          <option value="Networking session">Networking session</option>
-                         </select> 
-						 </label>
-						 <br>
-						<br>
-					
+	<div class="center1">
+		<h1>Create a New Event</h1>
+		<br><br><br>
+		<form class="needs-validation ml-1" novalidate autocomplete="off" method="POST" action="/create-event">
 
-					
-							<label for="timestart">Start Time:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label> 
-						
-							<input type="datetime-local"  name="timestart" id="timestart"  required> &nbsp;&nbsp;&nbsp;
-							
-						<br> 
-						<br>
-						<br>
-				
-							<label for="endtime">End Time:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
-							<input type="datetime-local"  name="endtime" id="endtime" required> 
-							
-							<br>
-						<br>
-					
-	
-						<label for="address">Address:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
-						<input type="text" class="ghost-round2" name="address" id="address" placeholder="          Address" required>
-						<br>
-						<br>
-				
-					
-               
-						<label for="city">City: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
-						<input type="text" class="ghost-round2" name="city" id="city" placeholder="          state" required>
-						<br>
-						<br>
-	
+			<label for="title"> Title:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			</label>
+			<input type="text" name="title" id="title" placeholder="Event name" required>
+			<br>
+			<br>
 
-		
-						<label for="state">State:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
-						<input type="text" class="ghost-round2" name="state" id="state" placeholder="          state" required>
-						<br>
-		
+			<label for="category">Category: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br><br>
 
-							<label for="ticketcapacity">Ticket Capacity:&nbsp;&nbsp;&nbsp;&nbsp;</label>
-							<input type="number" class="ghost-round2" name="ticketcapacity" id="ticketcapacity"  placeholder="      Number of seats" required>
-							<br>
-						<br>
-				
-					
+				<select class="ghost-round2" name="category" id="category" onfocus="this.select()">
+					<option>Select a
+						Value:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					</option>
+					<option value="Party">Party</option>
+					<option value="Get-Together">Get-Together</option>
+					<option value="Conference">Conference</option>
+					<option value="workshop">workshop</option>
+					<option value="Expo">Expo</option>
+					<option value="Networking session">Networking session</option>
+				</select>
+			</label>
+			<br>
+			<br>
 
-			
-							<label for="price">Price:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
-							<input type="number" class="ghost-round2" name="price" id="price"  >
-							
-							<br><small class="form-text text-muted">
-								(leave empty if free.)
-							</small> 
-							<br>
-						<br>
-						
-						
-                
-							<label for="description">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Description:</label>
-							<input type="text" class="ghost-round2" name="description" id="description" placeholder="      Description" required>
-							<br>
-						<br>
-					
-				
-					
-						
 
-					<input class='ghost-round1 full-width' type="submit" value="create-event">
-				</form>
-			</div>
-	
-	
 
-{{#if error}}
-<p class="center1"> {{ error }}</p>
-{{/if}}
+			<label for="timestart">Start Time:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
 
+			<input type="datetime-local" name="timestart" id="timestart" required> &nbsp;&nbsp;&nbsp;
+
+			<br>
+			<br>
+			<br>
+
+			<label for="endtime">End Time:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+			<input type="datetime-local" name="endtime" id="endtime" required>
+
+			<br>
+			<br>
+
+
+			<label for="address">Address:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+			<input type="text" class="ghost-round2" name="address" id="address" placeholder="          Address"
+				required>
+			<br>
+			<br>
+
+
+
+			<label for="city">City:
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+			<input type="text" class="ghost-round2" name="city" id="city" placeholder="          state" required>
+			<br>
+			<br>
+
+
+
+			<label
+				for="state">State:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+			<input type="text" class="ghost-round2" name="state" id="state" placeholder="          state" required>
+			<br>
+
+
+			<label for="ticketcapacity">Ticket Capacity:&nbsp;&nbsp;&nbsp;&nbsp;</label>
+			<input type="number" class="ghost-round2" name="ticketcapacity" id="ticketcapacity"
+				placeholder="      Number of seats" required>
+			<br>
+			<br>
+
+
+
+
+			<label
+				for="price">Price:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+			<input type="number" class="ghost-round2" name="price" id="price">
+
+			<br><small class="form-text text-muted">
+				(leave empty if free.)
+			</small>
+			<br>
+			<br>
+
+
+
+			<label for="description">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Description:</label>
+			<input type="text" class="ghost-round2" name="description" id="description" placeholder="      Description"
+				required>
+			<br>
+			<br>
+
+
+
+
+
+			<input class='ghost-round1 full-width' type="submit" value="create-event">
+		</form>
+	</div>
+
+
+
+	{{#if error}}
+	<p class="center1"> {{ error }}</p>
+	{{/if}}
+	<div class="center1">
+		&nbsp;&nbsp;&nbsp;&nbsp;
+		<a href="/userhomepage">Homepage</a>
+	</div>
 </main>

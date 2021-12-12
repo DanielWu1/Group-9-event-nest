@@ -1,60 +1,62 @@
-
 <main>
 
-		
-				<br><br><br>   
-   
-    
-<h1 class = "center1">Booked Events </h1>
-     
-    
-     <div> 
-    &nbsp;  &nbsp;  &nbsp; 
+
+  <br><br><br>
+
+
+  <h1 class="center1">Booked Events </h1>
+
+
+  <div class="center1">
+    &nbsp; &nbsp; &nbsp;
     <a href="/logout" target="_blank">Logout</a>
-     </div>  
-<br>
-<br>
-     <div>
-         &nbsp;&nbsp;&nbsp;&nbsp;
-        <a href="/userhomepage" target="_blank">Homepage</a>
-     </div>
+  </div>
+  <br>
+  <br>
+  {{!-- <div>
+    &nbsp;&nbsp;&nbsp;&nbsp;
+    <a href="/userhomepage" target="_blank">Homepage</a>
+  </div> --}}
 
 
- 
 
-                <form  autocomplete="off" method="POST" action="/userhomepage">
+
+  <form autocomplete="off" method="POST" action="/userhomepage">
 
 
 
   </form>
 
   {{#each allBookedEvents}}
-  <div class="ggg" >
- <p class="container3">{{this.title}}</p><br>
-<p class="container3"> Category:    {{this.category}} </p> <br>
-  <p class="container3">Creator Name:    {{this.creator}}</p><br>
- <p class="container3">Start Time:   {{this.timestart}}</p><br>
-<p class="container3">End Time:   {{this.endtime}}</p><br>
-<p class="container3">Address:   {{this.address}}</p><br>
-<p class="container3">City:    {{this.city}}</p><br>
-<p class="container3">State:    {{this.state}}</p><br>
-<p class="container3">Description:    {{this.description}}</p><br>
-<p class="container4">Ticket Price:    {{this.price}}</p><br>
-  
-
-  
+  <div class="ggg">
+    <p class="container3">{{this.title}}</p><br>
+    <p class="container3"> Category: {{this.category}} </p> <br>
+    <p class="container3">Creator Name: {{this.creator}}</p><br>
+    <p class="container3">Start Time: {{this.timestart}}</p><br>
+    <p class="container3">End Time: {{this.endtime}}</p><br>
+    <p class="container3">Address: {{this.address}}</p><br>
+    <p class="container3">City: {{this.city}}</p><br>
+    <p class="container3">State: {{this.state}}</p><br>
+    <p class="container3">Description: {{this.description}}</p><br>
+    <p class="container4">Ticket Price: {{this.price}}</p><br>
 
 
 
- 
 
 
-  <br><br><br><br>
-  </div> 
+
+
+
+
+    <br><br><br><br>
+  </div>
   <br>
   <br>
-  {{/each}} 
+  {{/each}}
 
-
+  <div class="center1">
+    &nbsp;&nbsp;&nbsp;&nbsp;
+    <a href="/userhomepage">Homepage</a>
+  </div>
 
 </main>

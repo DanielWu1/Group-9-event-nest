@@ -1,169 +1,173 @@
-
-
 <body>
 
 
 
-	<main class="body">
-		
-				<br><br><br>   
-   
-    
-   <center> <h1>Hi! {{username}} </h1> </center>
-     
-     <div > 
-&nbsp;&nbsp;&nbsp;&nbsp;<a href="/logout" > Logout </a> 
-     </div> 
-<br>
-     <div > 
-   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="/create-event" > Create Event </a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  <main class="body">
+
+    <br><br><br>
 
 
-   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="/bookedevents" > Booked Events </a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-     </div> 
+    <center>
+      <h1>Hi! {{username}} </h1>
+    </center>
 
-<br>
+    <div>
+      &nbsp;&nbsp;&nbsp;&nbsp;<a href="/logout"> Logout </a>
+    </div>
+    <br>
+    <div>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="/create-event"> Create Event </a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
-     <div align="left">
-       
 
-        &nbsp;&nbsp;&nbsp;&nbsp;  <a href="/myevents" style="text-decoration: none ; color:#eee"> My Events </a>
-     </div>
-   <div><form  autocomplete="off" method="Post" id="searchForm">  
-                <center>
-                  <label for="search_term">search_term </label>
-                </center>
-                <center><input type="text" class="ghost-round2"
-                    placeholder=" Search Events"
-                    name="search" id= "search_term"></center> 
-                <center><button type="submit" id = "submit_button" class="container5" value = "Search">Search</button> </center>  
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="/bookedevents"> Booked Events </a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    </div>
 
-                <br><br><br></form> </div>
+    <br>
 
- 
+    <div align="left">
 
-                {{!-- <form  autocomplete="off" method="POST" action="/userhomepage"> --}}
-                 <form  autocomplete="off" method="POST" >
 
-<h1>&nbsp;&nbsp;Filter By Category</h1>
-<label class="container2">Party
-  <input type="checkbox" id = "party">
-  <span class="checkmark"></span>
-</label>
-<label class="container2">Get-Together
-  <input type="checkbox"  id = "getTogether" >
-  <span class="checkmark"></span>
-</label>
-<label class="container2">Conference
-  <input type="checkbox" id = "conference">
-  <span class="checkmark"></span>
-</label>
-<label class="container2">workshop
-  <input type="checkbox" id = "workshop">
-  <span class="checkmark"></span>
-</label>
-<label class="container2">Expo
-  <input type="checkbox" id = "expo">
-  <span class="checkmark"></span>
-</label>
-<label class="container2">Networking session
-  <input type="checkbox" id = "networkingSession">
-  <span class="checkmark"></span>
-</label>
+      &nbsp;&nbsp;&nbsp;&nbsp; <a href="/myevents" style="text-decoration: none ; color:#eee"> My Events </a>
+    </div>
+    <div>
+      <form autocomplete="off" method="Post" id="searchForm">
+        <center>
+          <label for="search_term">search_term </label>
+        </center>
+        <center><input type="text" class="ghost-round2" placeholder=" Search Events" name="search" id="search_term">
+        </center>
+        <center><button type="submit" id="submit_button" class="container5" value="Search">Search</button> </center>
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button class="button" id = 'filterbtn' type = "button"> filter </button>
+        <br><br><br>
+      </form>
+    </div>
 
-  </form>
-  
-  <div class="ggg" id = "serchevent" hidden>
-  </div>
-  <div id="myallevent">
-  {{#each allevents}}
-  <div class="ggg">
- <p class="container3">{{this.title}}</p><br>
-<p class="container3"> <strong >Category:</strong>    {{this.category}} </p><br>
-  <p class="container3"><strong >Creator Name: </strong>   {{this.creator}}</p><br>
-<p class="container3"><strong >Start Time:</strong>   {{this.timestart}}</p><br>
-  <p class="container3"><strong> Time:</strong>   {{this.endtime}}</p><br>
-<p class="container3"><strong >Address:</strong>   {{this.address}}</p><br>
-<p class="container3"><strong >City:</strong>    {{this.city}}</p><br>
-<p class="container3"><strong >State:</strong>    {{this.state}}</p><br>
-<p class="container3"><strong >Description:</strong>    {{this.description}}</p> <br>
- <p class="container4"><strong >Ticket Price: </strong>   {{this.price}}</p><br>
-<p class="container4"><strong >Tickets Left: </strong>   {{this.ticketcapacity}}</p><br>
-  
 
-  {{#if this.likedByThisUser}}
-<center>
-   <button class="container6" disabled  value="submit">Liked</a></button>
-     </center> 
-     {{/if}}
-     {{#unless this.likedByThisUser}}
-  <center>
-    <a href="/events/{{this._id}}/like" class="like" >Like Event</a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-   <p id="likeCount" style="color:white">{{this.likeCount}}</p>
-     </center> 
-     {{/unless}}
 
-<center>
- <a href="/events/{{this._id}}/interested" class="interested" >Interested</a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-     <p id="interestedCount" style="color:white">{{this.interestedCount}}</p>
-     </center> 
-<center>
-  <a href="/events/{{this._id}}/going" >Going</a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-     <p id="goingCount" style="color:white">{{this.goingCount}}</p>
-     </center> 
+    {{!-- <form autocomplete="off" method="POST" action="/userhomepage"> --}}
+      <form autocomplete="off" method="POST">
 
-<div class="center2">
-  {{#if this.comments}}
-  {{#each this.comments}}
-    <p class="container7"><strong>{{this}}</strong></p>    
+        <h1>&nbsp;&nbsp;Filter By Category</h1>
+        <label class="container2">Party
+          <input type="checkbox" id="party">
+          <span class="checkmark"></span>
+        </label>
+        <label class="container2">Get-Together
+          <input type="checkbox" id="getTogether">
+          <span class="checkmark"></span>
+        </label>
+        <label class="container2">Conference
+          <input type="checkbox" id="conference">
+          <span class="checkmark"></span>
+        </label>
+        <label class="container2">workshop
+          <input type="checkbox" id="workshop">
+          <span class="checkmark"></span>
+        </label>
+        <label class="container2">Expo
+          <input type="checkbox" id="expo">
+          <span class="checkmark"></span>
+        </label>
+        <label class="container2">Networking session
+          <input type="checkbox" id="networkingSession">
+          <span class="checkmark"></span>
+        </label>
+
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button
+          class="button" id='filterbtn' type="button"> filter </button>
+
+      </form>
+
+      <div class="ggg" id="serchevent" hidden>
+      </div>
+      <div id="myallevent">
+        {{#each allevents}}
+        <div class="ggg">
+          <p class="container3">{{this.title}}</p><br>
+          <p class="container3"> <strong>Category:</strong> {{this.category}} </p><br>
+          <p class="container3"><strong>Creator Name: </strong> {{this.creator}}</p><br>
+          <p class="container3"><strong>Start Time:</strong> {{this.timestart}}</p><br>
+          <p class="container3"><strong> Time:</strong> {{this.endtime}}</p><br>
+          <p class="container3"><strong>Address:</strong> {{this.address}}</p><br>
+          <p class="container3"><strong>City:</strong> {{this.city}}</p><br>
+          <p class="container3"><strong>State:</strong> {{this.state}}</p><br>
+          <p class="container3"><strong>Description:</strong> {{this.description}}</p> <br>
+          <p class="container4"><strong>Ticket Price: </strong> {{this.price}}</p><br>
+          <p class="container4"><strong>Tickets Left: </strong> {{this.ticketcapacity}}</p><br>
+
+
+          {{#if this.likedByThisUser}}
+          <center>
+            <button class="container6" disabled value="submit">Liked</a></button>
+          </center>
+          {{/if}}
+          {{#unless this.likedByThisUser}}
+          <center>
+            <a href="/events/{{this._id}}/like" class="like">Like Event</a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <p id="likeCount" style="color:white">{{this.likeCount}}</p>
+          </center>
+          {{/unless}}
+
+          <center>
+            <a href="/events/{{this._id}}/interested" class="interested">Interested</a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <p id="interestedCount" style="color:white">{{this.interestedCount}}</p>
+          </center>
+          <center>
+            <a href="/events/{{this._id}}/going">Going</a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <p id="goingCount" style="color:white">{{this.goingCount}}</p>
+          </center>
+
+          <div class="center2">
+            {{#if this.comments}}
+            {{#each this.comments}}
+            <p class="container7"><strong>{{this}}</strong></p>
+            {{/each}}
+            {{/if}}
+          </div>
+
+          <center>
+            <form action="/comment/{{this._id}}" method="POST">
+
+              <p style="color:#eee">Comment section</p>
+              <label for="comment"></label>
+
+              <input type="text" name="comment" id="comment" class="inputbox">
+          </center>
+
+          <center>
+
+            <button class="container5" type="submit">Add the comment</button>
+    </form>
+    <br>
+    <br>
+    <br>
+    <a href="/checkout/{{this._id}}" style="text-decoration: none ; color:#eee">Buy Ticket</a>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    </center>
+    <br>
+
+    <div>
+      <center><a href="https://www.facebook.com/" class="fa fa-facebook"> share on Facebook</a> </center>
+      <br>
+      <center><a href="https://twitter.com/" class="fa fa-twitter">share on Twitter</a></center>
+
+    </div>
+
+
+
+
+    <br><br><br><br>
+    </div>
+    <br>
+    <br>
     {{/each}}
-  {{/if}}
-  </div>
-
-<center> 
-<form action="/comment/{{this._id}}" method="POST">
-     
-     <p style="color:#eee">Comment section</p>
-     <label for="comment"></label>
-
-    <input  type ="text" name="comment" id = "comment" class="inputbox">
-     </center>
-
-     <center>
-       
-   <button class="container5" type="submit">Add the comment</button>
-   </form>
-<br>
-<br>
-<br>
-   <a href="/checkout/{{this._id}}" style="text-decoration: none ; color:#eee">Buy Ticket</a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
-     </center>  
-     <br>
-
-  <div>
-<center><a href="https://www.facebook.com/" class="fa fa-facebook"> share on Facebook</a> </center> 
-<br>
-<center><a href="https://twitter.com/" class="fa fa-twitter">share on Twitter</a></center>
-
-</div>
-
- 
+    </div>
+    <div class="center1">
+      &nbsp;&nbsp;&nbsp;&nbsp;
+      <a href="/userhomepage">Homepage</a>
+    </div>
 
 
-  <br><br><br><br>
-  </div> 
-  <br>
-  <br>
-  {{/each}} 
-  </div> 
-  
 
-  
-  
 
 </body>
-
-
-              
