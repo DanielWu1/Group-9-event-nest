@@ -85,7 +85,7 @@ async function createUser(userName, phone, gender, email, address, password,){
     const hash = await bcrypt.hash(password,saltRounds)
     let myaftertestemail = email.split('@')
     myaftertestemail[0] = myaftertestemail[0].toLowerCase()
-    let mynewemail = myaftertestemail[0]+'@'+myaftertestemail[1]
+    let mynewemail = myaftertestemail[0]+'@'+myaftertestemail[1].toLowerCase()
     const myusers = await users1.findOne({ email: mynewemail });
     if (myusers !== null) throw 'have users with same email';
     let newusers = {
@@ -161,7 +161,7 @@ async function checkUsers(email,password){
     }
     
     const users1 = await users();
-    const myusers = await users1.findOne({ email: email });
+    const myusers = await users1.findOne({ email: email.toLowerCase });
     if (myusers === null) throw 'No users with that email';
     let compareToMerlin = false
     compareToMerlin = await bcrypt.compare(password, myusers['password']);

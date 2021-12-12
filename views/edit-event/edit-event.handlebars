@@ -9,7 +9,7 @@
 			<div class="col-md-10 col-lg-8">
 				<header class="title mt-3 mb-2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Edit event</header>
 				<br><br><br>
-				<form class="needs-validation ml-1" novalidate autocomplete="off" method="POST" action="/edit-eventsub" autocomplete="off">
+				<form class="needs-validation ml-1" novalidate  method="POST" action="/edit-eventsub" autocomplete="off">
 
 						<div>
 							<label for="eventid"></label>
@@ -37,23 +37,22 @@
 						<br>
 						</div>
 						
-                 
+                 </div>
 						
 
-					<div><center><button type="submit" class='btn' value = "edit" >Edit this Event</a></button></center></div>
-				</form>
-			</div>
+					<div class="center1"><button type="submit" class='button' value = "edit" >Edit this Event</button></div>
+				
+			
 		</div>
+        </form>
 	</main>
 
 {{#if error}}
-<center><p> {{ error }}</p></center>
+<p> {{ error }}</p>
 {{/if}}
 
 
-	<!-- Bootstrap core JavaScript
-    ================================================== -->
-	<!-- Placed at the end of the document so the pages load faster -->
+	
 
 	
 </body> 
