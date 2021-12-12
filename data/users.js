@@ -85,6 +85,7 @@ async function createUser(userName, phone, gender, email, address, password,){
     const hash = await bcrypt.hash(password,saltRounds)
     let myaftertestemail = email.split('@')
     myaftertestemail[0] = myaftertestemail[0].toLowerCase()
+    myaftertestemail[1] = myaftertestemail[0].toLowerCase()
     let mynewemail = myaftertestemail[0]+'@'+myaftertestemail[1].toLowerCase()
     const myusers = await users1.findOne({ email: mynewemail });
     if (myusers !== null) throw 'have users with same email';
@@ -103,7 +104,7 @@ async function createUser(userName, phone, gender, email, address, password,){
       let myreturn = false
       myreturn = false
       const insertInfo = await users1.insertOne(newusers);
-      if (insertInfo.insertedCount === 0) {throw '$ Could not add new restaurants'}
+      if (insertInfo.insertedCount === 0) {throw '$ Could not add new users'}
       else {
         myreturn = true
       }

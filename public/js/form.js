@@ -4,7 +4,7 @@
 	var searchform = $("#searchForm"), 
         serchevent = $("#serchevent"),
 		searchterm = $("#search_term"),
-		homelink = $("#homeLink"),
+		//homelink = $("#homeLink"),
 		myallevent = $("#myallevent")
        
 
@@ -39,17 +39,17 @@
             	    let showdetail = newelement[i]
                     // console.log(showdetail)
                 
-            	    let myeach1 = '<center><p class="container3">' +showdetail.title+'</p></center>'
-                    let myeach2 = '<center><p class="container3">Category:    ' +showdetail.category+'</p></center>'
-                    let myeach3 = '<center><p class="container3">Creator Name:    ' +showdetail.creator+'</p></center>'
-                    let myeach4 = '<center><p class="container3">Date:    ' +showdetail.date+'</p></center>'
-                    let myeach5 = '<center><p class="container3">Start Time:    ' +showdetail.timestart+'</p></center>'
-                    let myeach6 = '<center><p class="container3">End Time:    ' +showdetail.endtime+'</p></center>'
-                    let myeach7 = '<center><p class="container3">Address:    ' +showdetail.address+'</p></center>'
-                    let myeach8 = '<center><p class="container3">City:    ' +showdetail.city+'</p></center>'
-                    let myeach9 = '<center><p class="container3">State:    ' +showdetail.state+'</p></center>'
-                    let myeach10 = '<center><p class="container3">Description:    ' +showdetail.description+'</p></center>'
-                    let myeach11 = '<center><p class="container4">Ticket Price:    ' +showdetail.price+'</p></center>' 
+            	    let myeach1 = '<br><p class="container3">' +showdetail.title+'</p>' 
+                    let myeach2 = '<br><p class="container3">Category:    ' +showdetail.category+'</p>'
+                    let myeach3 = '<br><p class="container3">Creator Name:    ' +showdetail.creator+'</p>'
+                    let myeach4 = '<br><p class="container3">Date:    ' +showdetail.date+'</p>'
+                    let myeach5 = '<br><p class="container3">Start Time:    ' +showdetail.timestart+'</p>'
+                    let myeach6 = '<br><p class="container3">End Time:    ' +showdetail.endtime+'</p>'
+                    let myeach7 = '<br><p class="container3">Address:    ' +showdetail.address+'</p>'
+                    let myeach8 = '<br><p class="container3">City:    ' +showdetail.city+'</p>'
+                    let myeach9 = '<br><p class="container3">State:    ' +showdetail.state+'</p>'
+                    let myeach10 = '<br><<p class="container3">Description:    ' +showdetail.description+'</p>'
+                    let myeach11 = '<br><p class="container4">Ticket Price:    ' +showdetail.price+'</p><br>' 
 
                     //let myeach12 = '<button class="container5" type="submit"> <a href="/checkout/''" style="text-decoration: none ; color:#eee">Buy Ticket</a></button>'
                     
@@ -62,24 +62,24 @@
             
             myallevent.hide()
             serchevent.show()
-            homelink.show()
+            //homelink.show()
 
             // showinfo.hide()
             
         })
 	}
-    homelink.on('click', function (show){
-        show.preventDefault();
+    // // homelink.on('click', function (show){
+    // //     show.preventDefault();
         
-        serchevent.children().each(function (index, element) {
-            element.remove();
-        })
+    // //     serchevent.children().each(function (index, element) {
+    // //         element.remove();
+    // //     })
 
-        myallevent.show()
-        serchevent.hide()
-        homelink.hide()
-    })
-    })
+    //     myallevent.show()
+    //     serchevent.hide()
+    //     //homelink.hide()
+    // })
+     })
 
      // filter button
  $('#filterbtn').on('click',function(e){
@@ -137,7 +137,7 @@
                 console.log(newelement)
     
                 if (newelement.length === 0){
-                    let myeach = '<center><p class="container3"> not found by ' +mysearch+'</p></center>'
+                    let myeach = '<center><p class="container3"> not found by ' +filterArr+'</p></center>'
                     serchevent.append(myeach)
                 }
                 else{
@@ -166,7 +166,7 @@
     
                 myallevent.hide()
                 serchevent.show()
-                homelink.show()
+                //homelink.show()
     
             
         })
