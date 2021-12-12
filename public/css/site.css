@@ -35,6 +35,10 @@ a:link, a:visited {
   border-radius: 12px;
 }
 
+p{
+  color:white
+}
+
 a:hover, a:active {
   background-color: red;
 }
@@ -183,6 +187,21 @@ input[type=email], input[type=password] ,input[type=text]{
   top: 50%;
   left: 70%;
 }
+
+#search_term {
+  width: 20%;
+  margin-left:40%;
+}
+
+#search_button {
+  width: 20%;
+  margin-left:40%;
+}
+#comment {
+  width:50%
+}
+
+
 
 
 button {

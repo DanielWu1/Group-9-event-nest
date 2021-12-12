@@ -454,7 +454,7 @@ router.post("/events/:id/going", async (req, res) => {
 
 router.get("/logout", async (req, res) => {
     req.session.destroy();
-    res.render("logout/logout");
+    res.redirect("/userlogin")
 });
 
 function isEmail(inputEmail) {

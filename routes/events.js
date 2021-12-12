@@ -187,6 +187,14 @@ router.post("/create-event", async (req, res) => {
         });
         return;
     }
+
+    if (new Date(req.body.timestart).getTime() < new Date(Date.now()).getTime() || new Date(req.body.endtime).getTime() < new Date(Date.now()).getTime()) {
+        res.status(400).render("create-event/create-event", {
+            error: "Choose a time in the future",
+        });
+        return;
+    }
+
     if (!xss(req.body.address)) {
         res.status(400).render("create-event/create-event", {
             error: "Event address not found",
@@ -497,7 +505,7 @@ router.get("/bookedevents/:id", async (req, res) => {
             event.endtime,
             event.description
         );
-        // console.log(additinuser)
+        console.log(additinuser)
         if (additinuser === false) {
             console.log('3')
             res.status(400).render("checkoutcheck/checkoutcheck", {

@@ -66,10 +66,32 @@
       }
       $.ajax(requestConfig).then((message) => {
           console.log(elem)
-          $(elem).parent().parent().find('#goingCount').text(message.goingAdded);
+          $(elem).next().text(message.goingAdded);
       });
     })
   })
+
+  $('#commentform').submit((event) => {
+    let commentval = $('#comment').val();
+    if (commentval.length === 0 || commentval.trim().length === 0) {
+      event.preventDefault();
+      alert("Please enter a valid comment!")
+    }
+  })
+
+    if($('.bookEventincheck')) {
+      $('.bookEventincheck').click((event) => {
+          let cardname = $('#cname').val()
+          let cardno = $('#ccnum').val()
+            let expmonth = $('#expmonth').val()
+            console.log(cardname, cardno, expmonth)
+            if (cardname.length === 0 || cardno.length === 0 || expmonth.length === 0 || cardname.trim().length === 0 || cardno.trim().length === 0 || expmonth.trim().length === 0) {
+                event.preventDefault()
+                alert("Please check your inputs.")
+            }
+      })
+      }
+  
 </script>
 
     </body>
