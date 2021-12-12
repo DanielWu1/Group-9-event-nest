@@ -101,6 +101,7 @@ async function createUser(userName, phone, gender, email, address, password) {
     //to lower case
 
     const users1 = await users();
+<<<<<<< HEAD
 
     const hash = await bcrypt.hash(password, saltRounds);
     let myaftertestemail = email.split("@");
@@ -108,6 +109,13 @@ async function createUser(userName, phone, gender, email, address, password) {
     myaftertestemail[1] = myaftertestemail[1].toLowerCase();
     let mynewemail = myaftertestemail[0] + "@" + myaftertestemail[1];
 
+=======
+    const hash = await bcrypt.hash(password,saltRounds)
+    let myaftertestemail = email.split('@')
+    myaftertestemail[0] = myaftertestemail[0].toLowerCase()
+    myaftertestemail[1] = myaftertestemail[1].toLowerCase()
+    let mynewemail = myaftertestemail[0]+'@'+myaftertestemail[1]
+>>>>>>> c4433d777282876c7bb87dae9522e76fc1cddc6a
     const myusers = await users1.findOne({ email: mynewemail });
     if (myusers !== null) throw "have users with same email";
     let newusers = {
@@ -121,6 +129,7 @@ async function createUser(userName, phone, gender, email, address, password) {
         ticket: [],
         eventspost: [],
         likeevents: [],
+<<<<<<< HEAD
     };
     let myreturn = false;
     myreturn = false;
@@ -130,6 +139,16 @@ async function createUser(userName, phone, gender, email, address, password) {
     } else {
         myreturn = true;
     }
+=======
+      };
+      let myreturn = false
+      myreturn = false
+      const insertInfo = await users1.insertOne(newusers);
+      if (insertInfo.insertedCount === 0) {throw '$ Could not add new users'}
+      else {
+        myreturn = true
+      }
+>>>>>>> c4433d777282876c7bb87dae9522e76fc1cddc6a
 
     // it will return the users information
     return myreturn;
@@ -695,7 +714,8 @@ async function addTicketEvents(
         );
         if (
             (myticketstime <= mystart && mystart <= myticketetime) ||
-            (myticketstime <= myend && myend <= myticketetime)
+            (myticketstime <= myend && myend <= myticketetime) ||
+            (myticketstime > mystart && myend > myticketetime)
         ) {
             let mythrow = myticket["eventTitle"] + " have same time zone";
             console.log(mythrow);
@@ -714,7 +734,8 @@ async function addTicketEvents(
         );
         if (
             (mypoststime <= mystart && mystart <= mypostetime) ||
-            (mypoststime <= myend && myend <= mypostetime)
+            (mypoststime <= myend && myend <= mypostetime)||
+            (mypoststime > mystart && myend > mypostetime)
         ) {
             let mythrow = mypost["eventTitle"] + " have same time zone";
             console.log(mythrow);
@@ -1030,6 +1051,7 @@ async function addPostEvents(
     // let myaddpoststime = eventStartTime[0] + ' ' + eventStartTime[1]
     // let myaddpostetime = eventEndTime[0] + ' ' + eventEndTime[1]
 
+<<<<<<< HEAD
     // for (let i = 0; i < userpostlist.length; i++) {
     //     let mypost = userpostlist[i];
 
@@ -1065,6 +1087,45 @@ async function addPostEvents(
     //         return (myreturn = false);
     //     }
     // }
+=======
+    for (let i = 0; i < userpostlist.length; i++) {
+        let mypost = userpostlist[i];
+
+        let mypoststime = new Date(
+            mypost["eventStartTime"][0] + " " + mypost["eventStartTime"][1]
+        );
+        let mypostetime = new Date(
+            mypost["eventEndtime"][0] + " " + mypost["eventEndtime"][1]
+        );
+        if (
+            (mypoststime <= mystart && mystart <= mypostetime) ||
+            (mypoststime <= myend && myend <= mypostetime)||
+            (mypoststime > mystart && myend > mypostetime)
+        ) {
+            let mythrow = mypost["eventTitle"] + " have same time zone";
+            console.log(mythrow);
+            return (myreturn = false);
+        }
+    }
+    for (let b = 0; b < userticketlist.length; b++) {
+        let myticket = userticketlist[b];
+        let myticketstime = new Date(
+            myticket["eventStartTime"][0] + " " + myticket["eventStartTime"][1]
+        );
+        let myticketetime = new Date(
+            myticket["eventEndtime"][0] + " " + myticket["eventEndtime"][1]
+        );
+        if (
+            (myticketstime <= mystart && mystart <= myticketetime) ||
+            (myticketstime <= myend && myend <= myticketetime)||
+            (myticketstime > mystart && myend > myticketetime)
+        ) {
+            let mythrow = myticket["eventTitle"] + " have same time zone";
+            console.log(mythrow);
+            return (myreturn = false);
+        }
+    }
+>>>>>>> c4433d777282876c7bb87dae9522e76fc1cddc6a
     const insertliketevents = await usersCollection.updateOne(
         { _id: myuserId },
         { $addToSet: { eventspost: newpostevents } }

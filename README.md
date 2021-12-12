@@ -20,3 +20,10 @@
 
 -   [x] _Creators can add extra slots for events_
 -   [x] _Users will get an email for ticket confirmation_
+
+## How to Run
+
+-   [x] _npm install for installation_
+-   [x] _npm start to start the web application_
+-   [x] _Run seed script to populate the database with node seed.js_
+-   [x] _npm start to start the server [the server will be running at localhost:3000_

@@ -38,7 +38,11 @@
                 for(let i =0 ; i <newelement.length; i++){
             	    let showdetail = newelement[i]
                     // console.log(showdetail)
+<<<<<<< HEAD
                     let openingTag = `<div class="ggg">`
+=======
+                
+>>>>>>> c4433d777282876c7bb87dae9522e76fc1cddc6a
             	    let myeach1 = '<p class="container3">' +showdetail.title+'</p><br>'
                     let myeach2 = '<p class="container3"> <strong >Category:</strong>    ' +showdetail.category+' </p><br>'
                     let myeach3 = '<p class="container3"><strong >Creator Name: </strong>   ' +showdetail.creator+'</p><br>'
@@ -50,10 +54,16 @@
                     let myeach9 = '<p class="container3"><strong >Description:</strong>    ' +showdetail.description+'</p> <br>'
                     let myeach10 = '<p class="container4"><strong >Ticket Price: </strong>   ' +showdetail.price+'</p><br>' 
                     let myeach11 = '<p class="container4"><strong >Ticket Left: </strong>   ' +showdetail.ticketcapacity+'</p><br>'  
+<<<<<<< HEAD
                     let myeach12 = `<a href="/checkout/${showdetail._id}">Buy Ticket</a>`
                     let closingTag = `</div><br>`
                     let totalhtml = openingTag + myeach1 + myeach2 + myeach3 + myeach4 + myeach5 + myeach6 + myeach7 + myeach8 + myeach9 + myeach10 + myeach11 + myeach12 + closingTag
             	    serchevent.append(totalhtml)
+=======
+                    //let myeach12 = '<button class="container5" type="submit"> <a href="/checkout/''" style="text-decoration: none ; color:#eee">Buy Ticket</a></button>'
+                    
+            	    serchevent.append(myeach1,myeach2,myeach3,myeach4,myeach5,myeach6,myeach7,myeach8,myeach9,myeach10,myeach11)
+>>>>>>> c4433d777282876c7bb87dae9522e76fc1cddc6a
                     // console.log(serchevent)
         	    }
 
