@@ -7,6 +7,38 @@ const sendemail = require("../data/email");
 let { ObjectId } = require("mongodb");
 const xss = require("xss");
 
+router.post("/filterevents", async (req, res) => {
+    // console.log("req.body", req.body)
+    // console.log("req.body.filterList", req.body.filterList)
+
+    // validations
+    if (typeof req.body.filterList !== "object") {
+        res.status(400).render("error/error", {
+            error: "You must provide a name",
+        });
+        return;
+    }
+    if (req.body.filterList.length === 0) {
+        res.status(400).render("error/error", {
+            error: "You must provide a name",
+        });
+        return;
+    }
+
+    try {
+        // req.body.filterList like [ 'Party', 'Expo' ]
+        const eventList = await eventsdata.getEventListByCategory(
+            req.body.filterList
+        );
+
+        res.status(200).json(eventList);
+        return;
+    } catch (e) {
+        res.status(500).render("error/error", { error: e });
+        return;
+    }
+});
+
 // 1.1 to get the events which the user has booked -> get webpage
 router.get("/bookedevents", async (req, res) => {
     try {
@@ -81,7 +113,7 @@ router.post("/search/:id", async (req, res) => {
         res.status(200).json(myreturn);
         return;
     } catch (e) {
-        res.status(400).render("error/error", { error: e });
+        res.status(500).render("error/error", { error: e });
         return;
     }
 });
@@ -469,7 +501,7 @@ router.get("/bookedevents/:id", async (req, res) => {
         if (additinuser === false) {
             console.log('3')
             res.status(400).render("checkoutcheck/checkoutcheck", {
-                error: "can not add it because you already have event have to go at same time",
+                error: "Seems like you have a conflicting event for this time.",
             });
             return;
         }
@@ -638,39 +670,6 @@ router.post("/edit-eventsub", async (req, res) => {
     }
 });
 
-// to get the events based on category/ filters
-router.post("/filterevents"),
-    async (req, res) => {
-        // validations
-        if (typeof xss(req.body.filterList) !== "object") {
-            res.status(400).render("/userhomepage", {
-                error: "Something went wrong while filtering",
-            });
-            return;
-        }
-        if (xss(req.body.filterList).length === 0) {
-            res.status(400).render("/userhomepage", {
-                error: "Something went wrong while filter",
-            });
-            return;
-        }
-
-        try {
-            // req.body.filterList like [ 'Party', 'Expo' ]
-            const eventList = await eventsdata.getEventListByCategory(
-                xss(req.body.filterList)
-            );
-            // @cherry: make necessary changes to the render funcs based on your handlebars
-            // @cherry: do not hit the api if there are NO or ZERO filters
-            res.status(200).render("filterevents/filterevents", {
-                allFilteredEvents: eventList,
-            });
-            return;
-        } catch (e) {
-            res.status(500).json({ message: e });
-            return;
-        }
-    };
 
 // router.get("/update/:id", async(req,res) =>{
 //     try{

@@ -226,28 +226,39 @@ button {
 
  
 
-                <form  autocomplete="off" method="POST" action="/userhomepage">
+                {{!-- <form  autocomplete="off" method="POST" action="/userhomepage"> --}}
+                 <form  autocomplete="off" method="POST" >
 
-<h1>&nbsp;&nbsp;Filter By Type</h1>
+<h1>&nbsp;&nbsp;Filter By Category</h1>
 <label class="container2">Party
-  <input type="checkbox" checked="checked">
+  <input type="checkbox" id = "party">
   <span class="checkmark"></span>
 </label>
-<label class="container2">Social Gathering
-  <input type="checkbox">
+<label class="container2">Get-Together
+  <input type="checkbox"  id = "getTogether" >
   <span class="checkmark"></span>
 </label>
-<label class="container2">Conference / Workshop
-  <input type="checkbox">
+<label class="container2">Conference
+  <input type="checkbox" id = "conference">
+  <span class="checkmark"></span>
+</label>
+<label class="container2">workshop
+  <input type="checkbox" id = "workshop">
   <span class="checkmark"></span>
 </label>
 <label class="container2">Expo
-  <input type="checkbox">
+  <input type="checkbox" id = "expo">
   <span class="checkmark"></span>
 </label>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button class="button" id = 'filterbtn'> filter </button>
+<label class="container2">Networking session
+  <input type="checkbox" id = "networkingSession">
+  <span class="checkmark"></span>
+</label>
+{{!-- &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button class="button" id = 'filterbtn'> filter </button> --}}
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button class="button" id = 'filterbtn' type = "button"> filter </button>
 
   </form>
+  
   <div class="ggg" id = "serchevent" hidden>
   </div>
   <div id="myallevent">
