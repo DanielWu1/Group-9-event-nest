@@ -692,7 +692,8 @@ async function addTicketEvents(
         );
         if (
             (myticketstime <= mystart && mystart <= myticketetime) ||
-            (myticketstime <= myend && myend <= myticketetime)
+            (myticketstime <= myend && myend <= myticketetime) ||
+            (myticketstime > mystart && myend > myticketetime)
         ) {
             let mythrow = myticket["eventTitle"] + " have same time zone";
             console.log(mythrow);
@@ -711,7 +712,8 @@ async function addTicketEvents(
         );
         if (
             (mypoststime <= mystart && mystart <= mypostetime) ||
-            (mypoststime <= myend && myend <= mypostetime)
+            (mypoststime <= myend && myend <= mypostetime)||
+            (mypoststime > mystart && myend > mypostetime)
         ) {
             let mythrow = mypost["eventTitle"] + " have same time zone";
             console.log(mythrow);
@@ -1038,7 +1040,8 @@ async function addPostEvents(
         );
         if (
             (mypoststime <= mystart && mystart <= mypostetime) ||
-            (mypoststime <= myend && myend <= mypostetime)
+            (mypoststime <= myend && myend <= mypostetime)||
+            (mypoststime > mystart && myend > mypostetime)
         ) {
             let mythrow = mypost["eventTitle"] + " have same time zone";
             console.log(mythrow);
@@ -1055,7 +1058,8 @@ async function addPostEvents(
         );
         if (
             (myticketstime <= mystart && mystart <= myticketetime) ||
-            (myticketstime <= myend && myend <= myticketetime)
+            (myticketstime <= myend && myend <= myticketetime)||
+            (myticketstime > mystart && myend > myticketetime)
         ) {
             let mythrow = myticket["eventTitle"] + " have same time zone";
             console.log(mythrow);
