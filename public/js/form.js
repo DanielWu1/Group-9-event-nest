@@ -39,20 +39,6 @@
             	    let showdetail = newelement[i]
                     // console.log(showdetail)
                 
-<<<<<<< HEAD
-            	    let myeach1 = '<br><p class="container3">' +showdetail.title+'</p>' 
-                    let myeach2 = '<br><p class="container3">Category:    ' +showdetail.category+'</p>'
-                    let myeach3 = '<br><p class="container3">Creator Name:    ' +showdetail.creator+'</p>'
-                    let myeach4 = '<br><p class="container3">Date:    ' +showdetail.date+'</p>'
-                    let myeach5 = '<br><p class="container3">Start Time:    ' +showdetail.timestart+'</p>'
-                    let myeach6 = '<br><p class="container3">End Time:    ' +showdetail.endtime+'</p>'
-                    let myeach7 = '<br><p class="container3">Address:    ' +showdetail.address+'</p>'
-                    let myeach8 = '<br><p class="container3">City:    ' +showdetail.city+'</p>'
-                    let myeach9 = '<br><p class="container3">State:    ' +showdetail.state+'</p>'
-                    let myeach10 = '<br><<p class="container3">Description:    ' +showdetail.description+'</p>'
-                    let myeach11 = '<br><p class="container4">Ticket Price:    ' +showdetail.price+'</p><br>' 
-
-=======
             	    let myeach1 = '<p class="container3">' +showdetail.title+'</p><br>'
                     let myeach2 = '<p class="container3"> <strong >Category:</strong>    ' +showdetail.category+' </p><br>'
                     let myeach3 = '<p class="container3"><strong >Creator Name: </strong>   ' +showdetail.creator+'</p><br>'
@@ -64,7 +50,6 @@
                     let myeach9 = '<p class="container3"><strong >Description:</strong>    ' +showdetail.description+'</p> <br>'
                     let myeach10 = '<p class="container4"><strong >Ticket Price: </strong>   ' +showdetail.price+'</p><br>' 
                     let myeach11 = '<p class="container4"><strong >Ticket Left: </strong>   ' +showdetail.ticketcapacity+'</p><br>'  
->>>>>>> d7e058e66b4dd8aa58771e3dd6aaa3a7693e8957
                     //let myeach12 = '<button class="container5" type="submit"> <a href="/checkout/''" style="text-decoration: none ; color:#eee">Buy Ticket</a></button>'
                     
             	    serchevent.append(myeach1,myeach2,myeach3,myeach4,myeach5,myeach6,myeach7,myeach8,myeach9,myeach10,myeach11)
