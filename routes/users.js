@@ -235,7 +235,7 @@ router.get("/userhomepage", async (req, res) => {
 
         res.render("userhomepage/userhomepage", {
             allevents: result,
-            username: req.session.userName,
+            userName: req.session.userName,
         });
         return;
     } catch (e) {
