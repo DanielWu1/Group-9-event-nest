@@ -22,7 +22,8 @@
 -   [x] _Users will get an email for ticket confirmation_
 
 ## How to Run
-npm install for installation
-npm start to start the web application
-Run seed script to populate the database with node seed.js
-npm start to start the server [the server will be running at localhost:3000]
+
+-   [x] _npm install for installation_
+-   [x] _npm start to start the web application_
+-   [x] _Run seed script to populate the database with node seed.js_
+-   [x] _npm start to start the server [the server will be running at localhost:3000_
