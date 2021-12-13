@@ -148,6 +148,11 @@ button:focus {
   margin-left: 40%;
 }
 
+.whitefont
+{
+  color:white;
+
+}
 input[type=email], input[type=password] ,input[type=text], input[type=number]{
   width: 40%;
   padding: 12px 20px;
