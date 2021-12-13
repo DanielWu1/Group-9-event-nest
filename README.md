@@ -31,3 +31,18 @@
 ## Updated github link
 
 -   [x] https://github.com/DanielWu1/Group-9-event-nest_
+
+## Packages
+
+-   [x] axios_
+-   [x] bcryptjs
+-   [x] blueimp-md5_
+-   [x] express_
+-   [x] express-handlebars_
+-   [x] express-session_
+-   [x] handlebars_
+-   [x] mailgun-js_
+-   [x] mongodb_
+-   [x] pdfkit_
+-   [x] uuid_
+-   [x] xss_
