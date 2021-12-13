@@ -7,7 +7,7 @@
 		
 		<div >
 			<div class="col-md-10 col-lg-8">
-				<header class="title mt-3 mb-2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Edit event</header>
+				<header class="title mt-3 mb-2">Edit Ticket Preferences</header>
 				<br><br><br>
 				<form class="needs-validation ml-1"  method="POST" action="/edit-eventsub" autocomplete="off">
 
@@ -19,29 +19,27 @@
                    <div>
 							<label for="ticketcapacity">Ticket Capacity:&nbsp;&nbsp;&nbsp;&nbsp;</label>
 							<input type="number" class="ghost-round2" name="ticketcapacity" id="ticketcapacity" placeholder="      Number of seats" required>
-							<p>for now you have {{event.ticketcapacity}} seats</p>
-							<br>
-						<br>
+							<p>for now you have {{event.ticketcapacity}} seats</p><br><br>
+                            <h4>Price<h4>
+							
 						</div>
 					</div>
        
 
-					<div >
-						<div >
-							<label for="price">Price:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+					
+						<div>
+							<label for="price"></label>
+                            
 							<input type="number" class="ghost-round2" name="price" id="price" placeholder="        Price">
 							<p>for now you ticket price is {{event.price}}</p>
-							<small class="form-text text-muted">
-								(leave empty if free.)
-							</small> 
+						
 							<br>
 						<br>
 						</div>
 						
-                 </div>
-						
 
-					<div class="center1"><button type="submit" class='button' value = "edit" >Edit this Event</button></div>
+
+					<div class="center1"><button type="submit" class='button' value = "edit" >Confirm!</button></div>
 				
 			
 		</div>
