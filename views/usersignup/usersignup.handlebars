@@ -6,7 +6,7 @@
 <br><br><br><br><br><br>
 <h1 class="center1">User Signup</h1>
 
-<form action="/usersignup" method="POST">
+<form action="/usersignup" method="POST" id="signup-form">
   
 
   <div class="center1">
@@ -63,11 +63,16 @@
 
  
 </form>
-{{#if error}}
+
+<div id="error" hidden>
+</div>
+  {{#if error}}
 <p class="center1"> {{ error }}</p>
 {{/if}}
 
 
 
 
+
 </main>
+<script src="/public/js/code.js"></script>
