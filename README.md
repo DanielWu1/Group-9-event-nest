@@ -27,3 +27,7 @@
 -   [x] _npm start to start the web application_
 -   [x] _Run seed script to populate the database with node seed.js_
 -   [x] _npm start to start the server [the server will be running at localhost:3000_
+
+## Updated github link
+
+-   [x] https://github.com/DanielWu1/Group-9-event-nest_
