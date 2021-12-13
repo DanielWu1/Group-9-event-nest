@@ -9,7 +9,7 @@
 			<div class="col-md-10 col-lg-8">
 				<header class="title mt-3 mb-2">Edit Ticket Preferences</header>
 				<br><br><br>
-				<form class="needs-validation ml-1"  method="POST" action="/edit-eventsub" autocomplete="off">
+				<form class="needs-validation ml-1"  method="POST" action="/edit-eventsub" id="edit-event-form" autocomplete="off">
 
 						<div>
 							<label for="eventid"></label>
@@ -46,6 +46,9 @@
         </form>
 	</main>
 
+<div id="error" hidden>
+</div>
+
 {{#if error}}
 <p> {{ error }}</p>
 {{/if}}
@@ -55,3 +58,5 @@
 
 	
 </body> 
+
+<script src="/public/js/edit.js"></script>
