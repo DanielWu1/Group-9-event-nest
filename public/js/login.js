@@ -8,9 +8,9 @@
     if(signupform){
         error.hidden = true;
         signupform.addEventListener('submit', (event) => {
-            console.log(email.value.length)
-            console.log(email.value)
-            console.log('asdfasdfa')
+            // console.log(email.value.length)
+            // console.log(email.value)
+            // console.log('asdfasdfa')
         
             //------ login email---//
 
