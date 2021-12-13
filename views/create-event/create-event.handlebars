@@ -7,7 +7,7 @@
 	<div class="center1">
 		<h1>Create a New Event</h1>
 		<br><br><br>
-		<form class="needs-validation ml-1" novalidate autocomplete="off" method="POST" action="/create-event">
+		<form class="needs-validation ml-1" novalidate autocomplete="off" method="POST" action="/create-event" id="createe-form">
 
 			<label for="title"> Title:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -105,7 +105,8 @@
 		</form>
 	</div>
 
-
+	<div id="error" hidden>
+	</div>
 
 	{{#if error}}
 	<p class="center1"> {{ error }}</p>
@@ -115,3 +116,5 @@
 		<a href="/userhomepage">Homepage</a>
 	</div>
 </main>
+
+<script src="/public/js/createe.js"></script>
